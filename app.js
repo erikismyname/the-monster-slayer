@@ -31,7 +31,8 @@ new Vue({
             playerHealth: 100,
             monsterHealth: 100,
             currentGameRound: 0,
-            winner: null
+            winner: null,
+            battleLog: []
         };
     },
     computed: {
@@ -49,23 +50,30 @@ new Vue({
         }
     },
     methods: {
-        attackMonster(isSpecial) {
-            this.monsterHealth -= isSpecial ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
+        attackMonster(isSpecialAttack) {
+            const playerAttackPoints = isSpecialAttack ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
+            this.monsterHealth -= playerAttackPoints;
+            this.addToBattleLog({ target: 'Player', action: 'attack', points: playerAttackPoints });
+
             this.attackPlayer();
         },
         attackPlayer() {
-            this.playerHealth -= getRandomValueBetween(7, 12);
+            const monsterAttackPoints = getRandomValueBetween(7, 12);
+            this.playerHealth -= monsterAttackPoints;
+            this.addToBattleLog({ target: 'Monster', action: 'attack', points: monsterAttackPoints });
+
             this.checkGameStatus();
-            this.currentGameRound++;
+            this.currentGameRound++; // to move to checkGameStatus
         },
         healPlayer() {
-            const healValue = getRandomValueBetween(8, 11);
+            const playerHealPoints = getRandomValueBetween(8, 11);
 
-            if (this.playerHealth + healValue > 100) {
+            if (this.playerHealth + playerHealPoints > 100) {
                 this.playerHealth = 100;
             }
+            this.playerHealth += playerHealPoints;
+            this.addToBattleLog({ target: 'Player', action: 'heal', points: playerHealPoints });
 
-            this.playerHealth += healValue;
             this.attackPlayer();
         },
         checkGameStatus() {
@@ -82,9 +90,13 @@ new Vue({
             this.monsterHealth = 100;
             this.currentGameRound = 0;
             this.winner = null;
+            this.battleLog = [];
         },
         surrender() {
             this.winner = 'monster';
+        },
+        addToBattleLog(entry) {
+            this.battleLog.unshift(`${entry.target} ${entry.action}s for ${entry.points} points.`);
         }
     },
 });

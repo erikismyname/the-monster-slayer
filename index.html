@@ -38,7 +38,9 @@
         </section>
         <section id="battle-log">
             <h2>Battle Log</h2>
-            <ul></ul>
+            <ul>
+                <li v-for="entry in battleLog">{{entry}}</li>
+            </ul>
         </section>
     </main>
     <footer></footer>
