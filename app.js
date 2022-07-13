@@ -14,3 +14,13 @@ Vue.component('health-status', {
         </section>
     `
 });
+
+new Vue({
+    el: 'main',
+    data() {
+        return {
+            playerHealth: 100,
+            monsterHealth: 100
+        };
+    }
+});
