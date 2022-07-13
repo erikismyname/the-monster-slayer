@@ -16,12 +16,14 @@
         <h1>The Monster Slayer</h1>
     </header>
     <main>
-        <health-status id="player" :health="playerHealth">
-            <h2>Your Health</h2>
-        </health-status>
         <health-status id="monster" :health="monsterHealth">
             <h2>Monster Health</h2>
         </health-status>
+
+        <health-status id="player" :health="playerHealth">
+            <h2>Your Health</h2>
+        </health-status>
+
         <section v-if="isGameOver" class="container">
             <h2>Game Over</h2>
             <h3 v-if="hasPlayerWon">You WON!</h3>
@@ -29,13 +31,17 @@
             <h3 v-else>DRAW!</h3>
             <button @click="startNewGame">Start New Game</button>
         </section>
+
         <section v-else id="battle-controls">
             <button @click="attackMonster(false)">ATTACK</button>
-            <button :disabled="isCurrentGameRoundNotDivisibleByThree" @click="attackMonster(true)">SPECIAL
-                ATTACK</button>
+            <button
+                @click="attackMonster(true)" :disabled="isCurrentGameRoundNotDivisibleByThree">
+                SPECIAL ATTACK
+            </button>
             <button @click="healPlayer">HEAL</button>
-            <button @click="surrender">SURRENDER</button>
+            <button @click="surrenderToMonster">SURRENDER</button>
         </section>
+
         <section id="battle-log">
             <h2>Battle Log</h2>
             <ul>
