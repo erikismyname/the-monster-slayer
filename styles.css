@@ -3,3 +3,23 @@
     margin: 0;
     padding: 0;
 }
+
+header {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+section {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.healthbar {
+    border: 1px solid black;
+}
+
+.healthbar-status {
+    background-color: #880808;
+    height: 1rem;
+}
