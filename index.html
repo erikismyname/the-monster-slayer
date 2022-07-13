@@ -26,7 +26,7 @@
             <button @click="attackMonster(false)">ATTACK</button>
             <button :disabled="isCurrentGameRoundNotDivisibleByThree" @click="attackMonster(true)">SPECIAL
                 ATTACK</button>
-            <button>HEAL</button>
+            <button @click="healPlayer">HEAL</button>
             <button>SURRENDER</button>
         </section>
         <section id="battle-log">

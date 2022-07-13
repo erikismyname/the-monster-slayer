@@ -47,6 +47,16 @@ new Vue({
             this.playerHealth -= getRandomValueBetween(7, 12);
             this.currentGameRound++;
         },
+        healPlayer() {
+            const healValue = getRandomValueBetween(8, 11);
+
+            if (this.playerHealth + healValue > 100) {
+                this.playerHealth = 100;
+            }
+
+            this.playerHealth += healValue;
+            this.attackPlayer();
+        }
     }
 });
 
