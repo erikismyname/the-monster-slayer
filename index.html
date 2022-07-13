@@ -16,10 +16,10 @@
         <h1>The Monster Slayer</h1>
     </header>
     <main>
-        <health-status id="player">
+        <health-status id="player" :health="playerHealth">
             <h2>Your Health</h2>
         </health-status>
-        <health-status id="monster">
+        <health-status id="monster" :health="monsterHealth">
             <h2>Monster Health</h2>
         </health-status>
         <section id="battle-controls">
