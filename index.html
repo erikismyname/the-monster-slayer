@@ -22,6 +22,12 @@
         <health-status id="monster" :health="monsterHealth">
             <h2>Monster Health</h2>
         </health-status>
+        <section v-if="isGameOver" class="container">
+            <h2>Game Over</h2>
+            <h3 v-if="hasPlayerWon">You WON!</h3>
+            <h3 v-else-if="hasMonsterWon">You LOST!</h3>
+            <h3 v-else>DRAW!</h3>
+        </section>
         <section id="battle-controls">
             <button @click="attackMonster(false)">ATTACK</button>
             <button :disabled="isCurrentGameRoundNotDivisibleByThree" @click="attackMonster(true)">SPECIAL

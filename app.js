@@ -30,12 +30,22 @@ new Vue({
         return {
             playerHealth: 100,
             monsterHealth: 100,
-            currentGameRound: 0
+            currentGameRound: 0,
+            winner: null
         };
     },
     computed: {
         isCurrentGameRoundNotDivisibleByThree() {
             return this.currentGameRound % 3 !== 0;
+        },
+        isGameOver() {
+            return this.winner !== null;
+        },
+        hasPlayerWon() {
+            return this.winner === 'player';
+        },
+        hasMonsterWon() {
+            return this.winner === 'monster';
         }
     },
     methods: {
@@ -45,6 +55,7 @@ new Vue({
         },
         attackPlayer() {
             this.playerHealth -= getRandomValueBetween(7, 12);
+            this.checkGameStatus();
             this.currentGameRound++;
         },
         healPlayer() {
@@ -56,8 +67,17 @@ new Vue({
 
             this.playerHealth += healValue;
             this.attackPlayer();
+        },
+        checkGameStatus() {
+            if (this.playerHealth <= 0 && this.monsterHealth <= 0) {
+                this.winner = 'draw';
+            } else if (this.playerHealth <= 0) {
+                this.winner = 'monster';
+            } else if (this.monsterHealth <= 0) {
+                this.winner = 'player';
+            }
         }
-    }
+    },
 });
 
 function getRandomValueBetween(min, max) {
