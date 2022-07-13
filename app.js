@@ -28,16 +28,16 @@ new Vue({
     el: 'main',
     data() {
         return {
-            playerHealth: 100,
             monsterHealth: 100,
-            currentGameRound: 0,
+            playerHealth: 100,
+            currentRound: 0,
             winner: null,
             battleLog: []
         };
     },
     computed: {
-        isCurrentGameRoundNotDivisibleByThree() {
-            return this.currentGameRound % 3 !== 0;
+        isCurrentRoundNotDivisibleByThree() {
+            return this.currentRound % 3 !== 0;
         },
         isGameOver() {
             return this.winner !== null;
@@ -62,8 +62,7 @@ new Vue({
             this.playerHealth -= monsterAttackPoints;
             this.addToBattleLog({ target: 'Monster', action: 'attack', points: monsterAttackPoints });
 
-            this.checkGameStatus();
-            this.currentGameRound++; // to move to checkGameStatus
+            this.endCurrentRound();
         },
         healPlayer() {
             const playerHealPoints = getRandomValueBetween(8, 11);
@@ -76,7 +75,7 @@ new Vue({
 
             this.attackPlayer();
         },
-        checkGameStatus() {
+        endCurrentRound() {
             if (this.playerHealth <= 0 && this.monsterHealth <= 0) {
                 this.winner = 'draw';
             } else if (this.playerHealth <= 0) {
@@ -84,15 +83,17 @@ new Vue({
             } else if (this.monsterHealth <= 0) {
                 this.winner = 'player';
             }
+
+            this.currentRound++;
         },
         startNewGame() {
-            this.playerHealth = 100;
             this.monsterHealth = 100;
-            this.currentGameRound = 0;
+            this.playerHealth = 100;
+            this.currentRound = 0;
             this.winner = null;
             this.battleLog = [];
         },
-        surrender() {
+        surrenderToMonster() {
             this.winner = 'monster';
         },
         addToBattleLog(entry) {
