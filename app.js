@@ -29,17 +29,24 @@ new Vue({
     data() {
         return {
             playerHealth: 100,
-            monsterHealth: 100
+            monsterHealth: 100,
+            currentGameRound: 0
         };
     },
+    computed: {
+        isCurrentGameRoundNotDivisibleByThree() {
+            return this.currentGameRound % 3 !== 0;
+        }
+    },
     methods: {
-        attackMonster() {
-            this.monsterHealth -= getRandomValueBetween(5, 10);
+        attackMonster(isSpecial) {
+            this.monsterHealth -= isSpecial ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
             this.attackPlayer();
         },
         attackPlayer() {
             this.playerHealth -= getRandomValueBetween(7, 12);
-        }
+            this.currentGameRound++;
+        },
     }
 });
 
