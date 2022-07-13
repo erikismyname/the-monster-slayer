@@ -22,5 +22,18 @@ new Vue({
             playerHealth: 100,
             monsterHealth: 100
         };
+    },
+    methods: {
+        attackMonster() {
+            this.monsterHealth -= getRandomValueBetween(5, 10);
+            this.attackPlayer();
+        },
+        attackPlayer() {
+            this.playerHealth -= getRandomValueBetween(7, 12);
+        }
     }
 });
+
+function getRandomValueBetween(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
