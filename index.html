@@ -29,7 +29,7 @@
             <h3 v-else>DRAW!</h3>
             <button @click="startNewGame">Start New Game</button>
         </section>
-        <section v-if="!isGameOver" id="battle-controls">
+        <section v-else id="battle-controls">
             <button @click="attackMonster(false)">ATTACK</button>
             <button :disabled="isCurrentGameRoundNotDivisibleByThree" @click="attackMonster(true)">SPECIAL
                 ATTACK</button>
