@@ -82,6 +82,9 @@ new Vue({
             this.monsterHealth = 100;
             this.currentGameRound = 0;
             this.winner = null;
+        },
+        surrender() {
+            this.winner = 'monster';
         }
     },
 });

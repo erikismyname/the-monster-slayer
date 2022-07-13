@@ -34,7 +34,7 @@
             <button :disabled="isCurrentGameRoundNotDivisibleByThree" @click="attackMonster(true)">SPECIAL
                 ATTACK</button>
             <button @click="healPlayer">HEAL</button>
-            <button>SURRENDER</button>
+            <button @click="surrender">SURRENDER</button>
         </section>
         <section id="battle-log">
             <h2>Battle Log</h2>
