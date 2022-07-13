@@ -76,6 +76,12 @@ new Vue({
             } else if (this.monsterHealth <= 0) {
                 this.winner = 'player';
             }
+        },
+        startNewGame() {
+            this.playerHealth = 100;
+            this.monsterHealth = 100;
+            this.currentGameRound = 0;
+            this.winner = null;
         }
     },
 });
