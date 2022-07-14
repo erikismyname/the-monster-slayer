@@ -105,6 +105,18 @@ new Vue({
             this.battleLog.unshift(`${entry.target} ${entry.action}s for ${entry.points} points.`);
         }
     },
+    watch: {
+        monsterHealth(newHealth) {
+            if (newHealth < 0) {
+                this.monsterHealth = 0;
+            }
+        },
+        playerHealth(newHealth) {
+            if (newHealth < 0) {
+                this.playerHealth = 0;
+            }
+        }
+    }
 });
 
 function getRandomValueBetween(min, max) {
