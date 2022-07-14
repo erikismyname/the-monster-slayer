@@ -13,12 +13,20 @@ html {
 header {
     padding: 1rem;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 header,
 button {
     background-color: black;
     color: white;
+}
+
+header img {
+    margin: 0 .5rem;
+    height: 2.5rem;
 }
 
 section,
@@ -113,4 +121,23 @@ button:disabled {
 
 .low {
     background-color: #880808;
+}
+
+.avatar {
+    position: absolute;
+    height: 2.5rem;
+}
+
+.avatar.monster {
+    right: 13rem;
+    top: 1.9rem;
+}
+
+.avatar.player {
+    right: 13.6rem;
+    top: 2rem;
+}
+
+.container {
+    position: relative;
 }

@@ -19,11 +19,28 @@ Vue.component('health-status', {
                 medium: this.health > 25 && this.health <= 50,
                 high: this.health > 50,
             }
+        },
+        isMonster() {
+            return this.id === 'monster';
         }
     },
     template: `
         <section :id="id" class="container">
+            <img
+                v-if="isMonster" 
+                src="./assets/monster.jpg"
+                class="avatar monster"
+                alt="Monster"
+            />
+            <img 
+                v-else 
+                src="./assets/warrior.jpg"
+                class="avatar player"
+                alt="Warrior" 
+            />
+
             <slot></slot>
+
             <div class="healthbar">
                 <div 
                     class="healthbar-status"
