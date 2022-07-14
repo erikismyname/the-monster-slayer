@@ -13,12 +13,23 @@ Vue.component('health-status', {
         healthbarWidth() {
             return { width: (this.health > 0 ? this.health : 0) + '%' };
         },
+        healthbarClass() {
+            return {
+                low: this.health <= 25,
+                medium: this.health > 25 && this.health <= 50,
+                high: this.health > 50,
+            }
+        }
     },
     template: `
         <section :id="id" class="container">
             <slot></slot>
             <div class="healthbar">
-                <div class="healthbar-status" :style="healthbarWidth"></div>
+                <div 
+                    class="healthbar-status"
+                    :class="healthbarClass"
+                    :style="healthbarWidth"
+                ></div>
                 <span class="healthbar-percentage">{{ health }}%</span>
             </div>
         </section>
