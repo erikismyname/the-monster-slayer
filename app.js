@@ -54,7 +54,7 @@ Vue.component('health-status', {
 });
 
 new Vue({
-    el: 'main',
+    el: '#app',
     data() {
         return {
             monsterHealth: 100,
