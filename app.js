@@ -39,6 +39,9 @@ new Vue({
         isCurrentRoundNotDivisibleByThree() {
             return this.currentRound % 3 !== 0;
         },
+        isPlayerHealthFull() {
+            return this.playerHealth === 100;
+        },
         isGameOver() {
             return this.winner !== null;
         },
@@ -66,11 +69,12 @@ new Vue({
         },
         healPlayer() {
             const playerHealPoints = getRandomValueBetween(8, 11);
+            this.playerHealth += playerHealPoints;
 
-            if (this.playerHealth + playerHealPoints > 100) {
+            if (this.playerHealth > 100) {
                 this.playerHealth = 100;
             }
-            this.playerHealth += playerHealPoints;
+
             this.addToBattleLog({ target: 'Player', action: 'heal', points: playerHealPoints });
 
             this.attackPlayer();
