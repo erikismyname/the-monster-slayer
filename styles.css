@@ -32,7 +32,8 @@ header img {
 section,
 .healthbar,
 .healthbar-status,
-button {
+button,
+li {
     border-radius: .2rem;
 }
 
@@ -140,4 +141,22 @@ button:disabled {
 
 .container {
     position: relative;
+}
+
+.colored-entry {
+    background-color: black;
+    color: white;
+}
+
+li:nth-child(even) {
+    background-color: black;
+    color: white;
+}
+
+.fa-solid {
+    font-size: 1.2rem;
+}
+
+.fa-solid:hover {
+    cursor: pointer;
 }
