@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Monster Slayer</title>
     <link rel="stylesheet" href="./styles.css">
+    <script src="https://kit.fontawesome.com/84fccb38cf.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js" defer></script>
     <script src="./app.js" defer></script>
 </head>
@@ -51,7 +52,11 @@
         </section>
 
         <section id="battle-log">
-            <h2>Battle Log</h2>
+            <h2>
+                Battle Log 
+                <i v-if="isBattleLogSortTypeDesc" @click="changeBattleLogSortType" class="fa-solid fa-arrow-down"></i>
+                <i v-else @click="changeBattleLogSortType" class="fa-solid fa-arrow-up"></i>
+            </h2>
             <ul>
                 <li v-for="(entry, index) in battleLog" :key="index">
                     {{entry}}

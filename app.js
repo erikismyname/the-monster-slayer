@@ -61,7 +61,8 @@ new Vue({
             playerHealth: 100,
             currentRound: 0,
             winner: null,
-            battleLog: []
+            battleLog: [],
+            battleLogSortType: 'desc'
         };
     },
     computed: {
@@ -79,6 +80,9 @@ new Vue({
         },
         hasMonsterWon() {
             return this.winner === 'monster';
+        },
+        isBattleLogSortTypeDesc() {
+            return this.battleLogSortType === 'desc';
         }
     },
     methods: {
@@ -131,6 +135,9 @@ new Vue({
         },
         addToBattleLog(entry) {
             this.battleLog.unshift(`${entry.target} ${entry.action}ed for ${entry.points} points.`);
+        },
+        changeBattleLogSortType() {
+            this.battleLogSortType = this.battleLogSortType === 'desc' ? 'asc' : 'desc';
         }
     },
     watch: {
@@ -143,6 +150,15 @@ new Vue({
             if (newHealth < 0) {
                 this.playerHealth = 0;
             }
+        },
+        battleLogSortType() {
+            let sortedBattleLog = [];
+
+            for (let i = 0; i < this.battleLog.length; i += 2) {
+                sortedBattleLog.unshift(this.battleLog[i], this.battleLog[i + 1]);
+            }
+            
+            this.battleLog = sortedBattleLog;
         }
     }
 });
