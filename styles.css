@@ -53,11 +53,18 @@ h3 {
 .healthbar {
     height: 2rem;
     border: .1rem solid black;
+    position: relative;
 }
 
 .healthbar-status {
     background-color: #880808;
     height: 100%;
+}
+
+.healthbar-percentage {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
 }
 
 #battle-controls {

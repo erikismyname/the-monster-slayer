@@ -19,6 +19,7 @@ Vue.component('health-status', {
             <slot></slot>
             <div class="healthbar">
                 <div class="healthbar-status" :style="healthbarWidth"></div>
+                <span class="healthbar-percentage">{{ health }}%</span>
             </div>
         </section>
     `
