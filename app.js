@@ -130,7 +130,7 @@ new Vue({
             this.winner = 'monster';
         },
         addToBattleLog(entry) {
-            this.battleLog.unshift(`${entry.target} ${entry.action}s for ${entry.points} points.`);
+            this.battleLog.unshift(`${entry.target} ${entry.action}ed for ${entry.points} points.`);
         }
     },
     watch: {
