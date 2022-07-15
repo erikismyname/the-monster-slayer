@@ -231,7 +231,7 @@ new Vue({
             const playerAttackPoints = isSpecialAttack ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
             this.monsterHealth -= playerAttackPoints;
 
-            this.addEntryToBattleLog({ target: 'Player', action: 'attack', points: playerAttackPoints });
+            this.addEntryToBattleLog({ contender: 'Player', action: 'attack', points: playerAttackPoints });
 
             this.attackPlayer();
         },
@@ -239,7 +239,7 @@ new Vue({
             const monsterAttackPoints = getRandomValueBetween(7, 12);
             this.playerHealth -= monsterAttackPoints;
 
-            this.addEntryToBattleLog({ target: 'Monster', action: 'attack', points: monsterAttackPoints });
+            this.addEntryToBattleLog({ contender: 'Monster', action: 'attack', points: monsterAttackPoints });
 
             this.endCurrentRound();
         },
@@ -251,7 +251,7 @@ new Vue({
                 this.playerHealth = 100;
             }
 
-            this.addEntryToBattleLog({ target: 'Player', action: 'heal', points: playerHealPoints });
+            this.addEntryToBattleLog({ contender: 'Player', action: 'heal', points: playerHealPoints });
 
             this.attackPlayer();
         },
