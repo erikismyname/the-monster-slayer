@@ -144,31 +144,40 @@ Vue.component('battle-controls-section', {
 
 Vue.component('battle-log-section', {
     props: {
-        battleLogSortType: {
-            type: String,
-            required: true
-        },
         battleLog: {
             type: Array,
+            required: true
+        },
+        battleLogEntriesOrder: {
+            type: String,
             required: true
         }
     },
     computed: {
-        isBattleLogSortTypeDesc() {
-            return this.battleLogSortType === 'desc';
+        isBattleLogEntriesOrderDescending() {
+            return this.battleLogEntriesOrder === 'descending';
         }
     },
     methods: {
-        changeBattleLogSortType() {
-            this.$emit('change-battle-log-sort-type');
+        changeBattleLogEntriesOrder() {
+            this.$emit('change-battle-log-entries-order');
         }
     },
     template: `
         <section id="battle-log">
             <h2>
-                Battle Log 
-                <i v-if="isBattleLogSortTypeDesc" @click="changeBattleLogSortType" class="fa-solid fa-arrow-down"></i>
-                <i v-else @click="changeBattleLogSortType" class="fa-solid fa-arrow-up"></i>
+                Battle Log
+                <i 
+                    v-if="isBattleLogEntriesOrderDescending" @click="changeBattleLogEntriesOrder" 
+                    class="fa-solid fa-arrow-down"
+                >
+                </i>
+                <i 
+                    v-else 
+                    @click="changeBattleLogEntriesOrder" 
+                    class="fa-solid fa-arrow-up"
+                >
+                </i>
             </h2>
             <ul>
                 <li v-for="(entry, index) in battleLog" :key="index">
@@ -188,7 +197,7 @@ new Vue({
             currentRound: 0,
             winner: '',
             battleLog: [],
-            battleLogSortType: 'desc'
+            battleLogEntriesOrder: 'descending'
         };
     },
     methods: {
@@ -242,8 +251,8 @@ new Vue({
         addToBattleLog(entry) {
             this.battleLog.unshift(`${entry.target} ${entry.action}ed for ${entry.points} points.`);
         },
-        changeBattleLogSortType() {
-            this.battleLogSortType = this.battleLogSortType === 'desc' ? 'asc' : 'desc';
+        changeBattleLogEntriesOrder() {
+            this.battleLogEntriesOrder = this.battleLogEntriesOrder === 'descending' ? 'ascending' : 'descending';
         }
     },
     watch: {
@@ -257,8 +266,8 @@ new Vue({
                 this.playerHealth = 0;
             }
         },
-        battleLogSortType() {
-            let sortedBattleLog = [];
+        battleLogEntriesOrder() {
+            const sortedBattleLog = [];
 
             for (let i = 0; i < this.battleLog.length; i += 2) {
                 sortedBattleLog.unshift(this.battleLog[i], this.battleLog[i + 1]);
