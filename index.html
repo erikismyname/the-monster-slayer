@@ -19,27 +19,31 @@
         <img src="./assets/fire-torch.jpg" alt="A burning fire torch">
     </header>
     <main id="app">
-        <health-status id="monster" :health="monsterHealth">
+        <health-status-section id="monster" :health="monsterHealth">
             <h2>Monster Health</h2>
-        </health-status>
+        </health-status-section>
 
-        <health-status id="player" :health="playerHealth">
+        <health-status-section id="player" :health="playerHealth">
             <h2>Your Health</h2>
-        </health-status>
+        </health-status-section>
 
-        <game-over @start-new-game="startNewGame" :winner="winner"></game-over>
+        <game-over-section :winner="winner" @start-new-game="startNewGame" ></game-over-section>
 
-        <battle-controls 
+        <battle-controls-section 
             :player-health="playerHealth" 
             :current-round="currentRound"
             @attack-monster="attackMonster"
             @heal-player="healPlayer"
             @surrender-to-monster="surrenderToMonster"
-        ></battle-controls>
+        >
+        </battle-controls-section>
 
-        <battle-log 
-            :battle-log="battleLog" :battle-log-sort-type="battleLogSortType" @change-battle-log-sort-type="changeBattleLogSortType"
-        ></battle-log>
+        <battle-log-section 
+            :battle-log="battleLog" 
+            :battle-log-sort-type="battleLogSortType" 
+            @change-battle-log-sort-type="changeBattleLogSortType"
+        >
+        </battle-log-section>
     </main>
     <footer></footer>
 </body>
