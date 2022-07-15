@@ -12,33 +12,33 @@ Vue.component('health-status-section', {
         },
     },
     computed: {
-        healthbarWidth() {
-            return { width: (this.health > 0 ? this.health : 0) + '%' };
+        isMonsterAvatar() {
+            return this.id === 'monster';
         },
-        healthbarClass() {
+        healthbarLevelClass() {
             return {
-                low: this.health <= 25,
-                medium: this.health > 25 && this.health <= 50,
                 high: this.health > 50,
+                medium: this.health > 25 && this.health <= 50,
+                low: this.health <= 25,
             }
         },
-        isMonster() {
-            return this.id === 'monster';
+        healthbarWidthStyle() {
+            return { width: (this.health > 0 ? this.health : 0) + '%' };
         }
     },
     template: `
         <section :id="id" class="container">
             <img
-                v-if="isMonster" 
+                v-if="isMonsterAvatar" 
                 src="./assets/monster.jpg"
+                alt="Monster's avatar"
                 class="avatar monster"
-                alt="Monster"
             />
             <img 
                 v-else 
-                src="./assets/warrior.jpg"
+                src="./assets/player.jpg"
+                alt="Player's avatar" 
                 class="avatar player"
-                alt="Warrior" 
             />
 
             <slot></slot>
@@ -46,9 +46,10 @@ Vue.component('health-status-section', {
             <div class="healthbar">
                 <div 
                     class="healthbar-status"
-                    :class="healthbarClass"
-                    :style="healthbarWidth"
-                ></div>
+                    :class="healthbarLevelClass"
+                    :style="healthbarWidthStyle"
+                >
+                </div>
                 <span class="healthbar-percentage">{{ health }}%</span>
             </div>
         </section>
