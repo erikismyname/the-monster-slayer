@@ -140,7 +140,7 @@ Vue.component('battle-controls-section', {
             >
                 HEAL
             </button>
-            
+
             <button @click="surrenderToMonster">SURRENDER</button>
         </section>
     `
@@ -208,14 +208,16 @@ new Vue({
         attackMonster(isSpecialAttack) {
             const playerAttackPoints = isSpecialAttack ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
             this.monsterHealth -= playerAttackPoints;
-            this.addToBattleLog({ target: 'Player', action: 'attack', points: playerAttackPoints });
+
+            this.addEntryToBattleLog({ target: 'Player', action: 'attack', points: playerAttackPoints });
 
             this.attackPlayer();
         },
         attackPlayer() {
             const monsterAttackPoints = getRandomValueBetween(7, 12);
             this.playerHealth -= monsterAttackPoints;
-            this.addToBattleLog({ target: 'Monster', action: 'attack', points: monsterAttackPoints });
+
+            this.addEntryToBattleLog({ target: 'Monster', action: 'attack', points: monsterAttackPoints });
 
             this.endCurrentRound();
         },
@@ -227,7 +229,7 @@ new Vue({
                 this.playerHealth = 100;
             }
 
-            this.addToBattleLog({ target: 'Player', action: 'heal', points: playerHealPoints });
+            this.addEntryToBattleLog({ target: 'Player', action: 'heal', points: playerHealPoints });
 
             this.attackPlayer();
         },
@@ -252,8 +254,16 @@ new Vue({
         surrenderToMonster() {
             this.winner = 'monster';
         },
-        addToBattleLog(entry) {
-            this.battleLog.unshift(`${entry.target} ${entry.action}ed for ${entry.points} points.`);
+        addEntryToBattleLog({ target, action, points }) {
+            let entry;
+
+            if (action === 'attack') {
+                entry = `${target} attacked and ` + (points ? `dealt ${points} damage.` : 'missed.')
+            } else {
+                entry = `${target} ` + (points ? `healed for ${points} points.` : 'dropped his potion and couldn\'t heal.');
+            }
+
+            this.battleLog.unshift(entry);
         },
         changeBattleLogEntriesOrder() {
             this.battleLogEntriesOrder = this.battleLogEntriesOrder === 'descending' ? 'ascending' : 'descending';
