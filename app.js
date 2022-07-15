@@ -1,3 +1,5 @@
+import getRandomValueBetween from './util/getRandomValueBetween.js';
+
 Vue.component('health-status-section', {
     props: {
         id: {
@@ -266,7 +268,3 @@ new Vue({
         }
     }
 });
-
-function getRandomValueBetween(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-}
