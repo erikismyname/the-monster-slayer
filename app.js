@@ -205,6 +205,27 @@ new Vue({
             battleLogEntriesOrder: 'descending'
         };
     },
+    watch: {
+        monsterHealth(newHealth) {
+            if (newHealth < 0) {
+                this.monsterHealth = 0;
+            }
+        },
+        playerHealth(newHealth) {
+            if (newHealth < 0) {
+                this.playerHealth = 0;
+            }
+        },
+        battleLogEntriesOrder() {
+            const sortedBattleLog = [];
+
+            for (let i = 0; i < this.battleLog.length; i += 2) {
+                sortedBattleLog.unshift(this.battleLog[i], this.battleLog[i + 1]);
+            }
+
+            this.battleLog = sortedBattleLog;
+        }
+    },
     methods: {
         attackMonster(isSpecialAttack) {
             const playerAttackPoints = isSpecialAttack ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
@@ -261,27 +282,6 @@ new Vue({
         },
         changeBattleLogEntriesOrder() {
             this.battleLogEntriesOrder = this.battleLogEntriesOrder === 'descending' ? 'ascending' : 'descending';
-        }
-    },
-    watch: {
-        monsterHealth(newHealth) {
-            if (newHealth < 0) {
-                this.monsterHealth = 0;
-            }
-        },
-        playerHealth(newHealth) {
-            if (newHealth < 0) {
-                this.playerHealth = 0;
-            }
-        },
-        battleLogEntriesOrder() {
-            const sortedBattleLog = [];
-
-            for (let i = 0; i < this.battleLog.length; i += 2) {
-                sortedBattleLog.unshift(this.battleLog[i], this.battleLog[i + 1]);
-            }
-
-            this.battleLog = sortedBattleLog;
         }
     }
 });
