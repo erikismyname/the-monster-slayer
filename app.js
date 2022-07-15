@@ -42,6 +42,8 @@ Vue.component('health-status-section', {
                 class="avatar player"
             />
 
+            <span class="second-wind">Second Wind</span>
+
             <slot></slot>
 
             <div class="healthbar">
