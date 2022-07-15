@@ -29,21 +29,13 @@
 
         <game-over @start-new-game="startNewGame" :winner="winner"></game-over>
 
-        <section id="battle-controls">
-            <button @click="attackMonster(false)">ATTACK</button>
-            <button
-                @click="attackMonster(true)" :disabled="isCurrentRoundNotDivisibleByThree"
-            >
-                SPECIAL ATTACK
-            </button>
-            <button 
-                @click="healPlayer"
-                :disabled="isPlayerHealthFull"
-            >
-                HEAL
-            </button>
-            <button @click="surrenderToMonster">SURRENDER</button>
-        </section>
+        <battle-controls 
+            :player-health="playerHealth" 
+            :current-round="currentRound"
+            @attack-monster="attackMonster"
+            @heal-player="healPlayer"
+            @surrender-to-monster="surrenderToMonster"
+        ></battle-controls>
 
         <section id="battle-log">
             <h2>

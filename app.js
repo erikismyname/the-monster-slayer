@@ -90,6 +90,56 @@ Vue.component('game-over', {
     `
 });
 
+Vue.component('battle-controls', {
+    props: {
+        playerHealth: {
+            type: Number,
+            required: true
+        },
+        currentRound: {
+            type: Number,
+            required: true
+        }
+    },
+    computed: {
+        isCurrentRoundNotDivisibleByThree() {
+            return this.currentRound % 3 !== 0;
+        },
+        isPlayerHealthFull() {
+            return this.playerHealth === 100;
+        },
+    },
+    methods: {
+        attackMonster(isSpecialAttack) {
+            console.log(isSpecialAttack);
+            this.$emit('attack-monster', isSpecialAttack);
+        },
+        healPlayer() {
+            this.$emit('heal-player');
+        },
+        surrenderToMonster() {
+            this.$emit('surrender-to-monster');
+        }
+    },
+    template: `
+        <section id="battle-controls">
+        <button @click="attackMonster(false)">ATTACK</button>
+        <button
+            @click="attackMonster(true)" :disabled="isCurrentRoundNotDivisibleByThree"
+        >
+            SPECIAL ATTACK
+        </button>
+        <button 
+            @click="healPlayer"
+            :disabled="isPlayerHealthFull"
+        >
+            HEAL
+        </button>
+        <button @click="surrenderToMonster">SURRENDER</button>
+        </section>
+    `
+});
+
 new Vue({
     el: '#app',
     data() {
@@ -103,12 +153,6 @@ new Vue({
         };
     },
     computed: {
-        isCurrentRoundNotDivisibleByThree() {
-            return this.currentRound % 3 !== 0;
-        },
-        isPlayerHealthFull() {
-            return this.playerHealth === 100;
-        },
         isBattleLogSortTypeDesc() {
             return this.battleLogSortType === 'desc';
         }
