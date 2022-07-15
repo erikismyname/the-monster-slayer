@@ -140,6 +140,43 @@ Vue.component('battle-controls', {
     `
 });
 
+Vue.component('battle-log', {
+    props: {
+        battleLogSortType: {
+            type: String,
+            required: true
+        },
+        battleLog: {
+            type: Array,
+            required: true
+        }
+    },
+    computed: {
+        isBattleLogSortTypeDesc() {
+            return this.battleLogSortType === 'desc';
+        }
+    },
+    methods: {
+        changeBattleLogSortType() {
+            this.$emit('change-battle-log-sort-type');
+        }
+    },
+    template: `
+        <section id="battle-log">
+            <h2>
+                Battle Log 
+                <i v-if="isBattleLogSortTypeDesc" @click="changeBattleLogSortType" class="fa-solid fa-arrow-down"></i>
+                <i v-else @click="changeBattleLogSortType" class="fa-solid fa-arrow-up"></i>
+            </h2>
+            <ul>
+                <li v-for="(entry, index) in battleLog" :key="index">
+                    {{entry}}
+                </li>
+            </ul>
+        </section>
+    `
+});
+
 new Vue({
     el: '#app',
     data() {
@@ -151,11 +188,6 @@ new Vue({
             battleLog: [],
             battleLogSortType: 'desc'
         };
-    },
-    computed: {
-        isBattleLogSortTypeDesc() {
-            return this.battleLogSortType === 'desc';
-        }
     },
     methods: {
         attackMonster(isSpecialAttack) {
