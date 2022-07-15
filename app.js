@@ -1,4 +1,4 @@
-Vue.component('health-status', {
+Vue.component('health-status-section', {
     props: {
         id: {
             type: String,
@@ -53,7 +53,7 @@ Vue.component('health-status', {
     `
 });
 
-Vue.component('game-over', {
+Vue.component('game-over-section', {
     props: {
         winner: {
             type: String,
@@ -78,7 +78,7 @@ Vue.component('game-over', {
     },
     template: `
         <section
-            v-if="isGameOver" 
+            v-if="isGameOver"
             class="container"
         >
             <h2>Game Over</h2>
@@ -90,7 +90,7 @@ Vue.component('game-over', {
     `
 });
 
-Vue.component('battle-controls', {
+Vue.component('battle-controls-section', {
     props: {
         playerHealth: {
             type: Number,
@@ -140,7 +140,7 @@ Vue.component('battle-controls', {
     `
 });
 
-Vue.component('battle-log', {
+Vue.component('battle-log-section', {
     props: {
         battleLogSortType: {
             type: String,
