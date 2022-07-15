@@ -30,8 +30,8 @@
         <game-over-section :winner="winner" @start-new-game="startNewGame" ></game-over-section>
 
         <battle-controls-section 
-            :player-health="playerHealth" 
             :current-round="currentRound"
+            :player-health="playerHealth" 
             @attack-monster="attackMonster"
             @heal-player="healPlayer"
             @surrender-to-monster="surrenderToMonster"

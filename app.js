@@ -95,11 +95,11 @@ Vue.component('game-over-section', {
 
 Vue.component('battle-controls-section', {
     props: {
-        playerHealth: {
+        currentRound: {
             type: Number,
             required: true
         },
-        currentRound: {
+        playerHealth: {
             type: Number,
             required: true
         }
@@ -114,7 +114,6 @@ Vue.component('battle-controls-section', {
     },
     methods: {
         attackMonster(isSpecialAttack) {
-            console.log(isSpecialAttack);
             this.$emit('attack-monster', isSpecialAttack);
         },
         healPlayer() {
@@ -126,19 +125,23 @@ Vue.component('battle-controls-section', {
     },
     template: `
         <section id="battle-controls">
-        <button @click="attackMonster(false)">ATTACK</button>
-        <button
-            @click="attackMonster(true)" :disabled="isCurrentRoundNotDivisibleByThree"
-        >
-            SPECIAL ATTACK
-        </button>
-        <button 
-            @click="healPlayer"
-            :disabled="isPlayerHealthFull"
-        >
-            HEAL
-        </button>
-        <button @click="surrenderToMonster">SURRENDER</button>
+            <button @click="attackMonster(false)">ATTACK</button>
+
+            <button
+                :disabled="isCurrentRoundNotDivisibleByThree"
+                @click="attackMonster(true)" 
+            >
+                SPECIAL ATTACK
+            </button>
+
+            <button 
+                :disabled="isPlayerHealthFull"
+                @click="healPlayer"
+            >
+                HEAL
+            </button>
+            
+            <button @click="surrenderToMonster">SURRENDER</button>
         </section>
     `
 });
