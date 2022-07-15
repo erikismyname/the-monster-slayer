@@ -1,4 +1,5 @@
 import getRandomValueBetween from './util/getRandomValueBetween.js';
+import formatBattleLogEntry from './util/formatBattleLogEntry.js';
 
 Vue.component('health-status-section', {
     props: {
@@ -254,16 +255,9 @@ new Vue({
         surrenderToMonster() {
             this.winner = 'monster';
         },
-        addEntryToBattleLog({ target, action, points }) {
-            let entry;
-
-            if (action === 'attack') {
-                entry = `${target} attacked and ` + (points ? `dealt ${points} damage.` : 'missed.')
-            } else {
-                entry = `${target} ` + (points ? `healed for ${points} points.` : 'dropped his potion and couldn\'t heal.');
-            }
-
-            this.battleLog.unshift(entry);
+        addEntryToBattleLog(entry) {
+            const formattedEntry = formatBattleLogEntry(entry);
+            this.battleLog.unshift(formattedEntry);
         },
         changeBattleLogEntriesOrder() {
             this.battleLogEntriesOrder = this.battleLogEntriesOrder === 'descending' ? 'ascending' : 'descending';
