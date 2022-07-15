@@ -53,6 +53,43 @@ Vue.component('health-status', {
     `
 });
 
+Vue.component('game-over', {
+    props: {
+        winner: {
+            type: String,
+            required: true
+        }
+    },
+    computed: {
+        isGameOver() {
+            return this.winner;
+        },
+        hasPlayerWon() {
+            return this.winner === 'player';
+        },
+        hasMonsterWon() {
+            return this.winner === 'monster';
+        },
+    },
+    methods: {
+        startNewGame() {
+            this.$emit('start-new-game');
+        }
+    },
+    template: `
+        <section
+            v-if="isGameOver" 
+            class="container"
+        >
+            <h2>Game Over</h2>
+            <h3 v-if="hasPlayerWon">You WON!</h3>
+            <h3 v-else-if="hasMonsterWon">You LOST!</h3>
+            <h3 v-else>DRAW!</h3>
+            <button @click="startNewGame">Start New Game</button>
+        </section>
+    `
+});
+
 new Vue({
     el: '#app',
     data() {
@@ -60,7 +97,7 @@ new Vue({
             monsterHealth: 100,
             playerHealth: 100,
             currentRound: 0,
-            winner: null,
+            winner: '',
             battleLog: [],
             battleLogSortType: 'desc'
         };
@@ -71,15 +108,6 @@ new Vue({
         },
         isPlayerHealthFull() {
             return this.playerHealth === 100;
-        },
-        isGameOver() {
-            return this.winner !== null;
-        },
-        hasPlayerWon() {
-            return this.winner === 'player';
-        },
-        hasMonsterWon() {
-            return this.winner === 'monster';
         },
         isBattleLogSortTypeDesc() {
             return this.battleLogSortType === 'desc';
@@ -127,7 +155,7 @@ new Vue({
             this.monsterHealth = 100;
             this.playerHealth = 100;
             this.currentRound = 0;
-            this.winner = null;
+            this.winner = '';
             this.battleLog = [];
         },
         surrenderToMonster() {
@@ -157,7 +185,7 @@ new Vue({
             for (let i = 0; i < this.battleLog.length; i += 2) {
                 sortedBattleLog.unshift(this.battleLog[i], this.battleLog[i + 1]);
             }
-            
+
             this.battleLog = sortedBattleLog;
         }
     }
