@@ -19,11 +19,19 @@
         <img src="./assets/fire-torch.jpg" alt="A burning fire torch">
     </header>
     <main id="app">
-        <health-status-section id="monster" :health="monsterHealth">
+        <health-status-section 
+            id="monster" 
+            :health="monsterHealth" 
+            :second-wind="hasMonsterSecondWind"
+        >
             <h2>Monster Health</h2>
         </health-status-section>
 
-        <health-status-section id="player" :health="playerHealth">
+        <health-status-section 
+            id="player" 
+            :health="playerHealth" 
+            :second-wind="hasPlayerSecondWind"
+        >
             <h2>Your Health</h2>
         </health-status-section>
 

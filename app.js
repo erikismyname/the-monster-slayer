@@ -11,6 +11,10 @@ Vue.component('health-status-section', {
             type: Number,
             required: true
         },
+        secondWind: {
+            type: Boolean,
+            required: true
+        }
     },
     computed: {
         isMonsterAvatar() {
@@ -25,6 +29,9 @@ Vue.component('health-status-section', {
         },
         healthbarWidthStyle() {
             return { width: (this.health > 0 ? this.health : 0) + '%' };
+        },
+        isSecondWindActivated() {
+            return this.secondWind;
         }
     },
     template: `
@@ -42,7 +49,7 @@ Vue.component('health-status-section', {
                 class="avatar player"
             />
 
-            <span class="second-wind">Second Wind</span>
+            <span v-if="isSecondWindActivated" class="second-wind">Second Wind</span>
 
             <slot></slot>
 
@@ -200,7 +207,11 @@ new Vue({
     data() {
         return {
             monsterHealth: 100,
+            hasMonsterSecondWind: false,
+            hasMonsterUsedSecondWind: false,
             playerHealth: 100,
+            hasPlayerSecondWind: false,
+            hasPlayerUsedSecondWind: false,
             currentRound: 0,
             winner: '',
             battleLog: [],
@@ -261,16 +272,40 @@ new Vue({
             if (this.playerHealth <= 0 && this.monsterHealth <= 0) {
                 this.winner = 'draw';
             } else if (this.playerHealth <= 0) {
-                this.winner = 'monster';
+                if (!this.hasContenderSecondWind('player')) {
+                    this.winner = 'monster';
+                }
             } else if (this.monsterHealth <= 0) {
-                this.winner = 'player';
+                if (!this.hasContenderSecondWind('monster')) {
+                    this.winner = 'player';
+                }
             }
 
             this.currentRound++;
         },
+        hasContenderSecondWind(contender) {
+            if (Math.random() > 0.5 && contender === 'player' && !this.hasPlayerUsedSecondWind) {
+                this.hasPlayerSecondWind = true;
+                this.hasPlayerUsedSecondWind = true;
+                this.playerHealth = 50;
+                return true;
+            } else if (Math.random() > 0.5 && contender === 'monster' && !this.hasMonsterUsedSecondWind) {
+                this.hasMonsterSecondWind = true;
+                this.hasMonsterUsedSecondWind = true;
+                this.monsterHealth = 50;
+                return true;
+            }
+            return false;
+        },
         startNewGame() {
             this.monsterHealth = 100;
+            this.hasMonsterSecondWind = false;
+            this.hasMonsterUsedSecondWind = false;
+
             this.playerHealth = 100;
+            this.hasPlayerSecondWind = false;
+            this.hasPlayerUsedSecondWind = false;
+            
             this.currentRound = 0;
             this.winner = '';
             this.battleLog = [];
