@@ -13,12 +13,18 @@
 </head>
 
 <body>
-    <header>
+    <header id="main-header">
         <img src="./assets/fire-torch.jpg" alt="A burning fire torch">
         <h1>The Monster Slayer</h1>
         <img src="./assets/fire-torch.jpg" alt="A burning fire torch">
     </header>
     <main id="app">
+        <the-modal 
+            v-if="isModalVisible" 
+            @set-player-name="setPlayerName"
+        >
+        </the-modal>
+
         <health-status-section 
             id="monster" 
             :health="monsterHealth" 
@@ -33,7 +39,7 @@
             :player-health-potions="playerHealthPotions" 
             :second-wind="hasPlayerSecondWind"
         >
-            <h2>Your Health</h2>
+            <h2>{{ playerName || 'Your Health' }}</h2>
         </health-status-section>
 
         <game-over-section :winner="winner" @start-new-game="startNewGame" ></game-over-section>
