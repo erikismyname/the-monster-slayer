@@ -269,33 +269,42 @@ new Vue({
             this.attackPlayer();
         },
         endCurrentRound() {
-            if (this.playerHealth <= 0 && this.monsterHealth <= 0) {
+            if (this.monsterHealth <= 0 && this.playerHealth <= 0) {
                 this.winner = 'draw';
-            } else if (this.playerHealth <= 0) {
-                if (!this.hasContenderSecondWind('player')) {
-                    this.winner = 'monster';
-                }
             } else if (this.monsterHealth <= 0) {
-                if (!this.hasContenderSecondWind('monster')) {
-                    this.winner = 'player';
-                }
+                this.processMonsterDying();
+            } else if (this.playerHealth <= 0) {
+                this.processPlayerDying();
             }
 
             this.currentRound++;
         },
-        hasContenderSecondWind(contender) {
-            if (Math.random() > 0.5 && contender === 'player' && !this.hasPlayerUsedSecondWind) {
+        processPlayerDying() {
+            if (this.hasSecondWind('player')) {
                 this.hasPlayerSecondWind = true;
                 this.hasPlayerUsedSecondWind = true;
                 this.playerHealth = 50;
-                return true;
-            } else if (Math.random() > 0.5 && contender === 'monster' && !this.hasMonsterUsedSecondWind) {
+
+                return;
+            }
+
+            this.winner = 'monster';
+        },
+        processMonsterDying() {
+            if (this.hasSecondWind('monster')) {
                 this.hasMonsterSecondWind = true;
                 this.hasMonsterUsedSecondWind = true;
                 this.monsterHealth = 50;
-                return true;
+
+                return;
             }
-            return false;
+
+            this.winner = 'player';
+        },
+        hasSecondWind(contender) {
+            const hasContenderUsedSecondWind = contender === 'player' ? this.hasPlayerUsedSecondWind : this.hasMonsterUsedSecondWind;
+
+            return !hasContenderUsedSecondWind && Math.random() > 0.5;
         },
         startNewGame() {
             this.monsterHealth = 100;
@@ -305,7 +314,7 @@ new Vue({
             this.playerHealth = 100;
             this.hasPlayerSecondWind = false;
             this.hasPlayerUsedSecondWind = false;
-            
+
             this.currentRound = 0;
             this.winner = '';
             this.battleLog = [];
