@@ -1,6 +1,42 @@
 import getRandomValueBetween from './util/getRandomValueBetween.js';
 import formatBattleLogEntry from './util/formatBattleLogEntry.js';
 
+Vue.component('the-modal', {
+    data() {
+        return {
+            playerName: ''
+        };
+    },
+    methods: {
+        setPlayerName() {
+            if (!this.playerName) {
+                return;
+            }
+            
+            this.$emit('set-player-name', this.playerName);
+        }
+    },
+    template: `
+        <div>
+            <div id="backdrop"></div>
+            <div id="modal">
+                <header>
+                    <h2>Welcome to The Monster Slayer</h2>
+                </header>
+                <main>
+                    <div>
+                        <label for="username">Please enter you name:</label>
+                        <input type="text" id="username" v-model.trim="playerName">
+                    </div>
+                    <div id="button-container">
+                        <button @click="setPlayerName">Start Game</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    `
+});
+
 Vue.component('health-status-section', {
     props: {
         id: {
@@ -62,7 +98,7 @@ Vue.component('health-status-section', {
 
             <span v-if="isSecondWindActivated" class="second-wind">Second Wind</span>
 
-            <slot></slot>
+            <slot>Your Health</slot>
 
             <div class="healthbar">
                 <div 
@@ -221,9 +257,11 @@ new Vue({
     el: '#app',
     data() {
         return {
+            isModalVisible: true,
             monsterHealth: 100,
             hasMonsterSecondWind: false,
             hasMonsterUsedSecondWind: false,
+            playerName: '',
             playerHealth: 100,
             playerHealthPotions: 5,
             hasPlayerSecondWind: false,
@@ -256,6 +294,10 @@ new Vue({
         }
     },
     methods: {
+        setPlayerName(playerName) {
+            this.playerName = playerName;
+            this.isModalVisible = false;
+        },
         attackMonster(isSpecialAttack) {
             const playerAttackPoints = isSpecialAttack ? getRandomValueBetween(9, 14) : getRandomValueBetween(5, 10);
             this.monsterHealth -= playerAttackPoints;
