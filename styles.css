@@ -39,7 +39,8 @@ section,
 .healthbar,
 .healthbar-status,
 button,
-li {
+li,
+#modal input {
     border-radius: .2rem;
 }
 
@@ -199,6 +200,7 @@ li:nth-child(even) {
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
+    width: 30rem;
 }
 
 #modal header,
@@ -222,6 +224,13 @@ li:nth-child(even) {
 
 #modal input {
     padding: .2rem;
+    font-family: inherit;
+    border: .1rem solid black;
+    width: 40%;
+}
+
+#modal .invalid {
+    border-color: #880808;
 }
 
 #modal button {
@@ -231,7 +240,7 @@ li:nth-child(even) {
 }
 
 #button-container {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: flex-end;
 }
