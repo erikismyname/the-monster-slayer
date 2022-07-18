@@ -29,7 +29,8 @@
 
         <health-status-section 
             id="player" 
-            :health="playerHealth" 
+            :health="playerHealth"
+            :player-health-potions="playerHealthPotions" 
             :second-wind="hasPlayerSecondWind"
         >
             <h2>Your Health</h2>
@@ -39,7 +40,8 @@
 
         <battle-controls-section 
             :current-round="currentRound"
-            :player-health="playerHealth" 
+            :player-health="playerHealth"
+            :player-health-potions="playerHealthPotions" 
             @attack-monster="attackMonster"
             @heal-player="healPlayer"
             @surrender-to-monster="surrenderToMonster"

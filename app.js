@@ -11,6 +11,10 @@ Vue.component('health-status-section', {
             type: Number,
             required: true
         },
+        playerHealthPotions: {
+            type: Number,
+            required: true
+        },
         secondWind: {
             type: Boolean,
             required: true
@@ -53,7 +57,7 @@ Vue.component('health-status-section', {
                     alt="A health potion"
                     id="health-potion"
                 />
-                <span id="health-potion-counter">1</span>    
+                <span id="health-potion-counter">{{ playerHealthPotions }}</span>    
             </div>
 
             <span v-if="isSecondWindActivated" class="second-wind">Second Wind</span>
@@ -119,14 +123,18 @@ Vue.component('battle-controls-section', {
         playerHealth: {
             type: Number,
             required: true
+        },
+        playerHealthPotions: {
+            type: Number,
+            required: true
         }
     },
     computed: {
         isCurrentRoundNotDivisibleByThree() {
             return this.currentRound % 3 !== 0;
         },
-        isPlayerHealthFull() {
-            return this.playerHealth === 100;
+        isPlayerHealthDisabled() {
+            return this.playerHealth === 100 || this.playerHealthPotions <= 0;
         },
     },
     methods: {
@@ -152,7 +160,7 @@ Vue.component('battle-controls-section', {
             </button>
 
             <button 
-                :disabled="isPlayerHealthFull"
+                :disabled="isPlayerHealthDisabled"
                 @click="healPlayer"
             >
                 HEAL
@@ -217,6 +225,7 @@ new Vue({
             hasMonsterSecondWind: false,
             hasMonsterUsedSecondWind: false,
             playerHealth: 100,
+            playerHealthPotions: 5,
             hasPlayerSecondWind: false,
             hasPlayerUsedSecondWind: false,
             currentRound: 0,
@@ -270,6 +279,8 @@ new Vue({
             if (this.playerHealth > 100) {
                 this.playerHealth = 100;
             }
+
+            this.playerHealthPotions--;
 
             this.addEntryToBattleLog({ contender: 'Player', action: 'heal', points: playerHealPoints });
 
