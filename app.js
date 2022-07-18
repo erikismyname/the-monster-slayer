@@ -4,15 +4,22 @@ import formatBattleLogEntry from './util/formatBattleLogEntry.js';
 Vue.component('the-modal', {
     data() {
         return {
-            playerName: ''
+            playerName: '',
+            isPlayerNameInvalid: false
         };
+    },
+    computed: {
+        invalidClass() {
+            return { invalid: this.isPlayerNameInvalid };
+        }
     },
     methods: {
         setPlayerName() {
             if (!this.playerName) {
+                this.isPlayerNameInvalid = true;
                 return;
             }
-            
+
             this.$emit('set-player-name', this.playerName);
         }
     },
@@ -21,12 +28,12 @@ Vue.component('the-modal', {
             <div id="backdrop"></div>
             <div id="modal">
                 <header>
-                    <h2>Welcome to The Monster Slayer</h2>
+                    <h2>Welcome, Warrior!</h2>
                 </header>
                 <main>
                     <div>
-                        <label for="username">Please enter you name:</label>
-                        <input type="text" id="username" v-model.trim="playerName">
+                        <label for="username">How would you like to be called?</label>
+                        <input type="text" id="username" v-model.trim="playerName" placeholder="Please enter your name here" :class="invalidClass">
                     </div>
                     <div id="button-container">
                         <button @click="setPlayerName">Start Game</button>
