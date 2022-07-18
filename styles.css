@@ -125,7 +125,8 @@ button:disabled {
     background-color: #880808;
 }
 
-.avatar {
+.avatar,
+#health-potion {
     position: absolute;
     height: 2.5rem;
 }
@@ -171,4 +172,19 @@ li:nth-child(even) {
     padding: .1rem;
     transform: rotateZ(45deg) translateX(2.2rem) translateY(-.3rem);
     width: 8rem;
+}
+
+#health-potion {
+    right: 11rem;
+}
+
+#health-potion-counter {
+    position: absolute;
+    right: 11.5rem;
+    top: 1.5rem;
+    color: white;
+    background-color: black;
+    border-radius: 50%;
+    width: 1rem;
+    font-size: .6rem;
 }

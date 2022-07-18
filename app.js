@@ -42,12 +42,19 @@ Vue.component('health-status-section', {
                 alt="Monster's avatar"
                 class="avatar monster"
             />
-            <img 
-                v-else 
-                src="./assets/player.jpg"
-                alt="Player's avatar" 
-                class="avatar player"
-            />
+            <div v-else>
+                <img 
+                    src="./assets/player.jpg"
+                    alt="Player's avatar" 
+                    class="avatar player"
+                />
+                <img
+                    src="./assets/health-potion.jpg"
+                    alt="A health potion"
+                    id="health-potion"
+                />
+                <span id="health-potion-counter">1</span>    
+            </div>
 
             <span v-if="isSecondWindActivated" class="second-wind">Second Wind</span>
 
