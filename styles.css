@@ -221,15 +221,23 @@ li:nth-child(even) {
     padding: 1rem;
 }
 
-#modal input {
+#modal div:first-of-type {
+    margin-bottom: .3rem;
+}
+
+#modal input[type="text"] {
     padding: .2rem;
     font-family: inherit;
     border: .1rem solid black;
     width: 40%;
 }
 
-#modal .invalid {
+#modal input.invalid {
     border-color: #880808;
+}
+
+#modal input#generate-random-name {
+    margin-right: .3rem;
 }
 
 #modal button {
