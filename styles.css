@@ -264,6 +264,10 @@ li:nth-child(even) {
     opacity: 1;
 }
 
+.entry-move {
+    transition: transform .3s ease-out;
+}
+
 @keyframes modal {
     from {
         opacity: 0;
