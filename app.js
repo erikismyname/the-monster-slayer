@@ -1,5 +1,6 @@
 import getRandomValueBetween from './util/getRandomValueBetween.js';
 import formatEntry from './util/formatEntry.js';
+import getRandomName from './util/getRandomName.js';
 
 Vue.component('the-modal', {
     props: {
@@ -11,12 +12,19 @@ Vue.component('the-modal', {
     data() {
         return {
             playerName: '',
-            isPlayerNameInvalid: false
+            isPlayerNameInvalid: false,
+            isCheckboxChecked: false
         };
     },
     computed: {
         invalidClass() {
             return { invalid: this.isPlayerNameInvalid };
+        }
+    },
+    watch: {
+        isCheckboxChecked(isChecked) {
+            this.playerName = isChecked ? getRandomName() : '';
+            this.isPlayerNameInvalid = isChecked ? false : true;
         }
     },
     methods: {
@@ -41,8 +49,13 @@ Vue.component('the-modal', {
                     </header>
                     <main>
                         <div>
-                            <label for="username">How would you like to be called?</label>
+                            <label for="username">What is your name?</label>
                             <input type="text" id="username" v-model.trim="playerName" placeholder="Please enter your name here" :class="invalidClass">
+                        </div>
+                        <div>
+                            <input type="checkbox" id="generate-random-name" v-model="isCheckboxChecked">
+                            <label for="generate-random-name">Generate a random name</label>
+                            
                         </div>
                         <div id="button-container">
                             <button @click="setPlayerName">Start Game</button>
