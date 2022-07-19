@@ -179,6 +179,10 @@ Vue.component('battle-controls-section', {
         playerHealthPotions: {
             type: Number,
             required: true
+        },
+        winner: {
+            type: String,
+            required: true
         }
     },
     computed: {
@@ -188,6 +192,9 @@ Vue.component('battle-controls-section', {
         isPlayerHealthDisabled() {
             return this.playerHealth === 100 || this.playerHealthPotions <= 0;
         },
+        isGameRunning() {
+            return !this.winner;
+        }
     },
     methods: {
         attackMonster(isSpecialAttack) {
@@ -201,7 +208,7 @@ Vue.component('battle-controls-section', {
         }
     },
     template: `
-        <section id="battle-controls">
+        <section v-if="isGameRunning" id="battle-controls">
             <button @click="attackMonster(false)">ATTACK</button>
 
             <button
