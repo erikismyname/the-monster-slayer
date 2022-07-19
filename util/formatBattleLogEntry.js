@@ -1,4 +1,4 @@
-export default function formatBattleLogEntry({ contender, action, points }) {
+export default function formatEntry({ contender, action, points }) {
     let formattedEntry;
 
     if (action === 'attack') {
@@ -7,5 +7,12 @@ export default function formatBattleLogEntry({ contender, action, points }) {
         formattedEntry = `${contender} ` + (points ? `healed for ${points} points.` : 'dropped his potion and couldn\'t heal.');
     }
 
-    return formattedEntry;
+    return {
+        id: generateEntryId(),
+        text: formattedEntry
+    };
+}
+
+function generateEntryId() {
+    return Math.random().toString(16);
 }

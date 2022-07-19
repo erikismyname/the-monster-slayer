@@ -114,7 +114,7 @@ Vue.component('health-status-section', {
 
             <span v-if="isSecondWindActivated" class="second-wind">Second Wind</span>
 
-            <slot>Your Health</slot>
+            <slot></slot>
 
             <div class="healthbar">
                 <div 
@@ -260,11 +260,11 @@ Vue.component('battle-log-section', {
                 >
                 </i>
             </h2>
-            <ul>
-                <li v-for="(entry, index) in battleLog" :key="index">
-                    {{entry}}
+            <transition-group tag="ul" name="entry">
+                <li v-for="entry in battleLog" :key="entry.id">
+                    {{entry.text}}
                 </li>
-            </ul>
+            </transition-group>
         </section>
     `
 });
@@ -399,7 +399,7 @@ new Vue({
             this.winner = 'monster';
         },
         addEntryToBattleLog(entry) {
-            const formattedEntry = formatBattleLogEntry(entry);
+            const formattedEntry = formatEntry(entry);
             this.battleLog.unshift(formattedEntry);
         },
         changeBattleLogEntriesOrder() {

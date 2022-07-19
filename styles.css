@@ -252,6 +252,18 @@ li:nth-child(even) {
     animation: modal 500ms ease-in reverse;
 }
 
+.entry-enter {
+    opacity: 0;
+}
+
+.entry-enter-active {
+    transition: opacity 1s linear;
+}
+
+.entry-enter-to {
+    opacity: 1;
+}
+
 @keyframes modal {
     from {
         opacity: 0;
