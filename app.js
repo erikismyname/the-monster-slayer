@@ -2,6 +2,12 @@ import getRandomValueBetween from './util/getRandomValueBetween.js';
 import formatBattleLogEntry from './util/formatBattleLogEntry.js';
 
 Vue.component('the-modal', {
+    props: {
+        isVisible: {
+            type: Boolean,
+            required: true
+        },
+    },
     data() {
         return {
             playerName: '',
@@ -25,21 +31,25 @@ Vue.component('the-modal', {
     },
     template: `
         <div>
-            <div id="backdrop"></div>
-            <div id="modal">
-                <header>
-                    <h2>Welcome, Warrior!</h2>
-                </header>
-                <main>
-                    <div>
-                        <label for="username">How would you like to be called?</label>
-                        <input type="text" id="username" v-model.trim="playerName" placeholder="Please enter your name here" :class="invalidClass">
-                    </div>
-                    <div id="button-container">
-                        <button @click="setPlayerName">Start Game</button>
-                    </div>
-                </main>
-            </div>
+            <transition appear name="fade">
+                <div v-if="isVisible" id="backdrop"></div>
+            </transition>
+            <transition appear>
+                <div v-if="isVisible" id="modal">
+                    <header>
+                        <h2>Greetings, Warrior!</h2>
+                    </header>
+                    <main>
+                        <div>
+                            <label for="username">How would you like to be called?</label>
+                            <input type="text" id="username" v-model.trim="playerName" placeholder="Please enter your name here" :class="invalidClass">
+                        </div>
+                        <div id="button-container">
+                            <button @click="setPlayerName">Start Game</button>
+                        </div>
+                    </main>
+                </div>
+            </transition>
         </div>
     `
 });

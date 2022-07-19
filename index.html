@@ -20,7 +20,7 @@
     </header>
     <main id="app">
         <the-modal 
-            v-if="isModalVisible" 
+            :is-visible="isModalVisible" 
             @set-player-name="setPlayerName"
         >
         </the-modal>
