@@ -1,5 +1,5 @@
 import getRandomValueBetween from './util/getRandomValueBetween.js';
-import formatBattleLogEntry from './util/formatBattleLogEntry.js';
+import formatEntry from './util/formatEntry.js';
 
 Vue.component('the-modal', {
     props: {
