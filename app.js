@@ -66,7 +66,6 @@ Vue.component('health-status-section', {
         },
         playerHealthPotions: {
             type: Number,
-            required: true
         },
         secondWind: {
             type: Boolean,
