@@ -1,10 +1,69 @@
-<template></template>
+<template>
+    <div>
+        <!-- <modal 
+            :is-visible="isModalVisible" 
+            @set-player-name="setPlayerName"
+        >
+        </modal> -->
+
+        <health-status
+            id="monster"
+            :health="monsterHealth"
+            :second-wind="hasMonsterSecondWind"
+        >
+            <h2>Monster Health</h2>
+        </health-status>
+
+        <health-status
+            id="player"
+            :health="playerHealth"
+            :player-health-potions="playerHealthPotions"
+            :second-wind="hasPlayerSecondWind"
+        >
+            <h2>{{ playerName || "Your Health" }}</h2>
+        </health-status>
+
+        <game-over :winner="winner" @start-new-game="startNewGame">
+        </game-over>
+
+        <battle-controls
+            :current-round="currentRound"
+            :player-health="playerHealth"
+            :player-health-potions="playerHealthPotions"
+            :winner="winner"
+            @attack-monster="attackMonster"
+            @heal-player="healPlayer"
+            @surrender-to-monster="surrenderToMonster"
+        >
+        </battle-controls>
+
+        <battle-log
+            :battle-log="battleLog"
+            :battle-log-entries-order="battleLogEntriesOrder"
+            @change-battle-log-entries-order="changeBattleLogEntriesOrder"
+        >
+        </battle-log>
+    </div>
+</template>
 
 <script>
     import getRandomValueBetween from "./util/getRandomValueBetween.js";
     import formatEntry from "./util/formatEntry.js";
 
+    import Modal from "./components/Modal.vue";
+    import HealthStatus from "./components/HealthStatus.vue";
+    import GameOver from "./components/GameOver.vue";
+    import BattleControls from "./components/BattleControls.vue";
+    import BattleLog from "./components/BattleLog.vue";
+
     export default {
+        components: {
+            Modal,
+            HealthStatus,
+            GameOver,
+            BattleControls,
+            BattleLog,
+        },
         data() {
             return {
                 isModalVisible: true,
