@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import getRandomName from "./util/getRandomName.js";
+    import getRandomName from "../util/getRandomName.js";
 
     export default {
         props: {

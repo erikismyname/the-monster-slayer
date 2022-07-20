@@ -2,18 +2,18 @@
     <section :id="id" class="container">
         <img
             v-if="isMonsterAvatar"
-            src="./assets/monster.jpg"
+            src="../assets/monster.jpg"
             alt="Monster's avatar"
             class="avatar monster"
         />
         <div v-else>
             <img
-                src="./assets/player.jpg"
+                src="../assets/player.jpg"
                 alt="Player's avatar"
                 class="avatar player"
             />
             <img
-                src="./assets/health-potion.jpg"
+                src="../assets/health-potion.jpg"
                 alt="A health potion"
                 id="health-potion"
             />
