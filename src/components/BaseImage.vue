@@ -11,8 +11,14 @@
             },
             alt: {
                 type: String,
-                required: true
-            }
+                required: true,
+            },
         },
     };
 </script>
+
+<style scoped>
+    img {
+        height: 2.5rem;
+    }
+</style>
