@@ -80,4 +80,91 @@
 </script>
 
 <style>
+    #backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: black;
+        opacity: 0.5;
+        z-index: 1;
+    }
+
+    #modal {
+        position: fixed;
+        left: calc(50% - 15rem);
+        z-index: 2;
+        width: 30rem;
+    }
+
+    #modal header,
+    #modal main {
+        padding: 0.5rem;
+    }
+
+    #modal header {
+        background-color: black;
+        color: white;
+        border-top-left-radius: 0.2rem;
+        border-top-right-radius: 0.2rem;
+    }
+
+    #modal main {
+        background-color: white;
+        border-bottom-left-radius: 0.2rem;
+        border-bottom-right-radius: 0.2rem;
+        padding: 1rem;
+    }
+
+    #modal div:first-of-type {
+        margin-bottom: 0.3rem;
+    }
+
+    #modal input[type="text"] {
+        padding: 0.2rem;
+        font-family: inherit;
+        border: 0.1rem solid black;
+        width: 40%;
+    }
+
+    #modal input.invalid {
+        border-color: #880808;
+    }
+
+    #modal input#generate-random-name {
+        margin-right: 0.3rem;
+    }
+
+    #modal button {
+        width: 6rem;
+        padding: 0.5rem;
+        margin: 0;
+    }
+
+    #button-container {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .v-enter-active {
+        animation: modal 500ms ease-out;
+    }
+
+    .v-leave-active {
+        animation: modal 500ms ease-in reverse;
+    }
+
+    @keyframes modal {
+        from {
+            opacity: 0;
+            transform: translateY(-6rem);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 </style>
