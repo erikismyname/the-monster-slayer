@@ -1,30 +1,32 @@
 <template>
-    <section id="battle-log">
+    <section>
         <h2>
             Battle Log
-            <i
+
+            <base-icon
                 v-if="isBattleLogEntriesOrderDescending"
-                @click="changeBattleLogEntriesOrder"
+                @click.native="changeBattleLogEntriesOrder"
                 class="fa-solid fa-arrow-down"
-            >
-            </i>
-            <i
+            />
+            <base-icon
                 v-else
-                @click="changeBattleLogEntriesOrder"
+                @click.native="changeBattleLogEntriesOrder"
                 class="fa-solid fa-arrow-up"
-            >
-            </i>
+            />
         </h2>
-        <transition-group tag="ul" name="entry">
-            <li v-for="entry in battleLog" :key="entry.id">
-                {{ entry.text }}
-            </li>
-        </transition-group>
+        <battle-log-list :battle-log="battleLog" />
     </section>
 </template>
 
 <script>
+    import BaseIcon from "./BaseIcon.vue";
+    import BattleLogList from "./BattleLogList.vue";
+
     export default {
+        components: {
+            BaseIcon,
+            BattleLogList,
+        },
         props: {
             battleLog: {
                 type: Array,
@@ -47,6 +49,3 @@
         },
     };
 </script>
-
-<style>
-</style>
