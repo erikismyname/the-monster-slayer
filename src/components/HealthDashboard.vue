@@ -102,5 +102,75 @@
     };
 </script>
 
-<style>
+<style scoped>
+    .avatar,
+    #health-potion {
+        position: absolute;
+        height: 2.5rem;
+    }
+
+    .avatar.monster {
+        right: 13rem;
+        top: 1.9rem;
+    }
+
+    .avatar.player {
+        right: 13.6rem;
+        top: 2rem;
+    }
+
+    #health-potion {
+        right: 11rem;
+    }
+
+    #health-potion-counter {
+        position: absolute;
+        right: 11.5rem;
+        top: 1.5rem;
+        color: white;
+        background-color: black;
+        border-radius: 50%;
+        width: 1rem;
+        font-size: 0.6rem;
+    }
+
+    .second-wind {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        background-color: black;
+        color: white;
+        padding: 0.1rem;
+        transform: rotateZ(45deg) translateX(2.2rem) translateY(-0.3rem);
+        width: 8rem;
+    }
+
+    .healthbar {
+        height: 2rem;
+        border: 0.1rem solid black;
+        position: relative;
+    }
+
+    .healthbar-status {
+        height: 100%;
+        transition: width 500ms ease-out;
+    }
+
+    .healthbar-percentage {
+        position: absolute;
+        top: 0;
+        transform: translateX(-50%);
+    }
+
+    .high {
+        background-color: #006400;
+    }
+
+    .medium {
+        background-color: #ff8c00;
+    }
+
+    .low {
+        background-color: #880808;
+    }
 </style>
