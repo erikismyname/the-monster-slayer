@@ -1,25 +1,41 @@
 <template>
     <section v-if="isGameRunning" id="battle-controls">
-        <button @click="attackMonster(false)">ATTACK</button>
+        <base-button @click.native="attackMonster(false)">
+            Attack
+        </base-button>
 
-        <button
+        <base-button
             :disabled="isCurrentRoundNotDivisibleByThree"
-            @click="attackMonster(true)"
+            @click.native="attackMonster(true)"
         >
             SPECIAL ATTACK
-        </button>
+        </base-button>
 
-        <button :disabled="isPlayerHealthDisabled" @click="healPlayer">
+        <base-button
+            :disabled="isPlayerHealthDisabled"
+            @click.native="healPlayer"
+        >
             HEAL
-        </button>
+        </base-button>
 
-        <button @click="surrenderToMonster">SURRENDER</button>
+        <base-button @click.native="surrenderToMonster">
+            SURRENDER
+        </base-button>
     </section>
 </template>
 
 <script>
+    import BaseButton from "./BaseButton.vue";
+
     export default {
+        components: {
+            BaseButton,
+        },
         props: {
+            winner: {
+                type: String,
+                required: true,
+            },
             currentRound: {
                 type: Number,
                 required: true,
@@ -32,20 +48,16 @@
                 type: Number,
                 required: true,
             },
-            winner: {
-                type: String,
-                required: true,
-            },
         },
         computed: {
+            isGameRunning() {
+                return !this.winner;
+            },
             isCurrentRoundNotDivisibleByThree() {
                 return this.currentRound % 3 !== 0;
             },
             isPlayerHealthDisabled() {
                 return this.playerHealth === 100 || this.playerHealthPotions <= 0;
-            },
-            isGameRunning() {
-                return !this.winner;
             },
         },
         methods: {
