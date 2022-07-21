@@ -48,8 +48,8 @@
 </template>
 
 <script>
-    import getRandomValueBetween from "./util/getRandomValueBetween.js";
-    import formatEntry from "./util/formatEntry.js";
+    import getRandomValueBetween from "./utils/getRandomValueBetween.js";
+    import formatEntry from "./utils/formatEntry.js";
 
     import BattleControls from "./components/BattleControls.vue";
     import BattleLog from "./components/BattleLog.vue";
@@ -233,50 +233,5 @@
 </script>
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    html {
-        font-family: "Oswald", sans-serif;
-    }
-
-    header,
-    button,
-    .second-wind-badge,
-    #health-potions-counter,
-    li:nth-child(even) {
-        background-color: black;
-        color: white;
-    }
-
-    header,
-    button,
-    #modal,
-    section:not(#battle-controls) {
-        box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.6);
-    }
-
-    input,
-    button,
-    section,
-    .healthbar,
-    .healthbar-status,
-    li {
-        border-radius: 0.2rem;
-    }
-
-    section {
-        max-width: 40rem;
-        margin: 2rem auto;
-    }
-
-    section:not(#battle-controls) {
-        padding: 2rem;
-        text-align: center;
-    }
+    @import './styles/main.css';
 </style>
