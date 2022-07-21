@@ -1,36 +1,38 @@
 <template>
     <div>
-        <transition appear name="fade">
-            <div v-if="isVisible" id="backdrop"></div>
-        </transition>
-        <transition appear>
+        <div v-if="isVisible" id="backdrop"></div>
+
+        <transition name="modal" appear>
             <div v-if="isVisible" id="modal">
                 <header>
                     <h2>Greetings, Warrior!</h2>
                 </header>
                 <main>
                     <div>
-                        <label for="username">What is your name?</label>
-                        <input
-                            type="text"
-                            id="username"
+                        <base-label for="player-name">
+                            What is your name?
+                        </base-label>
+                        <base-input
                             v-model.trim="playerName"
-                            placeholder="Please enter your name here"
                             :class="invalidClass"
+                            id="player-name"
+                            placeholder="Please enter your name here"
                         />
                     </div>
                     <div>
-                        <input
+                        <base-checkbox
+                            v-model="isCheckboxChecked"
                             type="checkbox"
                             id="generate-random-name"
-                            v-model="isCheckboxChecked"
                         />
-                        <label for="generate-random-name"
-                            >Generate a random name</label
-                        >
+                        <base-label for="generate-random-name">
+                            Generate a random name
+                        </base-label>
                     </div>
                     <div id="button-container">
-                        <button @click="setPlayerName">Start Game</button>
+                        <base-button @click.native="setPlayerName">
+                            Start Game
+                        </base-button>
                     </div>
                 </main>
             </div>
@@ -41,7 +43,18 @@
 <script>
     import getRandomName from "../util/getRandomName.js";
 
+    import BaseLabel from "./BaseLabel.vue";
+    import BaseInput from "./BaseInput.vue";
+    import BaseCheckbox from "./BaseCheckbox.vue";
+    import BaseButton from "./BaseButton.vue";
+
     export default {
+        components: {
+            BaseLabel,
+            BaseInput,
+            BaseCheckbox,
+            BaseButton,
+        },
         props: {
             isVisible: {
                 type: Boolean,
@@ -79,7 +92,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     #backdrop {
         position: fixed;
         top: 0;
@@ -93,78 +106,82 @@
 
     #modal {
         position: fixed;
+        top: 7rem;
         left: calc(50% - 15rem);
-        z-index: 2;
         width: 30rem;
+        z-index: 2;
     }
 
-    #modal header,
-    #modal main {
+    header {
         padding: 0.5rem;
-    }
-
-    #modal header {
-        background-color: black;
-        color: white;
         border-top-left-radius: 0.2rem;
         border-top-right-radius: 0.2rem;
     }
 
-    #modal main {
-        background-color: white;
+    main {
+        padding: 1rem;
         border-bottom-left-radius: 0.2rem;
         border-bottom-right-radius: 0.2rem;
-        padding: 1rem;
+        background-color: white;
     }
 
     #modal div:first-of-type {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.5rem;
     }
 
-    #modal input[type="text"] {
-        padding: 0.2rem;
-        font-family: inherit;
-        border: 0.1rem solid black;
-        width: 40%;
+    #button-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 2rem;
     }
 
-    #modal input.invalid {
-        border-color: #880808;
-    }
-
-    #modal input#generate-random-name {
-        margin-right: 0.3rem;
-    }
-
-    #modal button {
+    button {
         width: 6rem;
         padding: 0.5rem;
         margin: 0;
     }
 
-    #button-container {
-        margin-top: 2rem;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .v-enter-active {
+    .modal-enter-active {
         animation: modal 500ms ease-out;
     }
 
-    .v-leave-active {
+    .modal-leave-active {
         animation: modal 500ms ease-in reverse;
     }
 
     @keyframes modal {
         from {
             opacity: 0;
-            transform: translateY(-6rem);
+            transform: translateY(-7rem);
         }
 
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        #modal {
+            width: 20rem;
+            left: calc(50% - 10rem);
+        }
+
+        #player-name {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 320px) {
+        #modal {
+            width: 15rem;
+            left: calc(50% - 7.5rem);
+            text-align: center;
+        }
+
+        #player-name {
+            width: 70%;
+            margin-top: 0.5rem;
         }
     }
 </style>
