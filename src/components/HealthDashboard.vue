@@ -1,10 +1,8 @@
 <template>
     <section class="container relative">
-        <span 
-            v-if="isContenderSecondWindActivated" class="second-wind-badge"
-        >
-            Second Wind
-        </span>
+        <health-dashboard-second-wind-badge
+            :has-contender-second-wind="hasContenderSecondWind"
+        />
 
         <slot></slot>
 
@@ -34,11 +32,13 @@
 <script>
     import BaseImage from "./ui/BaseImage.vue";
     import HealthDashboardHealthbar from "./HealthDashboardHealthbar.vue";
+    import HealthDashboardSecondWindBadge from './HealthDashboardSecondWindBadge.vue';
 
     export default {
         components: {
             BaseImage,
             HealthDashboardHealthbar,
+            HealthDashboardSecondWindBadge,
         },
         props: {
             contenderHealth: {
@@ -55,9 +55,6 @@
             },
         },
         computed: {
-            isContenderSecondWindActivated() {
-                return this.hasContenderSecondWind;
-            },
             isContenderMonster() {
                 return !this.contenderHealthPotions;
             },
@@ -75,37 +72,31 @@
 </script>
 
 <style scoped>
-    .relative {
-        position: relative;
+    section {
         overflow: hidden;
     }
 
-    .second-wind-badge,
-    #health-potions-counter {
-        position: absolute;
+    .relative {
+        position: relative;
     }
 
-    .second-wind-badge {
-        top: 0;
-        right: 0;
-        transform: rotateZ(45deg) translateX(2.2rem) translateY(-0.3rem);
-        width: 8rem;
-        padding: 0.1rem;
+    #health-potions-counter {
+        position: absolute;
     }
 
     h2,
     .player-icons {
         display: inline-block;
+        vertical-align: middle;
     }
 
     h2 {
-        vertical-align: middle;
         margin-right: 0.3rem;
     }
 
     #health-potions-counter {
-        right: .3rem;
-        top: -.2rem;
+        right: 0.3rem;
+        top: -0.2rem;
         border-radius: 50%;
         width: 1rem;
         font-size: 0.6rem;
