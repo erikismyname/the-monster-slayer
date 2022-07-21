@@ -1,7 +1,7 @@
 <template>
     <section v-if="isGameRunning" id="battle-controls">
         <base-button @click.native="attackMonster(false)">
-            Attack
+            ATTACK
         </base-button>
 
         <base-button
