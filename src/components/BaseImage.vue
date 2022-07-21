@@ -20,5 +20,6 @@
 <style scoped>
     img {
         height: 2.5rem;
+        vertical-align: middle;
     }
 </style>
