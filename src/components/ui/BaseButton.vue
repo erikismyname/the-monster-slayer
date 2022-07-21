@@ -4,10 +4,6 @@
     </button>
 </template>
 
-<script>
-    export default {};
-</script>
-
 <style scoped>
     button {
         width: 9rem;
