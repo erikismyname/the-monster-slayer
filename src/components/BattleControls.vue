@@ -1,6 +1,8 @@
 <template>
     <section v-if="isGameRunning" id="battle-controls">
-        <base-button @click.native="attackMonster(false)"> Attack </base-button>
+        <base-button @click.native="attackMonster(false)">
+            Attack
+        </base-button>
 
         <base-button
             :disabled="isCurrentRoundNotDivisibleByThree"
