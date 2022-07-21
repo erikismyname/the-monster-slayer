@@ -52,9 +52,9 @@
     import formatEntry from "./utils/formatEntry.js";
 
     import BattleControls from "./components/BattleControls.vue";
-    import BattleLog from "./components/BattleLog.vue";
+    import BattleLog from "./components/BattleLog/BattleLog.vue";
     import GameOver from "./components/GameOver.vue";
-    import HealthDashboard from "./components/HealthDashboard.vue";
+    import HealthDashboard from "./components/HealthDashboard/HealthDashboard.vue";
     import Modal from "./components/Modal.vue";
     import TheHeader from "./components/layouts/TheHeader.vue";
 

@@ -22,8 +22,8 @@
 </template>
 
 <script>
-    import BaseButton from "./ui/BaseButton.vue";
-    import BaseIcon from "./ui/BaseIcon.vue";
+    import BaseButton from "./common/BaseButton.vue";
+    import BaseIcon from "./common/BaseIcon.vue";
 
     export default {
         components: {

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import BaseImage from "./ui/BaseImage.vue";
+    import BaseImage from "../common/BaseImage.vue";
     import HealthDashboardHealthbar from "./HealthDashboardHealthbar.vue";
     import HealthDashboardSecondWindBadge from './HealthDashboardSecondWindBadge.vue';
 
@@ -63,13 +63,13 @@
                 return this.contender === 'monster';
             },
             monsterImagePath() {
-                return require("../assets/monster.jpg");
+                return require("@/assets/monster.jpg");
             },
             playerImagePath() {
-                return require("../assets/player.jpg");
+                return require("@/assets/player.jpg");
             },
             healthPotionImagePath() {
-                return require("../assets/health-potion.jpg");
+                return require("@/assets/health-potion.jpg");
             },
         },
     };

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import BaseImage from "../ui/BaseImage.vue";
+    import BaseImage from "../common/BaseImage.vue";
 
     export default {
         components: {
