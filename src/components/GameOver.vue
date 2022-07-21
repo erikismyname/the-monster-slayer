@@ -15,7 +15,9 @@
             <base-icon class="fa-solid fa-face-meh" />
         </h3>
 
-        <base-button @click.native="startNewGame"> Start New Game </base-button>
+        <base-button @click.native="startNewGame">
+            Start New Game
+        </base-button>
     </section>
 </template>
 
