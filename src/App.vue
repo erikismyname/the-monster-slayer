@@ -1,30 +1,31 @@
 <template>
     <div>
-        <!-- <modal 
+        <the-header />
+
+        <modal 
             :is-visible="isModalVisible" 
-            @set-player-name="setPlayerName"
-        >
-        </modal> -->
+            @set-player-name="setPlayerName" 
+        />
 
-        <health-status
-            id="monster"
-            :health="monsterHealth"
-            :second-wind="hasMonsterSecondWind"
+        <health-dashboard
+            :contender-health="monsterHealth"
+            :has-contender-second-wind="hasMonsterSecondWind"
         >
-            <h2>Monster Health</h2>
-        </health-status>
+            <h2>Monster</h2>
+        </health-dashboard>
 
-        <health-status
-            id="player"
-            :health="playerHealth"
-            :player-health-potions="playerHealthPotions"
-            :second-wind="hasPlayerSecondWind"
+        <health-dashboard
+            :contender-health="playerHealth"
+            :contender-health-potions="playerHealthPotions"
+            :has-contender-second-wind="hasPlayerSecondWind"
         >
-            <h2>{{ playerName || "Your Health" }}</h2>
-        </health-status>
+            <h2>{{ playerName }}</h2>
+        </health-dashboard>
 
-        <game-over :winner="winner" @start-new-game="startNewGame">
-        </game-over>
+        <game-over 
+            :winner="winner" 
+            @start-new-game="startNewGame" 
+        />
 
         <battle-controls
             :current-round="currentRound"
@@ -34,15 +35,13 @@
             @attack-monster="attackMonster"
             @heal-player="healPlayer"
             @surrender-to-monster="surrenderToMonster"
-        >
-        </battle-controls>
+        />
 
         <battle-log
             :battle-log="battleLog"
             :battle-log-entries-order="battleLogEntriesOrder"
             @change-battle-log-entries-order="changeBattleLogEntriesOrder"
-        >
-        </battle-log>
+        />
     </div>
 </template>
 
@@ -50,19 +49,21 @@
     import getRandomValueBetween from "./util/getRandomValueBetween.js";
     import formatEntry from "./util/formatEntry.js";
 
-    import Modal from "./components/Modal.vue";
-    import HealthStatus from "./components/HealthStatus.vue";
-    import GameOver from "./components/GameOver.vue";
     import BattleControls from "./components/BattleControls.vue";
     import BattleLog from "./components/BattleLog.vue";
+    import GameOver from "./components/GameOver.vue";
+    import HealthDashboard from "./components/HealthDashboard.vue";
+    import Modal from "./components/Modal.vue";
+    import TheHeader from "./components/layouts/TheHeader.vue";
 
     export default {
         components: {
-            Modal,
-            HealthStatus,
-            GameOver,
             BattleControls,
             BattleLog,
+            GameOver,
+            HealthDashboard,
+            Modal,
+            TheHeader,
         },
         data() {
             return {
@@ -108,6 +109,10 @@
         methods: {
             setPlayerName(playerName) {
                 this.playerName = playerName;
+                
+                this.closeModal();
+            },
+            closeModal() {
                 this.isModalVisible = false;
             },
             attackMonster(isSpecialAttack) {
@@ -238,281 +243,38 @@
         font-family: "Oswald", sans-serif;
     }
 
-    #main-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        text-align: center;
-    }
-
-    #main-header img {
-        margin: 0 0.5rem;
-        height: 2.5rem;
-    }
-
-    #main-header,
-    button {
-        background-color: black;
-        color: white;
-    }
-
-    #main-header,
-    section:not(#battle-controls),
-    button {
-        box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.6);
-    }
-
-    section,
-    .healthbar,
-    .healthbar-status,
+    header,
     button,
-    li,
-    #modal input {
-        border-radius: 0.2rem;
-    }
-
-    button {
-        width: 9rem;
-        margin: 0.5rem 0;
-        padding: 1rem;
-        border: none;
-        font-family: inherit;
-        font-size: inherit;
-        outline: none;
-    }
-
-    button:hover {
-        cursor: pointer;
-        color: black;
-        background-color: white;
-    }
-
-    button:disabled {
-        background-color: #b5b5b5;
-        color: #3f3f3f;
-        cursor: not-allowed;
-    }
-
-    section {
-        max-width: 40rem;
-        margin: 2rem auto;
-        overflow: hidden;
-    }
-
-    section:not(#battle-controls) {
-        padding: 2rem;
-        text-align: center;
-    }
-
-    section h2,
-    section h3 {
-        margin-bottom: 1rem;
-    }
-
-    .container {
-        position: relative;
-    }
-
-    .avatar,
-    #health-potion {
-        position: absolute;
-        height: 2.5rem;
-    }
-
-    .avatar.monster {
-        right: 13rem;
-        top: 1.9rem;
-    }
-
-    .avatar.player {
-        right: 13.6rem;
-        top: 2rem;
-    }
-
-    #health-potion {
-        right: 11rem;
-    }
-
-    #health-potion-counter {
-        position: absolute;
-        right: 11.5rem;
-        top: 1.5rem;
-        color: white;
-        background-color: black;
-        border-radius: 50%;
-        width: 1rem;
-        font-size: 0.6rem;
-    }
-
-    .second-wind {
-        position: absolute;
-        top: 0;
-        right: 0px;
-        background-color: black;
-        color: white;
-        padding: 0.1rem;
-        transform: rotateZ(45deg) translateX(2.2rem) translateY(-0.3rem);
-        width: 8rem;
-    }
-
-    .healthbar {
-        height: 2rem;
-        border: 0.1rem solid black;
-        position: relative;
-    }
-
-    .healthbar-status {
-        height: 100%;
-        transition: width 500ms ease-out;
-    }
-
-    .healthbar-percentage {
-        position: absolute;
-        top: 0;
-        transform: translateX(-50%);
-    }
-
-    .high {
-        background-color: #006400;
-    }
-
-    .medium {
-        background-color: #ff8c00;
-    }
-
-    .low {
-        background-color: #880808;
-    }
-
-    #battle-controls {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-evenly;
-    }
-
-    .fa-solid {
-        font-size: 1.2rem;
-    }
-
-    .fa-solid:hover {
-        cursor: pointer;
-    }
-
-    #battle-log ul {
-        list-style: none;
-    }
-
-    #battle-log ul li {
-        margin: 0.5rem 0;
-    }
-
+    .second-wind-badge,
+    #health-potions-counter,
     li:nth-child(even) {
         background-color: black;
         color: white;
     }
 
-    #backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
-        background-color: black;
-        opacity: 0.5;
-        z-index: 1;
+    header,
+    button,
+    #modal,
+    section:not(#battle-controls) {
+        box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.6);
     }
 
-    #modal {
-        position: fixed;
-        left: calc(50% - 15rem);
-        z-index: 2;
-        width: 30rem;
+    input,
+    button,
+    section,
+    .healthbar,
+    .healthbar-status,
+    li {
+        border-radius: 0.2rem;
     }
 
-    #modal header,
-    #modal main {
-        padding: 0.5rem;
+    section {
+        max-width: 40rem;
+        margin: 2rem auto;
     }
 
-    #modal header {
-        background-color: black;
-        color: white;
-        border-top-left-radius: 0.2rem;
-        border-top-right-radius: 0.2rem;
-    }
-
-    #modal main {
-        background-color: white;
-        border-bottom-left-radius: 0.2rem;
-        border-bottom-right-radius: 0.2rem;
-        padding: 1rem;
-    }
-
-    #modal div:first-of-type {
-        margin-bottom: 0.3rem;
-    }
-
-    #modal input[type="text"] {
-        padding: 0.2rem;
-        font-family: inherit;
-        border: 0.1rem solid black;
-        width: 40%;
-    }
-
-    #modal input.invalid {
-        border-color: #880808;
-    }
-
-    #modal input#generate-random-name {
-        margin-right: 0.3rem;
-    }
-
-    #modal button {
-        width: 6rem;
-        padding: 0.5rem;
-        margin: 0;
-    }
-
-    #button-container {
-        margin-top: 2rem;
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .v-enter-active {
-        animation: modal 500ms ease-out;
-    }
-
-    .v-leave-active {
-        animation: modal 500ms ease-in reverse;
-    }
-
-    .entry-enter {
-        opacity: 0;
-    }
-
-    .entry-enter-active {
-        transition: opacity 1s linear;
-    }
-
-    .entry-enter-to {
-        opacity: 1;
-    }
-
-    .entry-move {
-        transition: transform 0.3s ease-out;
-    }
-
-    @keyframes modal {
-        from {
-            opacity: 0;
-            transform: translateY(-6rem);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    section:not(#battle-controls) {
+        padding: 2rem;
+        text-align: center;
     }
 </style>
