@@ -40,7 +40,7 @@
 </template>
 
 <script>
-    import getRandomName from "../util/getRandomName.js";
+    import getRandomName from "../utils/getRandomName.js";
 
     import BaseButton from "./ui/BaseButton.vue";
     import BaseCheckbox from "./ui/BaseCheckbox.vue";
