@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import BaseButton from "./BaseButton.vue";
-    import BaseIcon from "./BaseIcon.vue";
+    import BaseButton from "./ui/BaseButton.vue";
+    import BaseIcon from "./ui/BaseIcon.vue";
 
     export default {
         components: {

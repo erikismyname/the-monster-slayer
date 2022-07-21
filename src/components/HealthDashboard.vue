@@ -32,7 +32,7 @@
 </template>
 
 <script>
-    import BaseImage from "./BaseImage.vue";
+    import BaseImage from "./ui/BaseImage.vue";
     import HealthDashboardHealthbar from "./HealthDashboardHealthbar.vue";
 
     export default {
@@ -77,6 +77,7 @@
 <style scoped>
     .relative {
         position: relative;
+        overflow: hidden;
     }
 
     .second-wind-badge,

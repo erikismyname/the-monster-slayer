@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import BaseIcon from "./BaseIcon.vue";
+    import BaseIcon from "./ui/BaseIcon.vue";
     import BattleLogList from "./BattleLogList.vue";
 
     export default {

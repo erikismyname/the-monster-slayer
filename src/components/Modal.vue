@@ -43,10 +43,10 @@
 <script>
     import getRandomName from "../util/getRandomName.js";
 
-    import BaseLabel from "./BaseLabel.vue";
-    import BaseInput from "./BaseInput.vue";
-    import BaseCheckbox from "./BaseCheckbox.vue";
-    import BaseButton from "./BaseButton.vue";
+    import BaseLabel from "./ui/BaseLabel.vue";
+    import BaseInput from "./ui/BaseInput.vue";
+    import BaseCheckbox from "./ui/BaseCheckbox.vue";
+    import BaseButton from "./ui/BaseButton.vue";
 
     export default {
         components: {

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import BaseImage from "./BaseImage.vue";
+    import BaseImage from "../ui/BaseImage.vue";
 
     export default {
         components: {
@@ -15,7 +15,7 @@
         },
         computed: {
             imagePath() {
-                return require("../assets/fire-torch.jpg");
+                return require("../../assets/fire-torch.jpg");
             },
             imageAlt() {
                 return "A burning fire torch";
