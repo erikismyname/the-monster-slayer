@@ -8,6 +8,7 @@
         />
 
         <health-dashboard
+            contender="monster"
             :contender-health="monsterHealth"
             :has-contender-second-wind="hasMonsterSecondWind"
         >
@@ -15,6 +16,7 @@
         </health-dashboard>
 
         <health-dashboard
+            contender="player"
             :contender-health="playerHealth"
             :contender-health-potions="playerHealthPotions"
             :has-contender-second-wind="hasPlayerSecondWind"

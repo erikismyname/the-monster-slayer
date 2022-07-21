@@ -41,6 +41,10 @@
             HealthDashboardSecondWindBadge,
         },
         props: {
+            contender: {
+                type: String,
+                required: true,
+            },
             contenderHealth: {
                 type: Number,
                 required: true,
@@ -56,7 +60,7 @@
         },
         computed: {
             isContenderMonster() {
-                return !this.contenderHealthPotions;
+                return this.contender === 'monster';
             },
             monsterImagePath() {
                 return require("../assets/monster.jpg");
