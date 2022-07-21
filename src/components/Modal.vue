@@ -22,7 +22,6 @@
                     <div>
                         <base-checkbox
                             v-model="isCheckboxChecked"
-                            type="checkbox"
                             id="generate-random-name"
                         />
                         <base-label for="generate-random-name">
@@ -43,17 +42,17 @@
 <script>
     import getRandomName from "../util/getRandomName.js";
 
-    import BaseLabel from "./ui/BaseLabel.vue";
-    import BaseInput from "./ui/BaseInput.vue";
-    import BaseCheckbox from "./ui/BaseCheckbox.vue";
     import BaseButton from "./ui/BaseButton.vue";
+    import BaseCheckbox from "./ui/BaseCheckbox.vue";
+    import BaseInput from "./ui/BaseInput.vue";
+    import BaseLabel from "./ui/BaseLabel.vue";
 
     export default {
         components: {
-            BaseLabel,
-            BaseInput,
-            BaseCheckbox,
             BaseButton,
+            BaseCheckbox,
+            BaseInput,
+            BaseLabel,
         },
         props: {
             isVisible: {
@@ -161,7 +160,7 @@
         }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 30rem) {
         #modal {
             width: 20rem;
             left: calc(50% - 10rem);
@@ -172,9 +171,10 @@
         }
     }
 
-    @media (max-width: 320px) {
+    @media (max-width: 20rem) {
         #modal {
             width: 15rem;
+            top: 9.9rem;
             left: calc(50% - 7.5rem);
             text-align: center;
         }
