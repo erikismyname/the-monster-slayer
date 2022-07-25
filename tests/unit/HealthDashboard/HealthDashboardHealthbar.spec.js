@@ -44,4 +44,12 @@ describe('HealthDashboardHealthBar', () => {
         expect(healthbarStatus.classes('medium')).toBe(false);
         expect(healthbarStatus.classes('low')).toBe(true);
     });
+
+    it('changes healthbar status width dynamically', async () => {
+        expect(healthbarStatus.element.style.width).toBe('100%');
+
+        await wrapper.setProps({ contenderHealth: 50 });
+
+        expect(healthbarStatus.element.style.width).toBe('50%');
+    });
 });
