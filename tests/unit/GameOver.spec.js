@@ -28,21 +28,25 @@ describe('GameOver.vue', () => {
 
         expect(wrapper.find('h3').text()).toBe('You WON!');
         expect(wrapper.find('.fa-face-smile').exists()).toBe(true);
-
-        // Check if other h3s and icons do not exist?
+        expect(wrapper.find('.fa-face-frown').exists()).toBe(false);
+        expect(wrapper.find('.fa-face-meh').exists()).toBe(false);
     });
 
     it('should render corresponding text and icon when the monster wins', async () => {
         await wrapper.setProps({ winner: 'monster' });
 
         expect(wrapper.find('h3').text()).toBe('You LOST!');
+        expect(wrapper.find('.fa-face-smile').exists()).toBe(false);
         expect(wrapper.find('.fa-face-frown').exists()).toBe(true);
+        expect(wrapper.find('.fa-face-meh').exists()).toBe(false);
     });
 
     it('should render corresponding text and icon when a draw occurs', async () => {
         await wrapper.setProps({ winner: 'draw' });
 
         expect(wrapper.find('h3').text()).toBe('DRAW!');
+        expect(wrapper.find('.fa-face-smile').exists()).toBe(false);
+        expect(wrapper.find('.fa-face-frown').exists()).toBe(false);
         expect(wrapper.find('.fa-face-meh').exists()).toBe(true);
     });
 
