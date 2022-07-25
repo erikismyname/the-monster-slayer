@@ -1,12 +1,16 @@
 <template>
     <section v-if="isGameRunning" id="battle-controls">
-        <base-button @click.native="attackMonster(false)">
+        <base-button 
+            @click.native="attackMonster(false)"
+            data-testid="attack-btn"
+        >
             ATTACK
         </base-button>
 
         <base-button
             :disabled="isCurrentRoundNotDivisibleByThree"
             @click.native="attackMonster(true)"
+            data-testid="special-attack-btn"
         >
             SPECIAL ATTACK
         </base-button>
@@ -14,11 +18,15 @@
         <base-button
             :disabled="isPlayerHealthDisabled"
             @click.native="healPlayer"
+            data-testid="heal-btn"
         >
             HEAL
         </base-button>
 
-        <base-button @click.native="surrenderToMonster">
+        <base-button 
+            @click.native="surrenderToMonster"
+            data-testid="surrender-btn"    
+        >
             SURRENDER
         </base-button>
     </section>
@@ -57,7 +65,7 @@
                 return this.currentRound % 3 !== 0;
             },
             isPlayerHealthDisabled() {
-                return this.playerHealth === 100 || this.playerHealthPotions <= 0;
+                return this.playerHealth === 100 || this.playerHealthPotions === 0;
             },
         },
         methods: {
