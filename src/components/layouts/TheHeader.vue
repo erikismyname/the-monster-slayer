@@ -15,7 +15,7 @@
         },
         computed: {
             imagePath() {
-                return require("../../assets/fire-torch.jpg");
+                return require("@/assets/fire-torch.jpg");
             },
             imageAlt() {
                 return "A burning fire torch";
