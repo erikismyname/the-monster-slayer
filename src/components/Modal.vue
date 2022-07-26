@@ -2,14 +2,18 @@
     <div>
         <div 
             v-if="isVisible" 
-            id="backdrop"
+            class="backdrop" 
             data-testid="backdrop"
-        ></div>
+        >
+        </div>
 
-        <transition name="modal" appear>
+        <transition 
+            name="move-fade" 
+            appear
+        >
             <div 
                 v-if="isVisible" 
-                id="modal"
+                class="modal" 
                 data-testid="modal"
             >
                 <header>
@@ -32,15 +36,16 @@
                         <base-checkbox
                             v-model="isCheckboxChecked"
                             id="generate-random-name"
+                            data-testid="generate-random-name"
                         />
                         <base-label for="generate-random-name">
                             Generate a random name
                         </base-label>
                     </div>
-                    <div id="button-container">
+                    <div class="button-container">
                         <base-button
-                            @click.native="beginGame"
-                            data-testid="start-game-btn"
+                            @click.native="startGame"
+                            data-testid="start-game"
                         >
                             Start Game
                         </base-button>
@@ -91,20 +96,20 @@
             },
         },
         methods: {
-            beginGame() {
+            startGame() {
                 if (!this.playerName) {
                     this.isPlayerNameInvalid = true;
                     return;
                 }
 
-                this.$emit("begin-game", this.playerName);
+                this.$emit("start-game", this.playerName);
             },
         },
     };
 </script>
 
 <style scoped>
-    #backdrop {
+    .backdrop {
         position: fixed;
         top: 0;
         left: 0;
@@ -115,7 +120,7 @@
         z-index: 1;
     }
 
-    #modal {
+    .modal {
         position: fixed;
         top: 7rem;
         left: calc(50% - 15rem);
@@ -136,11 +141,11 @@
         background-color: white;
     }
 
-    #modal div:first-of-type {
+    .modal div:first-of-type {
         margin-bottom: 0.5rem;
     }
 
-    #button-container {
+    .button-container {
         display: flex;
         justify-content: flex-end;
         margin-top: 2rem;
@@ -152,11 +157,11 @@
         margin: 0;
     }
 
-    .modal-enter-active {
+    .move-fade-enter-active {
         animation: modal 500ms ease-out;
     }
 
-    .modal-leave-active {
+    .move-fade-leave-active {
         animation: modal 500ms ease-in reverse;
     }
 
@@ -167,13 +172,12 @@
         }
 
         to {
-            opacity: 1;
             transform: translateY(0);
         }
     }
 
     @media (max-width: 30rem) {
-        #modal {
+        .modal {
             width: 20rem;
             left: calc(50% - 10rem);
         }
@@ -184,7 +188,7 @@
     }
 
     @media (max-width: 20rem) {
-        #modal {
+        .modal {
             width: 15rem;
             top: 9.9rem;
             left: calc(50% - 7.5rem);
