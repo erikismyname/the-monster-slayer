@@ -233,5 +233,5 @@
 </script>
 
 <style>
-    @import './styles/main.css';
+    @import '@/assets/styles/main.css';
 </style>
