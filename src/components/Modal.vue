@@ -1,9 +1,17 @@
 <template>
     <div>
-        <div v-if="isVisible" id="backdrop"></div>
+        <div 
+            v-if="isVisible" 
+            id="backdrop"
+            data-testid="backdrop"
+        ></div>
 
         <transition name="modal" appear>
-            <div v-if="isVisible" id="modal">
+            <div 
+                v-if="isVisible" 
+                id="modal"
+                data-testid="modal"
+            >
                 <header>
                     <h2>Greetings, Warrior!</h2>
                 </header>
@@ -16,6 +24,7 @@
                             v-model.trim="playerName"
                             :class="invalidClass"
                             id="player-name"
+                            data-testid="player-name"
                             placeholder="Please enter your name here"
                         />
                     </div>
@@ -29,7 +38,10 @@
                         </base-label>
                     </div>
                     <div id="button-container">
-                        <base-button @click.native="setPlayerName">
+                        <base-button
+                            @click.native="setPlayerName"
+                            data-testid="start-new-game-btn"
+                        >
                             Start Game
                         </base-button>
                     </div>
