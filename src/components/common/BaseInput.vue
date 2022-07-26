@@ -33,4 +33,22 @@
     .invalid {
         border-color: #880808;
     }
+
+    .invalid::placeholder {
+        color: #880808;
+        opacity: 1; /* Firefox fix (adds lower opacity by default) */
+    }
+
+    @media (max-width: 30rem) {
+        input {
+            width: 50%;
+        }
+    }
+
+    @media (max-width: 20rem) {
+        input {
+            width: 70%;
+            margin-top: 0.5rem;
+        }
+    }
 </style>
