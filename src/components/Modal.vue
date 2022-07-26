@@ -40,7 +40,7 @@
                     <div id="button-container">
                         <base-button
                             @click.native="setPlayerName"
-                            data-testid="start-new-game-btn"
+                            data-testid="start-game-btn"
                         >
                             Start Game
                         </base-button>
