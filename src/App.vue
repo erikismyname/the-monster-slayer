@@ -4,7 +4,7 @@
 
         <modal 
             :is-visible="isModalVisible" 
-            @begin-game="beginGame" 
+            @start-game="startGame" 
         />
 
         <battle-screen :player-name="playerName" />
@@ -29,7 +29,7 @@
             };
         },
         methods: {
-            beginGame(playerName) {
+            startGame(playerName) {
                 this.setPlayerName(playerName);
                 this.closeModal();
             },
