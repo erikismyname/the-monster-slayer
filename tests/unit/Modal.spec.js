@@ -42,11 +42,11 @@ describe('Modal.vue', () => {
     it('should attach invalid input class when player name is empty', async () => {
         await wrapper.setProps({ isVisible: true });
 
-        await wrapper.find('[data-testid="start-game-btn"]').trigger('click');
+        await wrapper.find('[data-testid="start-game"]').trigger('click');
 
         const playerNameInput = wrapper.find('[data-testid="player-name"]');
 
-        const generateRandomNameCheckbox = wrapper.find('#generate-random-name');
+        const generateRandomNameCheckbox = wrapper.find('[data-testid="generate-random-name"]');
 
         expect(playerNameInput.element._prevClass).toBe('invalid');
 
@@ -64,9 +64,9 @@ describe('Modal.vue', () => {
 
         await wrapper.find('[data-testid="player-name"]').setValue('Test');
 
-        await wrapper.find('[data-testid="start-game-btn"]').trigger('click');
+        await wrapper.find('[data-testid="start-game"]').trigger('click');
 
-        const emittedEvent = wrapper.emitted('begin-game');
+        const emittedEvent = wrapper.emitted('start-game');
 
         expect(emittedEvent).toBeTruthy();
         expect(emittedEvent.length).toBe(1);
