@@ -41,6 +41,7 @@
 </template>
 
 <script>
+    import config from '../config'; 
     import getRandomValueBetween from "../utils/getRandomValueBetween.js";
     import formatEntry from "../utils/formatEntry.js";
 
@@ -63,7 +64,7 @@
                 hasMonsterUsedSecondWind: false,
                 playerName: "",
                 playerHealth: 100,
-                playerHealthPotions: 5,
+                playerHealthPotions: config.PLAYER_HEALTH_POTIONS_NUMBER,
                 hasPlayerSecondWind: false,
                 hasPlayerUsedSecondWind: false,
                 currentRound: 0,
@@ -99,8 +100,8 @@
         methods: {
             attackMonster(isSpecialAttack) {
                 const playerAttackPoints = isSpecialAttack
-                    ? getRandomValueBetween(9, 14)
-                    : getRandomValueBetween(5, 10);
+                    ? getRandomValueBetween(config.PLAYER_MIN_SPECIAL_ATTACK_POINTS, config.PLAYER_MAX_SPECIAL_ATTACK_POINTS)
+                    : getRandomValueBetween(config.PLAYER_MIN_ATTACK_POINTS, config.PLAYER_MAX_ATTACK_POINTS);
                 this.monsterHealth -= playerAttackPoints;
 
                 this.addEntryToBattleLog({
@@ -112,7 +113,7 @@
                 this.attackPlayer();
             },
             attackPlayer() {
-                const monsterAttackPoints = getRandomValueBetween(7, 12);
+                const monsterAttackPoints = getRandomValueBetween(config.MONSTER_MIN_ATTACK_POINTS, config.MONSTER_MAX_ATTACK_POINTS);
                 this.playerHealth -= monsterAttackPoints;
 
                 this.addEntryToBattleLog({
@@ -124,7 +125,7 @@
                 this.endCurrentRound();
             },
             healPlayer() {
-                const playerHealPoints = getRandomValueBetween(8, 11);
+                const playerHealPoints = getRandomValueBetween(config.PLAYER_MIN_HEAL_POINTS, config.PLAYER_MAX_HEAL_POINTS);
                 this.playerHealth += playerHealPoints;
 
                 if (this.playerHealth > 100) {
@@ -188,6 +189,7 @@
                 this.hasMonsterUsedSecondWind = false;
 
                 this.playerHealth = 100;
+                this.playerHealthPotions = config.PLAYER_HEALTH_POTIONS_NUMBER;
                 this.hasPlayerSecondWind = false;
                 this.hasPlayerUsedSecondWind = false;
 
