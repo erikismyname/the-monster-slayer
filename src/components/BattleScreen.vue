@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import config from '../config'; 
+    import config from "../config";
     import getRandomValueBetween from "../utils/getRandomValueBetween.js";
     import formatEntry from "../utils/formatEntry.js";
 
@@ -57,12 +57,17 @@
             GameOver,
             HealthDashboard,
         },
+        props: {
+            playerName: {
+                type: String,
+                required: true,
+            },
+        },
         data() {
             return {
                 monsterHealth: 100,
                 hasMonsterSecondWind: false,
                 hasMonsterUsedSecondWind: false,
-                playerName: "",
                 playerHealth: 100,
                 playerHealthPotions: config.PLAYER_HEALTH_POTIONS_NUMBER,
                 hasPlayerSecondWind: false,
@@ -100,8 +105,14 @@
         methods: {
             attackMonster(isSpecialAttack) {
                 const playerAttackPoints = isSpecialAttack
-                    ? getRandomValueBetween(config.PLAYER_MIN_SPECIAL_ATTACK_POINTS, config.PLAYER_MAX_SPECIAL_ATTACK_POINTS)
-                    : getRandomValueBetween(config.PLAYER_MIN_ATTACK_POINTS, config.PLAYER_MAX_ATTACK_POINTS);
+                    ? getRandomValueBetween(
+                          config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
+                          config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
+                      )
+                    : getRandomValueBetween(
+                          config.PLAYER_MIN_ATTACK_POINTS,
+                          config.PLAYER_MAX_ATTACK_POINTS
+                      );
                 this.monsterHealth -= playerAttackPoints;
 
                 this.addEntryToBattleLog({
@@ -113,7 +124,10 @@
                 this.attackPlayer();
             },
             attackPlayer() {
-                const monsterAttackPoints = getRandomValueBetween(config.MONSTER_MIN_ATTACK_POINTS, config.MONSTER_MAX_ATTACK_POINTS);
+                const monsterAttackPoints = getRandomValueBetween(
+                    config.MONSTER_MIN_ATTACK_POINTS,
+                    config.MONSTER_MAX_ATTACK_POINTS
+                );
                 this.playerHealth -= monsterAttackPoints;
 
                 this.addEntryToBattleLog({
@@ -125,7 +139,10 @@
                 this.endCurrentRound();
             },
             healPlayer() {
-                const playerHealPoints = getRandomValueBetween(config.PLAYER_MIN_HEAL_POINTS, config.PLAYER_MAX_HEAL_POINTS);
+                const playerHealPoints = getRandomValueBetween(
+                    config.PLAYER_MIN_HEAL_POINTS,
+                    config.PLAYER_MAX_HEAL_POINTS
+                );
                 this.playerHealth += playerHealPoints;
 
                 if (this.playerHealth > 100) {

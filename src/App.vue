@@ -6,7 +6,7 @@
             :is-visible="isModalVisible" @set-player-name="setPlayerName" 
         />
 
-        <battle-screen />
+        <battle-screen :player-name="playerName" />
     </div>
 </template>
 
@@ -24,6 +24,7 @@
         data() {
             return {
                 isModalVisible: true,
+                playerName: "",
             };
         },
         methods: {
