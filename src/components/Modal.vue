@@ -39,7 +39,7 @@
                     </div>
                     <div id="button-container">
                         <base-button
-                            @click.native="setPlayerName"
+                            @click.native="beginGame"
                             data-testid="start-game-btn"
                         >
                             Start Game
@@ -91,13 +91,13 @@
             },
         },
         methods: {
-            setPlayerName() {
+            beginGame() {
                 if (!this.playerName) {
                     this.isPlayerNameInvalid = true;
                     return;
                 }
 
-                this.$emit("set-player-name", this.playerName);
+                this.$emit("begin-game", this.playerName);
             },
         },
     };

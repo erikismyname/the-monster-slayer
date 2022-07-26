@@ -3,7 +3,8 @@
         <the-header />
 
         <modal 
-            :is-visible="isModalVisible" @set-player-name="setPlayerName" 
+            :is-visible="isModalVisible" 
+            @begin-game="beginGame" 
         />
 
         <battle-screen :player-name="playerName" />
@@ -28,10 +29,12 @@
             };
         },
         methods: {
+            beginGame(playerName) {
+                this.setPlayerName(playerName);
+                this.closeModal();
+            },
             setPlayerName(playerName) {
                 this.playerName = playerName;
-
-                this.closeModal();
             },
             closeModal() {
                 this.isModalVisible = false;
