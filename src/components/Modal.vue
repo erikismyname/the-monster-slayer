@@ -27,9 +27,9 @@
                         <base-input
                             v-model.trim="playerName"
                             :class="invalidClass"
+                            :placeholder="playerNameInputPlaceholder"
                             id="player-name"
                             data-testid="player-name"
-                            placeholder="Please enter your name here"
                         />
                     </div>
                     <div>
@@ -42,6 +42,7 @@
                             Generate a random name
                         </base-label>
                     </div>
+                    <span>* Note that the name can only contain letters</span>
                     <div class="button-container">
                         <base-button
                             @click.native="startGame"
@@ -88,6 +89,9 @@
             invalidClass() {
                 return { invalid: this.isPlayerNameInvalid };
             },
+            playerNameInputPlaceholder() {
+                return this.isPlayerNameInvalid ? 'Why play the rebel?' : 'Please enter your name here'
+            }
         },
         watch: {
             isCheckboxChecked(isChecked) {
@@ -97,13 +101,20 @@
         },
         methods: {
             startGame() {
-                if (!this.playerName) {
+                if (this.isPlayerNameNotValid()) {
                     this.isPlayerNameInvalid = true;
                     return;
                 }
 
                 this.$emit("start-game", this.playerName);
             },
+            isPlayerNameNotValid() {
+                if (!this.playerName || !this.playerName.match(/^[a-zA-Z]+$/)) {
+                    return true;
+                } 
+
+                return false;
+            }
         },
     };
 </script>
@@ -141,14 +152,19 @@
         background-color: white;
     }
 
-    .modal div:first-of-type {
+    .modal div:not(.button-container) {
         margin-bottom: 0.5rem;
     }
+
+    .invalid::placeholder {
+        color: #880808;
+        opacity: 1; /* Firefox fix (adds lower opacity by default) */
+    }   
 
     .button-container {
         display: flex;
         justify-content: flex-end;
-        margin-top: 2rem;
+        margin-top: 1.5rem;
     }
 
     button {
