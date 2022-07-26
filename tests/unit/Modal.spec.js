@@ -66,7 +66,7 @@ describe('Modal.vue', () => {
 
         await wrapper.find('[data-testid="start-game-btn"]').trigger('click');
 
-        const emittedEvent = wrapper.emitted('set-player-name');
+        const emittedEvent = wrapper.emitted('begin-game');
 
         expect(emittedEvent).toBeTruthy();
         expect(emittedEvent.length).toBe(1);
