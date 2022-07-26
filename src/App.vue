@@ -13,7 +13,7 @@
 
 <script>
     import BattleScreen from "./components/BattleScreen.vue";
-    import Modal from "./components/Modal.vue";
+    import Modal from "./components/Modal/Modal.vue";
     import TheHeader from "./components/layouts/TheHeader.vue";
 
     export default {
