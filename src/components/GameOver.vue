@@ -2,11 +2,11 @@
     <section v-if="isGameOver" class="container">
         <h2>Game Over</h2>
 
-        <h3 v-if="hasPlayerWon">
+        <h3 v-if="isPlayerWinner">
             You WON!
             <base-icon class="fa-solid fa-face-smile" />
         </h3>
-        <h3 v-else-if="hasMonsterWon">
+        <h3 v-else-if="isMonsterWinner">
             You LOST!
             <base-icon class="fa-solid fa-face-frown" />
         </h3>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex";
+
     import BaseButton from "./common/BaseButton.vue";
     import BaseIcon from "./common/BaseIcon.vue";
 
@@ -30,26 +32,15 @@
             BaseButton,
             BaseIcon,
         },
-        props: {
-            winner: {
-                type: String,
-                required: true,
-            },
-        },
         computed: {
-            isGameOver() {
-                return this.winner;
-            },
-            hasPlayerWon() {
-                return this.winner === "player";
-            },
-            hasMonsterWon() {
-                return this.winner === "monster";
-            },
+            ...mapGetters(["isGameOver", "isPlayerWinner", "isMonsterWinner"]),
         },
         methods: {
             startNewGame() {
-                this.$emit("start-new-game");
+                this.$store.dispatch("resetMonsterData");
+                this.$store.dispatch("resetPlayerData");
+                this.$store.dispatch("resetBattleLogData");
+                this.$store.dispatch("resetGameData");
             },
         },
     };
