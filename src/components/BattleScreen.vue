@@ -41,6 +41,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     import config from "../config";
     import getRandomValueBetween from "../utils/getRandomValueBetween.js";
     import formatEntry from "../utils/formatEntry.js";
@@ -57,12 +59,6 @@
             GameOver,
             HealthDashboard,
         },
-        props: {
-            playerName: {
-                type: String,
-                required: true,
-            },
-        },
         data() {
             return {
                 monsterHealth: 100,
@@ -77,6 +73,9 @@
                 battleLog: [],
                 battleLogEntriesOrder: "descending",
             };
+        },
+        computed: {
+            ...mapGetters(['playerName'])
         },
         watch: {
             monsterHealth(newHealth) {
