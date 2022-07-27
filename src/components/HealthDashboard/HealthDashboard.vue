@@ -1,8 +1,8 @@
 <template>
     <section class="container relative">
-        <health-dashboard-second-wind-badge
+        <!-- <health-dashboard-second-wind-badge
             :has-contender-second-wind="hasContenderSecondWind"
-        />
+        /> -->
 
         <slot></slot>
 
@@ -21,7 +21,7 @@
                 alt="A health potion" 
             />
             <span id="health-potions-counter">
-                {{ contenderHealthPotions }}
+                {{ playerHealthPotions }}
             </span>
         </div>
 
@@ -30,9 +30,11 @@
 </template>
 
 <script>
+    import { mapGetters } from "vuex";
+
     import BaseImage from "../common/BaseImage.vue";
     import HealthDashboardHealthbar from "./HealthDashboardHealthbar.vue";
-    import HealthDashboardSecondWindBadge from './HealthDashboardSecondWindBadge.vue';
+    import HealthDashboardSecondWindBadge from "./HealthDashboardSecondWindBadge.vue";
 
     export default {
         components: {
@@ -45,22 +47,11 @@
                 type: String,
                 required: true,
             },
-            contenderHealth: {
-                type: Number,
-                required: true,
-            },
-            contenderHealthPotions: {
-                type: Number,
-                required: false,
-            },
-            hasContenderSecondWind: {
-                type: Boolean,
-                required: true,
-            },
         },
         computed: {
+            ...mapGetters(['monsterHealth', 'playerHealth', "playerHealthPotions"]),
             isContenderMonster() {
-                return this.contender === 'monster';
+                return this.contender === "monster";
             },
             monsterImagePath() {
                 return require("@/assets/monster.jpg");
@@ -71,6 +62,11 @@
             healthPotionImagePath() {
                 return require("@/assets/health-potion.jpg");
             },
+            contenderHealth() {
+                return this.contender === 'monster' 
+                    ? this.monsterHealth
+                    : this.playerHealth;
+            }
         },
     };
 </script>
