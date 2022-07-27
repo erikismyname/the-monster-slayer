@@ -79,7 +79,7 @@
                     return;
                 }
 
-                this.$emit("start-game", this.playerName);
+                this.$store.dispatch('setPlayerName', this.playerName);
             },
             isPlayerNameNotValid() {
                 if (!this.playerName || !this.playerName.match(/^[a-zA-Z]+$/)) {

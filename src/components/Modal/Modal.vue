@@ -1,27 +1,29 @@
 <template>
     <div>
-        <modal-backdrop v-if="isVisible" />
+        <modal-backdrop v-if="!isPlayerNameSet" />
 
         <transition 
             name="move-fade" 
             appear
         >
             <div 
-                v-if="isVisible" 
+                v-if="!isPlayerNameSet" 
                 class="modal" 
                 data-testid="modal"
             >
                 <modal-header />
-                <modal-main @start-game="startGame" />
+                <modal-main />
             </div>
         </transition>
     </div>
 </template>
 
 <script>
-    import ModalBackdrop from './ModalBackdrop.vue';
-    import ModalHeader from './ModalHeader.vue';
-    import ModalMain from './ModalMain.vue';
+    import { mapGetters } from "vuex";
+
+    import ModalBackdrop from "./ModalBackdrop.vue";
+    import ModalHeader from "./ModalHeader.vue";
+    import ModalMain from "./ModalMain.vue";
 
     export default {
         components: {
@@ -29,17 +31,9 @@
             ModalHeader,
             ModalMain,
         },
-        props: {
-            isVisible: {
-                type: Boolean,
-                required: true,
-            },
+        computed: {
+            ...mapGetters({ isPlayerNameSet: "playerName" }),
         },
-       methods: {
-        startGame(playerName) {
-            this.$emit('start-game', playerName);
-        }
-       }
     };
 </script>
 

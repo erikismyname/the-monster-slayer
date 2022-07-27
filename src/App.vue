@@ -1,13 +1,8 @@
 <template>
     <div>
         <the-header />
-
-        <modal 
-            :is-visible="isModalVisible" 
-            @start-game="startGame" 
-        />
-
-        <battle-screen :player-name="playerName" />
+        <modal />
+        <battle-screen />
     </div>
 </template>
 
@@ -21,24 +16,6 @@
             BattleScreen,
             Modal,
             TheHeader,
-        },
-        data() {
-            return {
-                isModalVisible: true,
-                playerName: "",
-            };
-        },
-        methods: {
-            startGame(playerName) {
-                this.setPlayerName(playerName);
-                this.closeModal();
-            },
-            setPlayerName(playerName) {
-                this.playerName = playerName;
-            },
-            closeModal() {
-                this.isModalVisible = false;
-            },
         },
     };
 </script>
