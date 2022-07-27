@@ -22,7 +22,7 @@ li:nth-child(even) {
 header,
 button,
 #modal,
-section:not(#battle-controls) {
+section:not(.battle-controls) {
     box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.6);
 }
 
@@ -40,7 +40,7 @@ section {
     margin: 2rem auto;
 }
 
-section:not(#battle-controls) {
+section:not(.battle-controls) {
     padding: 2rem;
     text-align: center;
 }
