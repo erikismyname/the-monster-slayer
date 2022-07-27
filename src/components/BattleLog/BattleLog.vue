@@ -19,6 +19,8 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     import BaseIcon from "../common/BaseIcon.vue";
     import BattleLogList from "./BattleLogList.vue";
 
@@ -27,24 +29,12 @@
             BaseIcon,
             BattleLogList,
         },
-        props: {
-            battleLog: {
-                type: Array,
-                required: true,
-            },
-            battleLogEntriesOrder: {
-                type: String,
-                required: true,
-            },
-        },
         computed: {
-            isBattleLogEntriesOrderDescending() {
-                return this.battleLogEntriesOrder === "descending";
-            },
+            ...mapGetters(['battleLog', 'isBattleLogEntriesOrderDescending']),
         },
         methods: {
             changeBattleLogEntriesOrder() {
-                this.$emit("change-battle-log-entries-order");
+                this.$store.dispatch('changeBattleLogEntriesOrder');
             },
         },
     };
