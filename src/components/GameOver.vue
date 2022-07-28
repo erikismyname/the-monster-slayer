@@ -37,10 +37,7 @@
         },
         methods: {
             startNewGame() {
-                this.$store.dispatch("resetMonsterData");
-                this.$store.dispatch("resetPlayerData");
-                this.$store.dispatch("resetBattleLogData");
-                this.$store.dispatch("resetGameData");
+                this.$store.dispatch('startNewGame');
             },
         },
     };
