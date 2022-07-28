@@ -40,13 +40,16 @@ export default {
                 // this.processPlayerDying();
                 commit('SET_WINNER', 'monster');
             }
-            
+
             commit('INCREMENT_ROUND'); // check if even if someone dies it increments the round
         },
         endGame({ commit }) {
             commit('SET_WINNER', 'monster');
         },
-        resetGameData({ commit }) {
+        startNewGame({ commit }) {
+            commit('RESET_MONSTER_DATA');
+            commit('RESET_PLAYER_DATA');
+            commit('RESET_BATTLE_LOG_DATA');
             commit('RESET_GAME_DATA');
         }
     }
