@@ -23,8 +23,8 @@
             HEAL
         </base-button>
 
-        <base-button
-            @click.native="surrenderToMonster"
+        <base-button 
+            @click.native="surrender" 
             data-testid="surrender-btn"
         >
             SURRENDER
@@ -46,39 +46,18 @@
                 "isGameOver",
                 "isCurrentRoundNotDivisibleByThree",
                 "isPlayerHealthDisabled",
-                "lastPlayerDamagePointsTaken",
-                "lastPlayerHealthPointsGained",
-                "lastMonsterDamagePointsTaken",
             ]),
         },
         methods: {
             processRound(action, isSpecialAttack) {
-                let playerActionPoints;
-                // ternary below?
-                if (action === "attack") {
-                    this.$store.dispatch("attackMonster", isSpecialAttack);
-                    playerActionPoints = this.lastMonsterDamagePointsTaken;
-                } else {
-                    this.$store.dispatch("healPlayer");
-                    playerActionPoints = this.lastPlayerHealthPointsGained;
-                }
-
-                this.$store.dispatch("addEntryToBattleLog", {
-                    contender: "Player",
+                this.$store.dispatch("processPlayerAction", {
                     action,
-                    points: playerActionPoints,
+                    isSpecialAttack,
                 });
-
-                this.$store.dispatch("attackPlayer");
-                this.$store.dispatch("addEntryToBattleLog", {
-                    contender: "Monster",
-                    action: "attack",
-                    points: this.lastPlayerDamagePointsTaken,
-                });
-
+                this.$store.dispatch("processMonsterAction");
                 this.$store.dispatch("endCurrentRound");
             },
-            surrenderToMonster() {
+            surrender() {
                 this.$store.dispatch("endGame");
             },
         },
