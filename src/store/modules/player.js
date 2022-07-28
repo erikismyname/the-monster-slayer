@@ -29,6 +29,9 @@ export default {
         },
         lastPlayerHealthPointsGained(state) {
             return state.lastPlayerHealthPointsGained;
+        },
+        hasPlayerSecondWind(state) {
+            return state.hasPlayerSecondWind;
         }
     },
     mutations: {
@@ -71,7 +74,17 @@ export default {
         setPlayerName({ commit }, playerName) {
             commit('SET_PLAYER_NAME', playerName);
         },
+        processPlayerAction({ dispatch, getters, rootGetters }, { action, isSpecialAttack }) {
+            action === 'attack' ? dispatch('attackMonster', isSpecialAttack) : dispatch('healPlayer');
+
+            dispatch('addEntryToBattleLog', {
+                contender: 'Player',
+                action,
+                points: action === 'attack' ? rootGetters.lastMonsterDamagePointsTaken : getters.lastPlayerHealthPointsGained
+            });
+        },
         attackPlayer({ commit }) {
+            // change to attack monster and dispatch mutation from monster?
             const attackPoints = getRandomValueBetween(
                 config.MONSTER_MIN_ATTACK_POINTS,
                 config.MONSTER_MAX_ATTACK_POINTS
@@ -90,8 +103,5 @@ export default {
             commit('DECREMENT_PLAYER_HEALTH_POTIONS');
             commit('SET_LAST_PLAYER_HEALTH_POINTS_GAINED', healPoints);
         },
-        resetPlayerData({ commit }) {
-            commit('RESET_PLAYER_DATA');
-        }
     }
 };
