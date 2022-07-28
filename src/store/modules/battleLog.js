@@ -34,7 +34,7 @@ export default {
         },
         RESET_BATTLE_LOG_DATA(state) {
             state.battleLog = [];
-            state.battleLogEntriesOrder = 'descending'; // check how it behaves without this
+            state.battleLogEntriesOrder = 'descending';
         }
     },
     actions: {
@@ -44,8 +44,5 @@ export default {
         changeBattleLogEntriesOrder({ commit }) {
             commit('CHANGE_BATTLE_LOG_ENTRIES_ORDER');
         },
-        resetBattleLogData({ commit }) {
-            commit('RESET_BATTLE_LOG_DATA');
-        }
     }
 };
