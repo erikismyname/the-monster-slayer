@@ -1,8 +1,8 @@
 <template>
     <section class="container relative">
-        <!-- <health-dashboard-second-wind-badge
+        <health-dashboard-second-wind-badge
             :has-contender-second-wind="hasContenderSecondWind"
-        /> -->
+        />
 
         <slot></slot>
 
@@ -20,7 +20,7 @@
                 :src="healthPotionImagePath" 
                 alt="A health potion" 
             />
-            <span id="health-potions-counter">
+            <span class="health-potions-counter">
                 {{ playerHealthPotions }}
             </span>
         </div>
@@ -49,7 +49,7 @@
             },
         },
         computed: {
-            ...mapGetters(['monsterHealth', 'playerHealth', "playerHealthPotions"]),
+            ...mapGetters(['hasMonsterSecondWind', 'hasPlayerSecondWind', "playerHealthPotions", "monsterHealth", "playerHealth"]),
             isContenderMonster() {
                 return this.contender === "monster";
             },
@@ -62,11 +62,16 @@
             healthPotionImagePath() {
                 return require("@/assets/health-potion.jpg");
             },
+            hasContenderSecondWind() {
+                return this.isContenderMonster
+                    ? this.hasMonsterSecondWind
+                    : this.hasPlayerSecondWind;
+            },
             contenderHealth() {
-                return this.contender === 'monster' 
+                return this.isContenderMonster
                     ? this.monsterHealth
                     : this.playerHealth;
-            }
+            },
         },
     };
 </script>
@@ -80,10 +85,6 @@
         position: relative;
     }
 
-    #health-potions-counter {
-        position: absolute;
-    }
-
     h2,
     .player-icons {
         display: inline-block;
@@ -94,7 +95,11 @@
         margin-right: 0.3rem;
     }
 
-    #health-potions-counter {
+    .health-potions-counter {
+        position: absolute;
+    }
+
+    .health-potions-counter {
         right: 0.3rem;
         top: -0.2rem;
         border-radius: 50%;
