@@ -14,6 +14,9 @@ export default {
         },
         lastMonsterDamagePointsTaken(state) {
             return state.lastMonsterDamagePointsTaken;
+        },
+        hasMonsterSecondWind(state) {
+            return state.hasMonsterSecondWind;
         }
     },
     mutations: {
@@ -35,6 +38,14 @@ export default {
         }
     },
     actions: {
+        processMonsterAction({ dispatch, rootGetters }) {
+            dispatch('attackPlayer');
+            dispatch('addEntryToBattleLog', {
+                contender: 'Monster',
+                action: 'attack',
+                points: rootGetters.lastPlayerDamagePointsTaken
+            });
+        },
         attackMonster({ commit }, isSpecialAttack) {
             // extract the logic for attack points in a separate func in utils?
             const attackPoints = isSpecialAttack
@@ -50,8 +61,5 @@ export default {
             commit('ATTACK_MONSTER', attackPoints);
             commit('SET_LAST_MONSTER_DAMAGE_POINTS_TAKEN', attackPoints);
         },
-        resetMonsterData({ commit }) {
-            commit('RESET_MONSTER_DATA');
-        }
     }
 };
