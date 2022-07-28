@@ -13,7 +13,7 @@ html {
 header,
 button,
 .second-wind-badge,
-#health-potions-counter,
+.health-potions-counter,
 li:nth-child(even) {
     background-color: black;
     color: white;
