@@ -5,7 +5,7 @@
         </health-dashboard>
 
         <health-dashboard contender="player">
-            <h2>{{ playerName }}</h2>
+            <h2>{{ name }}</h2>
         </health-dashboard>
 
         <battle-controls />
@@ -30,7 +30,7 @@
             HealthDashboard,
         },
         computed: {
-            ...mapGetters(["playerName"]),
+            ...mapGetters('player', ["name"]),
         },
     };
 </script>
