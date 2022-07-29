@@ -1,65 +1,75 @@
 import config from '@/config';
 import getRandomValueBetween from "@/utils/getRandomValueBetween";
+import hasSecondWind from '@/utils/hasSecondWind';
 
 export default {
+    namespaced: true,
     state: {
-        monsterHealth: config.MONSTER_MAX_HEALTH_POINTS,
-        hasMonsterSecondWind: false,
-        hasMonsterUsedSecondWind: false,
-        lastMonsterDamagePointsTaken: null
+        health: config.MONSTER_MAX_HEALTH_POINTS,
+        hasSecondWind: false,
+        hasUsedSecondWind: false,
+        lastDamagePointsTaken: null
     },
     getters: {
-        monsterHealth(state) {
-            return state.monsterHealth;
+        health(state) {
+            return state.health;
         },
-        lastMonsterDamagePointsTaken(state) {
-            return state.lastMonsterDamagePointsTaken;
+        hasSecondWind(state) {
+            return state.hasSecondWind;
         },
-        hasMonsterSecondWind(state) {
-            return state.hasMonsterSecondWind;
+        hasUsedSecondWind(state) {
+            return state.hasUsedSecondWind;
+        },
+        lastDamagePointsTaken(state) {
+            return state.lastDamagePointsTaken;
         }
     },
     mutations: {
-        ATTACK_MONSTER(state, attackPoints) {
-            state.monsterHealth -= attackPoints;
+        DECREASE_HEALTH(state, points) {
+            state.health -= points;
 
-            if (state.monsterHealth < 0) {
-                state.monsterHealth = 0;
+            if (state.health < 0) {
+                state.health = 0;
             }
         },
-        SET_LAST_MONSTER_DAMAGE_POINTS_TAKEN(state, points) {
-            state.lastMonsterDamagePointsTaken = points;
+        SET_LAST_DAMAGE_POINTS_TAKEN(state, points) {
+            state.lastDamagePointsTaken = points;
         },
-        RESET_MONSTER_DATA(state) {
-            state.monsterHealth = 100;
-            state.hasMonsterSecondWind = false;
-            state.hasMonsterUsedSecondWind = false;
-            state.lastMonsterDamagePointsTaken = null;
+        SET_SECOND_WIND(state) {
+            state.hasSecondWind = true;
+            state.hasUsedSecondWind = true;
+            state.health = 50;
+        },
+        RESET_DATA(state) {
+            state.health = 100;
+            state.hasSecondWind = false;
+            state.hasUsedSecondWind = false;
+            state.lastDamagePointsTaken = null;
         }
     },
     actions: {
-        processMonsterAction({ dispatch, rootGetters }) {
-            dispatch('attackPlayer');
-            dispatch('addEntryToBattleLog', {
+        processAction({ dispatch, rootGetters }) {
+            dispatch('attack');
+            dispatch('addEntry', {
                 contender: 'Monster',
                 action: 'attack',
-                points: rootGetters.lastPlayerDamagePointsTaken
-            });
+                points: rootGetters['player/lastDamagePointsTaken']
+            }, { root: true });
         },
-        attackMonster({ commit }, isSpecialAttack) {
+        attack({ commit }) {
             // extract the logic for attack points in a separate func in utils?
-            const attackPoints = isSpecialAttack
-                ? getRandomValueBetween(
-                    config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
-                    config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
-                )
-                : getRandomValueBetween(
-                    config.PLAYER_MIN_ATTACK_POINTS,
-                    config.PLAYER_MAX_ATTACK_POINTS
-                );
+            const attackPoints = getRandomValueBetween(
+                config.MONSTER_MIN_ATTACK_POINTS,
+                config.MONSTER_MAX_ATTACK_POINTS
+            );
 
-            commit('ATTACK_MONSTER', attackPoints);
-            commit('SET_LAST_MONSTER_DAMAGE_POINTS_TAKEN', attackPoints);
+            commit('player/DECREASE_HEALTH', attackPoints, { root: true });
+            commit('player/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
+        },
+        processDying({ getters, commit }) {
+            hasSecondWind(getters.hasUsedSecondWind)
+                ? commit('SET_SECOND_WIND')
+                : commit('SET_WINNER', 'player', { root: true });
         },
     }
 };
