@@ -1,107 +1,126 @@
 import config from '@/config';
 import getRandomValueBetween from '@/utils/getRandomValueBetween';
-// namespace modules?
+import hasSecondWind from '@/utils/hasSecondWind';
+
 export default {
+    namespaced: true,
     state: {
-        playerName: null,
-        playerHealth: config.PLAYER_MAX_HEALTH_POINTS,
-        playerHealthPotions: config.PLAYER_HEALTH_POTIONS_NUMBER,
-        hasPlayerSecondWind: false,
-        hasPlayerUsedSecondWind: false,
-        lastPlayerDamagePointsTaken: null,
-        lastPlayerHealthPointsGained: null
+        name: null,
+        health: config.PLAYER_MAX_HEALTH_POINTS,
+        healthPotions: config.PLAYER_MAX_HEALTH_POTIONS_NUMBER,
+        hasSecondWind: false,
+        hasUsedSecondWind: false,
+        lastDamagePointsTaken: null,
+        lastHealthPointsGained: null
     },
     getters: {
-        playerName(state) {
-            return state.playerName;
+        name(state) {
+            return state.name;
         },
-        playerHealth(state) {
-            return state.playerHealth;
+        health(state) {
+            return state.health;
         },
-        playerHealthPotions(state) {
-            return state.playerHealthPotions
+        healthPotions(state) {
+            return state.healthPotions;
         },
-        isPlayerHealthDisabled(state) {
-            return state.playerHealth === 100 || state.playerHealthPotions === 0;
+        isHealingDisabled(state) {
+            return state.health === 100 || state.healthPotions === 0;
         },
-        lastPlayerDamagePointsTaken(state) {
-            return state.lastPlayerDamagePointsTaken;
+        hasSecondWind(state) {
+            return state.hasSecondWind;
         },
-        lastPlayerHealthPointsGained(state) {
-            return state.lastPlayerHealthPointsGained;
+        hasUsedSecondWind(state) {
+            return state.hasUsedSecondWind;
         },
-        hasPlayerSecondWind(state) {
-            return state.hasPlayerSecondWind;
+        lastDamagePointsTaken(state) {
+            return state.lastDamagePointsTaken;
+        },
+        lastHealthPointsGained(state) {
+            return state.lastHealthPointsGained;
         }
     },
     mutations: {
-        SET_PLAYER_NAME(state, playerName) {
-            state.playerName = playerName;
+        SET_NAME(state, name) {
+            state.name = name;
         },
-        ATTACK_PLAYER(state, attackPoints) {
-            state.playerHealth -= attackPoints;
+        DECREASE_HEALTH(state, points) {
+            state.health -= points;
 
-            if (state.playerHealth < 0) {
-                state.playerHealth = 0;
+            if (state.health < 0) {
+                state.health = 0;
             }
         },
-        HEAL_PLAYER(state, healPoints) {
-            state.playerHealth += healPoints;
+        INCREASE_HEALTH(state, points) {
+            state.health += points;
 
-            if (state.playerHealth > 100) {
-                state.playerHealth = 100;
+            if (state.health > 100) {
+                state.health = 100;
             }
         },
-        SET_LAST_PLAYER_DAMAGE_POINTS_TAKEN(state, points) {
-            state.lastPlayerDamagePointsTaken = points;
+        SET_LAST_DAMAGE_POINTS_TAKEN(state, points) {
+            state.lastDamagePointsTaken = points;
         },
-        SET_LAST_PLAYER_HEALTH_POINTS_GAINED(state, points) {
-            state.lastPlayerHealthPointsGained = points;
+        SET_LAST_HEALTH_POINTS_GAINED(state, points) {
+            state.lastHealthPointsGained = points;
         },
-        DECREMENT_PLAYER_HEALTH_POTIONS(state) {
-            state.playerHealthPotions--;
+        DECREASE_HEALTH_POTIONS(state) {
+            state.healthPotions--;
         },
-        RESET_PLAYER_DATA(state) {
-            state.playerHealth = 100;
-            state.playerHealthPotions = config.PLAYER_HEALTH_POTIONS_NUMBER;
-            state.hasPlayerSecondWind = false;
-            state.hasPlayerUsedSecondWind = false;
-            state.lastPlayerDamagePointsTaken = null;
-            state.lastPlayerHealthPointsGained = null;
+        SET_SECOND_WIND(state) {
+            state.health = 50;
+            state.hasSecondWind = true;
+            state.hasUsedSecondWind = true;
+        },
+        RESET_DATA(state) {
+            state.health = config.PLAYER_MAX_HEALTH_POINTS;
+            state.healthPotions = config.PLAYER_MAX_HEALTH_POTIONS_NUMBER;
+            state.hasSecondWind = false;
+            state.hasUsedSecondWind = false;
+            state.lastDamagePointsTaken = null;
+            state.lastHealthPointsGained = null;
         }
     },
     actions: {
-        setPlayerName({ commit }, playerName) {
-            commit('SET_PLAYER_NAME', playerName);
+        setName({ commit }, name) {
+            commit('SET_NAME', name);
         },
-        processPlayerAction({ dispatch, getters, rootGetters }, { action, isSpecialAttack }) {
-            action === 'attack' ? dispatch('attackMonster', isSpecialAttack) : dispatch('healPlayer');
+        processAction({ dispatch, getters, rootGetters }, { action, isSpecialAttack }) {
+            action === 'attack' ? dispatch('attack', isSpecialAttack) : dispatch('heal');
 
-            dispatch('addEntryToBattleLog', {
+            dispatch('addEntry', {
                 contender: 'Player',
                 action,
-                points: action === 'attack' ? rootGetters.lastMonsterDamagePointsTaken : getters.lastPlayerHealthPointsGained
-            });
+                points: action === 'attack' ? rootGetters['monster/lastDamagePointsTaken'] : getters.lastHealthPointsGained
+            }, { root: true });
         },
-        attackPlayer({ commit }) {
-            // change to attack monster and dispatch mutation from monster?
-            const attackPoints = getRandomValueBetween(
-                config.MONSTER_MIN_ATTACK_POINTS,
-                config.MONSTER_MAX_ATTACK_POINTS
-            );
+        attack({ commit }, isSpecialAttack) {
+            const attackPoints = isSpecialAttack
+                ? getRandomValueBetween(
+                    config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
+                    config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
+                )
+                : getRandomValueBetween(
+                    config.PLAYER_MIN_ATTACK_POINTS,
+                    config.PLAYER_MAX_ATTACK_POINTS
+                );
 
-            commit('ATTACK_PLAYER', attackPoints);
-            commit('SET_LAST_PLAYER_DAMAGE_POINTS_TAKEN', attackPoints);
+            commit('monster/DECREASE_HEALTH', attackPoints, { root: true });
+            commit('monster/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
         },
-        healPlayer({ commit }) {
+        heal({ commit }) {
             const healPoints = getRandomValueBetween(
                 config.PLAYER_MIN_HEAL_POINTS,
                 config.PLAYER_MAX_HEAL_POINTS
             );
 
-            commit('HEAL_PLAYER', healPoints);
-            commit('DECREMENT_PLAYER_HEALTH_POTIONS');
-            commit('SET_LAST_PLAYER_HEALTH_POINTS_GAINED', healPoints);
+            commit('INCREASE_HEALTH', healPoints);
+            commit('SET_LAST_HEALTH_POINTS_GAINED', healPoints);
+            commit('DECREASE_HEALTH_POTIONS');
+        },
+        processDying({ getters, commit }) {
+            hasSecondWind(getters.hasUsedSecondWind)
+                ? commit('SET_SECOND_WIND')
+                : commit('SET_WINNER', 'monster', { root: true });
         },
     }
 };
