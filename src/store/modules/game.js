@@ -30,15 +30,13 @@ export default {
         }
     },
     actions: {
-        endCurrentRound({ commit, rootGetters }) {
-            if (rootGetters.monsterHealth <= 0 && rootGetters.playerHealth <= 0) {
+        endCurrentRound({ dispatch, commit, rootGetters }) {
+            if (rootGetters['monster/health'] <= 0 && rootGetters['player/health'] <= 0) {
                 commit('SET_WINNER', 'draw');
-            } else if (rootGetters.monsterHealth <= 0) {
-                // this.processMonsterDying();
-                commit('SET_WINNER', 'player');
-            } else if (rootGetters.playerHealth <= 0) {
-                // this.processPlayerDying();
-                commit('SET_WINNER', 'monster');
+            } else if (rootGetters['monster/health'] <= 0) {
+                dispatch('monster/processDying');
+            } else if (rootGetters['player/health'] <= 0) {
+                dispatch('player/processDying');
             }
 
             commit('INCREMENT_ROUND'); // check if even if someone dies it increments the round
@@ -47,41 +45,10 @@ export default {
             commit('SET_WINNER', 'monster');
         },
         startNewGame({ commit }) {
-            commit('RESET_MONSTER_DATA');
-            commit('RESET_PLAYER_DATA');
-            commit('RESET_BATTLE_LOG_DATA');
+            commit('monster/RESET_DATA');
+            commit('player/RESET_DATA');
+            commit('RESET_ENTRIES_DATA');
             commit('RESET_GAME_DATA');
         }
     }
 };
-
-// processPlayerDying() {
-//     if (this.hasSecondWind("player")) {
-//         this.hasPlayerSecondWind = true;
-//         this.hasPlayerUsedSecondWind = true;
-//         this.playerHealth = 50;
-
-//         return;
-//     }
-
-//     this.winner = "monster";
-// },
-// processMonsterDying() {
-//     if (this.hasSecondWind("monster")) {
-//         this.hasMonsterSecondWind = true;
-//         this.hasMonsterUsedSecondWind = true;
-//         this.monsterHealth = 50;
-
-//         return;
-//     }
-
-//     this.winner = "player";
-// },
-// hasSecondWind(contender) {
-//     const hasContenderUsedSecondWind =
-//         contender === "player"
-//             ? this.hasPlayerUsedSecondWind
-//             : this.hasMonsterUsedSecondWind;
-
-//     return !hasContenderUsedSecondWind && Math.random() > 0.5;
-// },
