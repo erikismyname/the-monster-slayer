@@ -16,7 +16,7 @@
         </base-button>
 
         <base-button
-            :disabled="isPlayerHealthDisabled"
+            :disabled="isPlayerHealingDisabled"
             @click.native="processRound('heal')"
             data-testid="heal-btn"
         >
@@ -45,16 +45,18 @@
             ...mapGetters([
                 "isGameOver",
                 "isCurrentRoundNotDivisibleByThree",
-                "isPlayerHealthDisabled",
             ]),
+            ...mapGetters('player', {
+                isPlayerHealingDisabled: 'isHealingDisabled'
+            }),
         },
         methods: {
             processRound(action, isSpecialAttack) {
-                this.$store.dispatch("processPlayerAction", {
+                this.$store.dispatch("player/processAction", {
                     action,
                     isSpecialAttack,
                 });
-                this.$store.dispatch("processMonsterAction");
+                this.$store.dispatch("monster/processAction");
                 this.$store.dispatch("endCurrentRound");
             },
             surrender() {
