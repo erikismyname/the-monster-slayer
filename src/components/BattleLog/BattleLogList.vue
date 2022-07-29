@@ -1,7 +1,7 @@
 <template>
     <transition-group tag="ul" name="entry">
         <battle-log-list-item
-            v-for="entry in battleLog"
+            v-for="entry in entries"
             :key="entry.id"
             :text="entry.text"
         />
@@ -16,7 +16,7 @@
             BattleLogListItem,
         },
         props: {
-            battleLog: {
+            entries: {
                 type: Array,
                 required: true,
             },
