@@ -4,22 +4,22 @@
             Battle Log
 
             <base-icon
-                v-if="isBattleLogEntriesOrderDescending"
-                @click.native="changeBattleLogEntriesOrder"
+                v-if="isEntriesOrderDescending"
+                @click.native="changeEntriesOrder"
                 class="fa-solid fa-arrow-down"
             />
             <base-icon
                 v-else
-                @click.native="changeBattleLogEntriesOrder"
+                @click.native="changeEntriesOrder"
                 class="fa-solid fa-arrow-up"
             />
         </h2>
-        <battle-log-list :battle-log="battleLog" />
+        <battle-log-list :entries="entries" />
     </section>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from "vuex";
 
     import BaseIcon from "../common/BaseIcon.vue";
     import BattleLogList from "./BattleLogList.vue";
@@ -30,12 +30,10 @@
             BattleLogList,
         },
         computed: {
-            ...mapGetters(['battleLog', 'isBattleLogEntriesOrderDescending']),
+            ...mapGetters(["entries", "isEntriesOrderDescending"]),
         },
         methods: {
-            changeBattleLogEntriesOrder() {
-                this.$store.dispatch('changeBattleLogEntriesOrder');
-            },
+            ...mapActions(["changeEntriesOrder"]),
         },
     };
 </script>
