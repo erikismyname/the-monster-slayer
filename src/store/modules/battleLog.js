@@ -2,47 +2,48 @@ import formatEntry from "@/utils/formatEntry";
 
 export default {
     state: {
-        battleLog: [],
-        battleLogEntriesOrder: 'descending',
+        entries: [],
+        entriesOrder: 'descending',
     },
     getters: {
-        battleLog(state) {
-            return state.battleLog;
+        entries(state) {
+            return state.entries;
         },
-        isBattleLogEntriesOrderDescending(state) {
-            return state.battleLogEntriesOrder === 'descending';
+        isEntriesOrderDescending(state) {
+            return state.entriesOrder === 'descending';
         }
     },
     mutations: {
-        ADD_ENTRY_TO_BATTLE_LOG(state, entry) {
-            state.battleLog.unshift(formatEntry(entry));
+        ADD_ENTRY(state, entry) {
+            state.entries.unshift(formatEntry(entry));
         },
-        CHANGE_BATTLE_LOG_ENTRIES_ORDER(state) {
-            state.battleLogEntriesOrder =
-                state.battleLogEntriesOrder === 'descending'
+        CHANGE_ENTRIES_ORDER(state) {
+            state.entriesOrder =
+                state.entriesOrder === 'descending'
                     ? 'ascending'
                     : 'descending';
             // separate func for below logic?
+            // use map? more elegant?
             const sortedBattleLog = [];
-            for (let i = 0; i < state.battleLog.length; i += 2) {
+            for (let i = 0; i < state.entries.length; i += 2) {
                 sortedBattleLog.unshift(
-                    state.battleLog[i],
-                    state.battleLog[i + 1]
+                    state.entries[i],
+                    state.entries[i + 1]
                 );
             }
-            state.battleLog = sortedBattleLog;
+            state.entries = sortedBattleLog;
         },
-        RESET_BATTLE_LOG_DATA(state) {
-            state.battleLog = [];
-            state.battleLogEntriesOrder = 'descending';
+        RESET_ENTRIES_DATA(state) {
+            state.entries = [];
+            state.entriesOrder = 'descending';
         }
     },
     actions: {
-        addEntryToBattleLog({ commit }, entry) {
-            commit('ADD_ENTRY_TO_BATTLE_LOG', entry);
+        addEntry({ commit }, entry) {
+            commit('ADD_ENTRY', entry);
         },
-        changeBattleLogEntriesOrder({ commit }) {
-            commit('CHANGE_BATTLE_LOG_ENTRIES_ORDER');
+        changeEntriesOrder({ commit }) {
+            commit('CHANGE_ENTRIES_ORDER');
         },
     }
 };
