@@ -30,6 +30,7 @@
 </template>
 
 <script>
+    // use createNamespacedHelpers insead?
     import { mapGetters } from "vuex";
 
     import BaseImage from "../common/BaseImage.vue";
@@ -49,7 +50,15 @@
             },
         },
         computed: {
-            ...mapGetters(['hasMonsterSecondWind', 'hasPlayerSecondWind', "playerHealthPotions", "monsterHealth", "playerHealth"]),
+            ...mapGetters("monster", {
+                hasMonsterSecondWind: "hasSecondWind",
+                monsterHealth: "health",
+            }),
+            ...mapGetters("player", {
+                hasPlayerSecondWind: "hasSecondWind",
+                playerHealthPotions: "healthPotions",
+                playerHealth: "health",
+            }),
             isContenderMonster() {
                 return this.contender === "monster";
             },
