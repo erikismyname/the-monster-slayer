@@ -1,11 +1,11 @@
 <template>
     <div>
         <health-dashboard contender="monster">
-            <h2>Monster</h2>
+            <base-h2 class="contender">Monster</base-h2>
         </health-dashboard>
 
         <health-dashboard contender="player">
-            <h2>{{ name }}</h2>
+            <base-h2 class="contender">{{ name }}</base-h2>
         </health-dashboard>
 
         <battle-controls />
@@ -18,6 +18,7 @@
 <script>
     import { mapGetters } from "vuex";
 
+    import BaseH2 from './common/BaseH2.vue';
     import BattleControls from "./BattleControls.vue";
     import BattleLog from "./BattleLog/BattleLog.vue";
     import GameOver from "./GameOver.vue";
@@ -26,6 +27,7 @@
 
     export default {
         components: {
+            BaseH2,
             BattleControls,
             BattleLog,
             GameOver,
