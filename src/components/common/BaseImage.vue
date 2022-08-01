@@ -22,4 +22,8 @@
         height: 2.5rem;
         vertical-align: middle;
     }
+
+    .player-avatar {
+        margin-right: .1rem;
+    }
 </style>
