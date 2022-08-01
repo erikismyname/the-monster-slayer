@@ -1,5 +1,8 @@
 <template>
-    <section class="container relative">
+    <section 
+        :class="theme" 
+        class="container relative"
+    >
         <health-dashboard-second-wind-badge
             :has-contender-second-wind="hasContenderSecondWind"
         />
@@ -13,7 +16,8 @@
         />
         <div v-else class="player-icons relative">
             <base-image 
-                :src="playerImagePath" 
+                :src="playerImagePath"
+                class="player-avatar" 
                 alt="Player's avatar" 
             />
             <base-image 
@@ -59,6 +63,7 @@
                 playerHealthPotions: "healthPotions",
                 playerHealth: "health",
             }),
+            ...mapGetters(['theme']),
             isContenderMonster() {
                 return this.contender === "monster";
             },
@@ -105,7 +110,7 @@
 
     .health-potions-counter {
         right: 0.3rem;
-        top: -0.2rem;
+        top: -0.05rem;
         border-radius: 50%;
         width: 1rem;
         font-size: 0.6rem;
