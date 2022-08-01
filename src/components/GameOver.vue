@@ -1,5 +1,9 @@
 <template>
-    <section v-if="isGameOver" class="container">
+    <section 
+        v-if="isGameOver" 
+        :class="theme" 
+        class="container"
+    >
         <base-h2>Game Over</base-h2>
 
         <base-h3 v-if="isPlayerWinner">
@@ -25,8 +29,8 @@
     import { mapGetters } from "vuex";
 
     import BaseButton from "./common/BaseButton.vue";
-    import BaseH2 from './common/BaseH2.vue';
-    import BaseH3 from './common/BaseH3.vue';
+    import BaseH2 from "./common/BaseH2.vue";
+    import BaseH3 from "./common/BaseH3.vue";
     import BaseIcon from "./common/BaseIcon.vue";
 
     export default {
@@ -37,11 +41,16 @@
             BaseIcon,
         },
         computed: {
-            ...mapGetters(["isGameOver", "isPlayerWinner", "isMonsterWinner"]),
+            ...mapGetters([
+                "isGameOver",
+                "isPlayerWinner",
+                "isMonsterWinner",
+                "theme",
+            ]),
         },
         methods: {
             startNewGame() {
-                this.$store.dispatch('startNewGame');
+                this.$store.dispatch("startNewGame");
             },
         },
     };
