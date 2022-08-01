@@ -1,19 +1,19 @@
 <template>
     <section v-if="isGameOver" class="container">
-        <h2>Game Over</h2>
+        <base-h2>Game Over</base-h2>
 
-        <h3 v-if="isPlayerWinner">
+        <base-h3 v-if="isPlayerWinner">
             You WON!
             <base-icon class="fa-solid fa-face-smile" />
-        </h3>
-        <h3 v-else-if="isMonsterWinner">
+        </base-h3>
+        <base-h3 v-else-if="isMonsterWinner">
             You LOST!
             <base-icon class="fa-solid fa-face-frown" />
-        </h3>
-        <h3 v-else>
+        </base-h3>
+        <base-h3 v-else>
             DRAW!
             <base-icon class="fa-solid fa-face-meh" />
-        </h3>
+        </base-h3>
 
         <base-button @click.native="startNewGame">
             Start New Game
@@ -25,11 +25,15 @@
     import { mapGetters } from "vuex";
 
     import BaseButton from "./common/BaseButton.vue";
+    import BaseH2 from './common/BaseH2.vue';
+    import BaseH3 from './common/BaseH3.vue';
     import BaseIcon from "./common/BaseIcon.vue";
 
     export default {
         components: {
             BaseButton,
+            BaseH2,
+            BaseH3,
             BaseIcon,
         },
         computed: {
@@ -42,10 +46,3 @@
         },
     };
 </script>
-
-<style scoped>
-    h2,
-    h3 {
-        margin-bottom: 1rem;
-    }
-</style>
