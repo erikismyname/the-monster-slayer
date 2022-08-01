@@ -2,6 +2,7 @@ export default {
     state: {
         currentRound: 0,
         winner: null,
+        theme: 'light'
     },
     getters: {
         isCurrentRoundNotDivisibleByThree(state) {
@@ -16,6 +17,12 @@ export default {
         isMonsterWinner(state) {
             return state.winner === "monster";
         },
+        theme(state) {
+            return state.theme;
+        },
+        isThemeLight(state) {
+            return state.theme === 'light';
+        }
     },
     mutations: {
         INCREMENT_ROUND(state) {
@@ -27,6 +34,9 @@ export default {
         RESET_GAME_DATA(state) {
             state.currentRound = 0;
             state.winner = null;
+        },
+        SET_THEME(state) {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
         }
     },
     actions: {
@@ -49,6 +59,9 @@ export default {
             commit('player/RESET_DATA');
             commit('RESET_ENTRIES_DATA');
             commit('RESET_GAME_DATA');
+        },
+        setTheme({ commit }) {
+            commit('SET_THEME');
         }
     }
 };
