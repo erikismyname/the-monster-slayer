@@ -17,4 +17,18 @@
         bottom: 1rem;
         font-size: 2rem;
     }
+
+    .fa-sun,
+    .fa-moon {
+        position: absolute;
+        right: 3rem;
+        padding: .3rem;
+        border-radius: 50%;
+    }
+
+    .fa-sun:hover,
+    .fa-moon:hover {
+        background-color: white;
+        color: black;
+    }
 </style>
