@@ -94,14 +94,9 @@
         position: relative;
     }
 
-    h2,
     .player-icons {
         display: inline-block;
         vertical-align: middle;
-    }
-
-    h2 {
-        margin-right: 0.3rem;
     }
 
     .health-potions-counter {
