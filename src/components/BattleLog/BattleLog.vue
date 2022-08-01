@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2>
+        <base-h2>
             Battle Log
 
             <base-icon
@@ -13,7 +13,7 @@
                 @click.native="changeEntriesOrder"
                 class="fa-solid fa-arrow-up"
             />
-        </h2>
+        </base-h2>
         <battle-log-list :entries="entries" />
     </section>
 </template>
@@ -21,11 +21,13 @@
 <script>
     import { mapGetters, mapActions } from "vuex";
 
+    import BaseH2 from '../common/BaseH2.vue';
     import BaseIcon from "../common/BaseIcon.vue";
     import BattleLogList from "./BattleLogList.vue";
 
     export default {
         components: {
+            BaseH2,
             BaseIcon,
             BattleLogList,
         },
@@ -37,9 +39,3 @@
         },
     };
 </script>
-
-<style scoped>
-    h2 {
-        margin-bottom: 1rem;
-    }
-</style>
