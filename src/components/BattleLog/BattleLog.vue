@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section :class="theme">
         <base-h2>
             Battle Log
 
@@ -32,7 +32,7 @@
             BattleLogList,
         },
         computed: {
-            ...mapGetters(["entries", "isEntriesOrderDescending"]),
+            ...mapGetters(["entries", "isEntriesOrderDescending", 'theme']),
         },
         methods: {
             ...mapActions(["changeEntriesOrder"]),
