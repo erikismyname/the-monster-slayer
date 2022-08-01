@@ -11,6 +11,7 @@
         <battle-controls />
         <game-over />
         <battle-log />
+        <scroll-to-top />
     </div>
 </template>
 
@@ -21,6 +22,7 @@
     import BattleLog from "./BattleLog/BattleLog.vue";
     import GameOver from "./GameOver.vue";
     import HealthDashboard from "./HealthDashboard/HealthDashboard.vue";
+    import ScrollToTop from "./ScrollToTop.vue";
 
     export default {
         components: {
@@ -28,9 +30,10 @@
             BattleLog,
             GameOver,
             HealthDashboard,
+            ScrollToTop,
         },
         computed: {
-            ...mapGetters('player', ["name"]),
+            ...mapGetters("player", ["name"]),
         },
     };
 </script>
