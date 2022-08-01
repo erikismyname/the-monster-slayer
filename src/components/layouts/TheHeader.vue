@@ -1,17 +1,26 @@
 <template>
     <header>
-        <base-image :src="imagePath" :alt="imageAlt" />
+        <base-image 
+            :src="imagePath" 
+            :alt="imageAlt" 
+        />
         <h1>The Monster Slayer</h1>
-        <base-image :src="imagePath" :alt="imageAlt" />
+        <base-image 
+            :src="imagePath" 
+            :alt="imageAlt" 
+        />
+        <toggle-theme />
     </header>
 </template>
 
 <script>
     import BaseImage from "../common/BaseImage.vue";
+    import ToggleTheme from '../ToggleTheme.vue';
 
     export default {
         components: {
             BaseImage,
+            ToggleTheme,
         },
         computed: {
             imagePath() {
