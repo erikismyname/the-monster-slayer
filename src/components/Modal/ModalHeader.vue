@@ -1,8 +1,18 @@
 <template>
     <header>
-        <h2>Greetings, Warrior!</h2>
+        <base-h2>Greetings, Warrior!</base-h2>
     </header>
 </template>
+
+<script>
+    import BaseH2 from "../common/BaseH2.vue";
+
+    export default {
+        components: {
+            BaseH2,
+        },
+    };
+</script>
 
 <style scoped>
     header {
