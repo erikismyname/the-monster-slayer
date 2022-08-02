@@ -8,9 +8,9 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters } from "vuex";
 
-    import BaseIcon from "./common/BaseIcon.vue";
+    import BaseIcon from "@/components/common/BaseIcon";
 
     export default {
         components: {
@@ -20,9 +20,9 @@
             return { scrollY: 0 };
         },
         computed: {
-            ...mapGetters(['theme']),
+            ...mapGetters(["theme"]),
             isScrollToTopIconVisible() {
-                return this.scrollY > 250;
+                return this.scrollY >= 250;
             },
         },
         mounted() {
