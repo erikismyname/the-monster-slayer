@@ -3,7 +3,7 @@
         :class="theme" 
         class="container relative"
     >
-        <health-dashboard-second-wind-badge
+        <contenders-dashboard-card-second-wind-badge
             :has-contender-second-wind="hasContenderSecondWind"
         />
 
@@ -29,7 +29,7 @@
             </span>
         </div>
 
-        <health-dashboard-healthbar :contenderHealth="contenderHealth" />
+        <contenders-dashboard-card-healthbar :contenderHealth="contenderHealth" />
     </section>
 </template>
 
@@ -38,14 +38,14 @@
     import { mapGetters } from "vuex";
 
     import BaseImage from "../common/BaseImage.vue";
-    import HealthDashboardHealthbar from "./HealthDashboardHealthbar.vue";
-    import HealthDashboardSecondWindBadge from "./HealthDashboardSecondWindBadge.vue";
+    import ContendersDashboardCardHealthbar from "./ContendersDashboardCardHealthbar.vue";
+    import ContendersDashboardCardSecondWindBadge from "./ContendersDashboardCardSecondWindBadge.vue";
 
     export default {
         components: {
             BaseImage,
-            HealthDashboardHealthbar,
-            HealthDashboardSecondWindBadge,
+            ContendersDashboardCardHealthbar,
+            ContendersDashboardCardSecondWindBadge,
         },
         props: {
             contender: {
