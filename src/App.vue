@@ -13,10 +13,10 @@
 <script>
     import { mapGetters } from "vuex";
 
-    import BattleScreen from "./components/BattleScreen.vue";
-    import Modal from "./components/Modal/Modal.vue";
-    import ScrollToTop from "./components/ScrollToTop.vue";
-    import TheHeader from "./components/layouts/TheHeader.vue";
+    import BattleScreen from "@/components/BattleScreen";
+    import Modal from "@/components/Modal/Modal";
+    import ScrollToTop from "@/components/ScrollToTop";
+    import TheHeader from "@/components/layouts/TheHeader";
 
     export default {
         components: {
@@ -25,9 +25,7 @@
             ScrollToTop,
             TheHeader,
         },
-        computed: {
-            ...mapGetters(["theme"]),
-        },
+        computed: mapGetters(["theme"]),
     };
 </script>
 
