@@ -24,17 +24,17 @@ describe('App.vue', () => {
     });
 });
 
-function createWrapper(store) {
-    return shallowMount(App, {
-        localVue,
-        store
-    });
-}
-
 function createStore(value) {
     return new Vuex.Store({
         getters: {
             theme: () => value
         }
+    });
+}
+
+function createWrapper(store) {
+    return shallowMount(App, {
+        localVue,
+        store
     });
 }
