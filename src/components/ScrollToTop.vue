@@ -2,11 +2,14 @@
     <base-icon
         v-if="isScrollToTopIconVisible"
         @click.native="scrollToTop"
+        :class="theme"
         class="fa-solid fa-circle-arrow-up"
     />
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     import BaseIcon from "./common/BaseIcon.vue";
 
     export default {
@@ -17,8 +20,9 @@
             return { scrollY: 0 };
         },
         computed: {
+            ...mapGetters(['theme']),
             isScrollToTopIconVisible() {
-                return this.scrollY > 300;
+                return this.scrollY > 250;
             },
         },
         mounted() {
