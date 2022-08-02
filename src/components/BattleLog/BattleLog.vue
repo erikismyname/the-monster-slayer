@@ -1,5 +1,5 @@
 <template>
-    <section :class="theme">
+    <section :class="theme" class="container">
         <base-h2>
             Battle Log
 
@@ -39,3 +39,9 @@
         },
     };
 </script>
+
+<style scoped>
+    section {
+        margin-bottom: 0;
+    }
+</style>
