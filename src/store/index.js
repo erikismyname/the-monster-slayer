@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import battleLog from './modules/battleLog.js';
-import game from './modules/game.js';
-import monster from './modules/monster.js';
-import player from './modules/player.js';
+import battleLog from '@/store/modules/battleLog';
+import game from '@/store/modules/game';
+import monster from '@/store/modules/monster';
+import player from '@/store/modules/player';
 
 Vue.use(Vuex);
 
