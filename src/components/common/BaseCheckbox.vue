@@ -28,6 +28,6 @@
 
 <style scoped>
     input {
-        margin-right: .3rem;
+        margin-right: 0.3rem;
     }
 </style>

@@ -35,12 +35,12 @@
 </template>
 
 <script>
-    import getRandomName from "../../utils/getRandomName.js";
+    import getRandomName from "@/utils/getRandomName";
 
-    import BaseButton from "../common/BaseButton.vue";
-    import BaseCheckbox from "../common/BaseCheckbox.vue";
-    import BaseInput from "../common/BaseInput.vue";
-    import BaseLabel from "../common/BaseLabel.vue";
+    import BaseButton from "@/components/common/BaseButton";
+    import BaseCheckbox from "@/components/common/BaseCheckbox";
+    import BaseInput from "@/components/common/BaseInput";
+    import BaseLabel from "@/components/common/BaseLabel";
 
     export default {
         components: {
@@ -79,7 +79,7 @@
                     return;
                 }
 
-                this.$store.dispatch('player/setName', this.playerName);
+                this.$store.dispatch("player/setName", this.playerName);
             },
             isPlayerNameNotValid() {
                 if (!this.playerName || !this.playerName.match(/^[a-zA-Z]+$/)) {

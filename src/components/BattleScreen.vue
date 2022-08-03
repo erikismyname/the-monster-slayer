@@ -8,10 +8,10 @@
 </template>
 
 <script>
-    import BattleControls from "./BattleControls.vue";
-    import BattleLog from "./BattleLog/BattleLog.vue";
-    import ContendersDashboard from "./ContendersDashboard/ContendersDashboard.vue";
-    import GameOver from "./GameOver.vue";
+    import BattleControls from "@/components/BattleControls";
+    import BattleLog from "@/components/BattleLog/BattleLog";
+    import ContendersDashboard from "@/components/ContendersDashboard/ContendersDashboard";
+    import GameOver from "@/components/GameOver";
 
     export default {
         components: {

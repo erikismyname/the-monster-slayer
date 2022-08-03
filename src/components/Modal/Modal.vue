@@ -1,13 +1,13 @@
 <template>
     <div>
-        <modal-backdrop v-if="!isPlayerNameSet" />
+        <modal-backdrop v-if="isPlayerNameSet" />
 
         <transition 
             name="move-fade" 
             appear
         >
             <div 
-                v-if="!isPlayerNameSet" 
+                v-if="isPlayerNameSet" 
                 class="modal" 
                 data-testid="modal"
             >
@@ -21,9 +21,9 @@
 <script>
     import { mapGetters } from "vuex";
 
-    import ModalBackdrop from "./ModalBackdrop.vue";
-    import ModalHeader from "./ModalHeader.vue";
-    import ModalMain from "./ModalMain.vue";
+    import ModalBackdrop from "@/components/Modal/ModalBackdrop";
+    import ModalHeader from "@/components/Modal/ModalHeader";
+    import ModalMain from "@/components/Modal/ModalMain";
 
     export default {
         components: {
@@ -31,9 +31,7 @@
             ModalHeader,
             ModalMain,
         },
-        computed: {
-            ...mapGetters({ isPlayerNameSet: "playerName" }),
-        },
+        computed: mapGetters("player", { isPlayerNameSet: "name" }),
     };
 </script>
 

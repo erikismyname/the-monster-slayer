@@ -2,7 +2,7 @@
     <div class="healthbar">
         <div
             class="healthbar-status"
-            :class="contenderHealthbarLevelClass"
+            :class="contenderHealthbarStatusClass"
             :style="contenderHealthbarWidthStyle"
         ></div>
         <span class="healthbar-percentage">{{ contenderHealth }}%</span>
@@ -18,7 +18,7 @@
             },
         },
         computed: {
-            contenderHealthbarLevelClass() {
+            contenderHealthbarStatusClass() {
                 return {
                     high: this.contenderHealth > 50,
                     medium: this.contenderHealth > 25 && this.contenderHealth <= 50,

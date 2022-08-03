@@ -45,7 +45,10 @@
             BaseButton,
         },
         computed: {
-            ...mapGetters('game', ["isGameOver", "isCurrentRoundNotDivisibleByThree"]),
+            ...mapGetters("game", [
+                "isGameOver",
+                "isCurrentRoundNotDivisibleByThree",
+            ]),
             ...mapGetters("player", {
                 isPlayerHealingDisabled: "isHealingDisabled",
             }),
@@ -54,10 +57,10 @@
             processRound(action) {
                 this.$store.dispatch("player/processAction", action);
                 this.$store.dispatch("monster/processAction");
-                this.$store.dispatch("game/endCurrentRound");
+                this.$store.dispatch("game/endRound");
             },
             surrender() {
-                this.$store.dispatch("game/endGame");
+                this.$store.dispatch("game/endBattle");
             },
         },
     };

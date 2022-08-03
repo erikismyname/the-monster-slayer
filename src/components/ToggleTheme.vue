@@ -7,8 +7,7 @@
     <base-icon 
         v-else 
         @click.native="toggleDarkMode" 
-        class="fa-solid fa-moon" 
-    />
+        class="fa-solid fa-moon" />
 </template>
 
 <script>
@@ -20,7 +19,7 @@
         components: {
             BaseIcon,
         },
-        computed: mapGetters('game', ["isDarkModeOn"]),
-        methods: mapActions('game', ["toggleDarkMode"]),
+        computed: mapGetters("game", ["isDarkModeOn"]),
+        methods: mapActions("game", ["toggleDarkMode"]),
     };
 </script>

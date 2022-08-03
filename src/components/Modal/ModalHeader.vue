@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import BaseH2 from "../common/BaseH2.vue";
+    import BaseH2 from "@/components/common/BaseH2";
 
     export default {
         components: {

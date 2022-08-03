@@ -14,8 +14,8 @@
 </template>
 
 <script>
-    import BaseImage from "../common/BaseImage.vue";
-    import ToggleTheme from "../ToggleTheme.vue";
+    import BaseImage from "@/components/common/BaseImage";
+    import ToggleTheme from "@/components/ToggleTheme";
 
     export default {
         components: {

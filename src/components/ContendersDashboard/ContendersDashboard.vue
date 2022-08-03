@@ -13,19 +13,14 @@
 <script>
     import { mapGetters } from "vuex";
 
-    import BaseH2 from "../common/BaseH2.vue";
-    import ContendersDashboardCard from "./ContendersDashboardCard.vue";
+    import BaseH2 from "@/components/common/BaseH2";
+    import ContendersDashboardCard from "@/components/ContendersDashboard/ContendersDashboardCard";
 
     export default {
         components: {
             BaseH2,
             ContendersDashboardCard,
         },
-        computed: {
-            ...mapGetters("player", ["name"]),
-        },
+        computed: mapGetters("player", ["name"]),
     };
 </script>
-
-<style>
-</style>

@@ -19,17 +19,17 @@
             return { scrollY: 0 };
         },
         computed: {
-            ...mapGetters('game', ["isDarkModeOn"]),
+            ...mapGetters("game", ["isDarkModeOn"]),
+            classes() {
+                return {
+                    "fa-solid": true,
+                    "fa-circle-arrow-up": true,
+                    dark: this.isDarkModeOn,
+                };
+            },
             isScrollToTopIconVisible() {
                 return this.scrollY >= 250;
             },
-            classes() {
-                return {
-                    'fa-solid': true,
-                    'fa-circle-arrow-up': true,
-                    dark: this.isDarkModeOn
-                };
-            }
         },
         mounted() {
             window.addEventListener("scroll", this.setScrollY);

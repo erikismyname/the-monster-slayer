@@ -1,7 +1,7 @@
 <template>
     <section 
         v-if="isGameOver" 
-        :class="classes" 
+        :class="classes"
     >
         <base-h2>Game Over</base-h2>
 
@@ -18,7 +18,7 @@
             <base-icon class="fa-solid fa-face-meh" />
         </base-h3>
 
-        <base-button @click.native="startNewGame">
+        <base-button @click.native="startNewGame"> 
             Start New Game
         </base-button>
     </section>
@@ -27,10 +27,10 @@
 <script>
     import { mapGetters } from "vuex";
 
-    import BaseButton from "./common/BaseButton.vue";
-    import BaseH2 from "./common/BaseH2.vue";
-    import BaseH3 from "./common/BaseH3.vue";
-    import BaseIcon from "./common/BaseIcon.vue";
+    import BaseButton from "@/components/common/BaseButton";
+    import BaseH2 from "@/components/common/BaseH2";
+    import BaseH3 from "@/components/common/BaseH3";
+    import BaseIcon from "@/components/common/BaseIcon";
 
     export default {
         components: {
@@ -40,22 +40,22 @@
             BaseIcon,
         },
         computed: {
-            ...mapGetters('game', [
+            ...mapGetters("game", [
                 "isGameOver",
+                "isDarkModeOn",
                 "isPlayerWinner",
                 "isMonsterWinner",
-                "isDarkModeOn",
             ]),
             classes() {
                 return {
                     container: true,
-                    dark: this.isDarkModeOn
+                    dark: this.isDarkModeOn,
                 };
-            }
+            },
         },
         methods: {
             startNewGame() {
-                this.$store.dispatch("game/startNewGame");
+                this.$store.dispatch("game/restart");
             },
         },
     };

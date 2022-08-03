@@ -1,5 +1,8 @@
 <template>
-    <transition-group tag="ul" name="entry">
+    <transition-group 
+        tag="ul" 
+        name="entry"
+    >
         <battle-log-list-item
             v-for="entry in entries"
             :key="entry.id"
@@ -9,7 +12,7 @@
 </template>
 
 <script>
-    import BattleLogListItem from "./BattleLogListItem.vue";
+    import BattleLogListItem from "@/components/BattleLog/BattleLogListItem";
 
     export default {
         components: {

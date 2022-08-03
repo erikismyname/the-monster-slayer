@@ -1,5 +1,8 @@
 <template>
-    <img :src="src" :alt="alt" />
+    <img 
+        :src="src" 
+        :alt="alt" 
+    />
 </template>
 
 <script>
@@ -24,6 +27,6 @@
     }
 
     .player-avatar {
-        margin-right: .1rem;
+        margin-right: 0.1rem;
     }
 </style>

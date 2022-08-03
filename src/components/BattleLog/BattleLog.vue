@@ -21,9 +21,9 @@
 <script>
     import { mapGetters, mapActions } from "vuex";
 
-    import BaseH2 from '../common/BaseH2.vue';
-    import BaseIcon from "../common/BaseIcon.vue";
-    import BattleLogList from "./BattleLogList.vue";
+    import BaseH2 from "@/components/common/BaseH2";
+    import BaseIcon from "@/components/common/BaseIcon";
+    import BattleLogList from "@/components/BattleLog/BattleLogList";
 
     export default {
         components: {
@@ -32,18 +32,16 @@
             BattleLogList,
         },
         computed: {
-            ...mapGetters('battleLog', ["entries", "isEntriesOrderDescending"]),
-            ...mapGetters('game', ['isDarkModeOn']),
+            ...mapGetters("battleLog", ["entries", "isEntriesOrderDescending"]),
+            ...mapGetters("game", ["isDarkModeOn"]),
             classes() {
                 return {
                     container: true,
-                    dark: this.isDarkModeOn
+                    dark: this.isDarkModeOn,
                 };
-            }
+            },
         },
-        methods: {
-            ...mapActions('battleLog', ["changeEntriesOrder"]),
-        },
+        methods: mapActions("battleLog", ["changeEntriesOrder"]),
     };
 </script>
 

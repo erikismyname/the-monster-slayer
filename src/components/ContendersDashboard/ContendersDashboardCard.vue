@@ -1,8 +1,6 @@
 <template>
     <section :class="classes">
-        <contenders-dashboard-card-second-wind-badge
-            :has-contender-second-wind="hasContenderSecondWind"
-        />
+        <contenders-dashboard-card-second-wind-badge :has-contender-second-wind="hasContenderSecondWind" />
 
         <slot></slot>
 
@@ -21,24 +19,22 @@
                 :src="healthPotionImagePath" 
                 alt="A health potion" 
             />
+
             <span class="health-potions-counter">
                 {{ playerHealthPotions }}
             </span>
         </div>
 
-        <contenders-dashboard-card-healthbar
-            :contenderHealth="contenderHealth"
-        />
+        <contenders-dashboard-card-healthbar :contenderHealth="contenderHealth" />
     </section>
 </template>
 
 <script>
-    // use createNamespacedHelpers insead?
     import { mapGetters } from "vuex";
 
-    import BaseImage from "../common/BaseImage.vue";
-    import ContendersDashboardCardHealthbar from "./ContendersDashboardCardHealthbar.vue";
-    import ContendersDashboardCardSecondWindBadge from "./ContendersDashboardCardSecondWindBadge.vue";
+    import BaseImage from "@/components/common/BaseImage";
+    import ContendersDashboardCardHealthbar from "@/components/ContendersDashboard/ContendersDashboardCardHealthbar";
+    import ContendersDashboardCardSecondWindBadge from "@/components/ContendersDashboard/ContendersDashboardCardSecondWindBadge";
 
     export default {
         components: {
