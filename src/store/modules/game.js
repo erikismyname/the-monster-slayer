@@ -1,14 +1,15 @@
 export default {
+    namespaced: true,
     state: {
-        currentRound: 0,
+        round: 0,
         winner: null,
         theme: 'light'
     },
     getters: {
         isCurrentRoundNotDivisibleByThree(state) {
-            return state.currentRound % 3 !== 0;
+            return state.round % 3 !== 0;
         },
-        isGameOver(state) {
+        isOver(state) {
             return state.winner;
         },
         isPlayerWinner(state) {
@@ -26,16 +27,16 @@ export default {
     },
     mutations: {
         INCREMENT_ROUND(state) {
-            state.currentRound++;
+            state.round++;
         },
         SET_WINNER(state, winner) {
             state.winner = winner;
         },
         RESET_GAME_DATA(state) {
-            state.currentRound = 0;
+            state.round = 0;
             state.winner = null;
         },
-        SET_THEME(state) {
+        TOGGLE_THEME(state) {
             state.theme = state.theme === 'light' ? 'dark' : 'light';
         }
     },
@@ -44,9 +45,9 @@ export default {
             if (rootGetters['monster/health'] <= 0 && rootGetters['player/health'] <= 0) {
                 commit('SET_WINNER', 'draw');
             } else if (rootGetters['monster/health'] <= 0) {
-                dispatch('monster/processDying');
+                dispatch('monster/processDying', null, { root: true });
             } else if (rootGetters['player/health'] <= 0) {
-                dispatch('player/processDying');
+                dispatch('player/processDying', null, { root: true });
             }
 
             commit('INCREMENT_ROUND'); // check if even if someone dies it increments the round
@@ -55,13 +56,13 @@ export default {
             commit('SET_WINNER', 'monster');
         },
         startNewGame({ commit }) {
-            commit('monster/RESET_DATA');
-            commit('player/RESET_DATA');
-            commit('RESET_ENTRIES_DATA');
+            commit('monster/RESET_DATA', null, { root: true });
+            commit('player/RESET_DATA', null, { root: true });
+            commit('battleLog/RESET_ENTRIES_DATA', null, { root: true });
             commit('RESET_GAME_DATA');
         },
-        setTheme({ commit }) {
-            commit('SET_THEME');
+        toggleTheme({ commit }) {
+            commit('TOGGLE_THEME');
         }
     }
 };

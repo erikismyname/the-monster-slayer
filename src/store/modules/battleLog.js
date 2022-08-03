@@ -1,6 +1,7 @@
 import formatEntry from "@/utils/formatEntry";
 
 export default {
+    namespaced: true,
     state: {
         entries: [],
         entriesOrder: 'descending',
@@ -17,21 +18,23 @@ export default {
         ADD_ENTRY(state, entry) {
             state.entries.unshift(formatEntry(entry));
         },
-        CHANGE_ENTRIES_ORDER(state) {
+        TOGGLE_ENTRIES_ORDER(state) {
             state.entriesOrder =
                 state.entriesOrder === 'descending'
                     ? 'ascending'
                     : 'descending';
-            // separate func for below logic?
-            // use map? more elegant?
-            const sortedBattleLog = [];
+        },
+        SORT_ENTRIES(state) {
+            const sortedEntries = [];
+
             for (let i = 0; i < state.entries.length; i += 2) {
-                sortedBattleLog.unshift(
+                sortedEntries.unshift(
                     state.entries[i],
                     state.entries[i + 1]
                 );
             }
-            state.entries = sortedBattleLog;
+
+            state.entries = sortedEntries;
         },
         RESET_ENTRIES_DATA(state) {
             state.entries = [];
@@ -39,11 +42,9 @@ export default {
         }
     },
     actions: {
-        addEntry({ commit }, entry) {
-            commit('ADD_ENTRY', entry);
-        },
         changeEntriesOrder({ commit }) {
-            commit('CHANGE_ENTRIES_ORDER');
+            commit('TOGGLE_ENTRIES_ORDER');
+            commit('SORT_ENTRIES');
         },
     }
 };

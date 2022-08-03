@@ -1,6 +1,6 @@
 import config from '@/config';
 import getRandomValueBetween from "@/utils/getRandomValueBetween";
-import hasSecondWind from '@/utils/hasSecondWind';
+import hasContenderSecondWind from '@/utils/hasContenderSecondWind';
 
 export default {
     namespaced: true,
@@ -26,38 +26,35 @@ export default {
     },
     mutations: {
         DECREASE_HEALTH(state, points) {
-            state.health -= points;
-
-            if (state.health < 0) {
-                state.health = 0;
-            }
+            const newHealth = state.health - points;
+            state.health = newHealth >= 0 ? newHealth : 0;
         },
         SET_LAST_DAMAGE_POINTS_TAKEN(state, points) {
             state.lastDamagePointsTaken = points;
         },
         SET_SECOND_WIND(state) {
+            state.health = 50;
             state.hasSecondWind = true;
             state.hasUsedSecondWind = true;
-            state.health = 50;
         },
         RESET_DATA(state) {
-            state.health = 100;
+            state.health = config.MONSTER_MAX_HEALTH_POINTS;
             state.hasSecondWind = false;
             state.hasUsedSecondWind = false;
             state.lastDamagePointsTaken = null;
         }
     },
     actions: {
-        processAction({ dispatch, rootGetters }) {
+        processAction({ commit, dispatch, rootGetters }) {
             dispatch('attack');
-            dispatch('addEntry', {
+
+            commit('battleLog/ADD_ENTRY', {
                 contender: 'Monster',
                 action: 'attack',
                 points: rootGetters['player/lastDamagePointsTaken']
             }, { root: true });
         },
         attack({ commit }) {
-            // extract the logic for attack points in a separate func in utils?
             const attackPoints = getRandomValueBetween(
                 config.MONSTER_MIN_ATTACK_POINTS,
                 config.MONSTER_MAX_ATTACK_POINTS
@@ -67,9 +64,9 @@ export default {
             commit('player/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
         },
         processDying({ getters, commit }) {
-            hasSecondWind(getters.hasUsedSecondWind)
+            hasContenderSecondWind(getters.hasUsedSecondWind)
                 ? commit('SET_SECOND_WIND')
-                : commit('SET_WINNER', 'player', { root: true });
+                : commit('game/SET_WINNER', 'player', { root: true });
         },
     }
 };

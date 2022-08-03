@@ -1,6 +1,6 @@
 import config from '@/config';
 import getRandomValueBetween from '@/utils/getRandomValueBetween';
-import hasSecondWind from '@/utils/hasSecondWind';
+import hasContenderSecondWind from '@/utils/hasContenderSecondWind';
 
 export default {
     namespaced: true,
@@ -44,18 +44,12 @@ export default {
             state.name = name;
         },
         DECREASE_HEALTH(state, points) {
-            state.health -= points;
-
-            if (state.health < 0) {
-                state.health = 0;
-            }
+            const newHealth = state.health - points;
+            state.health = newHealth >= 0 ? newHealth : 0;
         },
         INCREASE_HEALTH(state, points) {
-            state.health += points;
-
-            if (state.health > 100) {
-                state.health = 100;
-            }
+            const newHealth = state.health + points;
+            state.health = newHealth <= 100 ? newHealth : 100;
         },
         SET_LAST_DAMAGE_POINTS_TAKEN(state, points) {
             state.lastDamagePointsTaken = points;
@@ -84,25 +78,39 @@ export default {
         setName({ commit }, name) {
             commit('SET_NAME', name);
         },
-        processAction({ dispatch, getters, rootGetters }, { action, isSpecialAttack }) {
-            action === 'attack' ? dispatch('attack', isSpecialAttack) : dispatch('heal');
+        processAction({ commit, dispatch, getters, rootGetters }, action) {
+            switch (action) {
+                case 'attack':
+                    dispatch('attack');
+                    break;
+                case 'specialAttack':
+                    dispatch('specialAttack');
+                    break;
+                case 'heal':
+                    dispatch('heal');
+                    break;
+            }
 
-            dispatch('addEntry', {
+            commit('battleLog/ADD_ENTRY', {
                 contender: 'Player',
                 action,
                 points: action === 'attack' ? rootGetters['monster/lastDamagePointsTaken'] : getters.lastHealthPointsGained
             }, { root: true });
         },
-        attack({ commit }, isSpecialAttack) {
-            const attackPoints = isSpecialAttack
-                ? getRandomValueBetween(
-                    config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
-                    config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
-                )
-                : getRandomValueBetween(
-                    config.PLAYER_MIN_ATTACK_POINTS,
-                    config.PLAYER_MAX_ATTACK_POINTS
-                );
+        attack({ commit }) {
+            const attackPoints = getRandomValueBetween(
+                config.PLAYER_MIN_ATTACK_POINTS,
+                config.PLAYER_MAX_ATTACK_POINTS
+            );
+
+            commit('monster/DECREASE_HEALTH', attackPoints, { root: true });
+            commit('monster/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
+        },
+        specialAttack({ commit }) {
+            const attackPoints = getRandomValueBetween(
+                config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
+                config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
+            );
 
             commit('monster/DECREASE_HEALTH', attackPoints, { root: true });
             commit('monster/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
@@ -117,10 +125,10 @@ export default {
             commit('SET_LAST_HEALTH_POINTS_GAINED', healPoints);
             commit('DECREASE_HEALTH_POTIONS');
         },
-        processDying({ getters, commit }) {
-            hasSecondWind(getters.hasUsedSecondWind)
+        processDying({ commit, getters }) {
+            hasContenderSecondWind(getters.hasUsedSecondWind)
                 ? commit('SET_SECOND_WIND')
-                : commit('SET_WINNER', 'monster', { root: true });
+                : commit('game/SET_WINNER', 'monster', { root: true });
         },
     }
 };
