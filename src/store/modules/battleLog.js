@@ -24,7 +24,7 @@ export default {
                     ? 'ascending'
                     : 'descending';
         },
-        SORT_ENTRIES(state) {
+        ORDER_ENTRIES(state) {
             const sortedEntries = [];
 
             for (let i = 0; i < state.entries.length; i += 2) {
@@ -44,7 +44,7 @@ export default {
     actions: {
         changeEntriesOrder({ commit }) {
             commit('TOGGLE_ENTRIES_ORDER');
-            commit('SORT_ENTRIES');
+            commit('ORDER_ENTRIES');
         },
     }
 };
