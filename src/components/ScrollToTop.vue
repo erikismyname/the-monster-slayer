@@ -2,8 +2,7 @@
     <base-icon
         v-if="isScrollToTopIconVisible"
         @click.native="scrollToTop"
-        :class="theme"
-        class="fa-solid fa-circle-arrow-up"
+        :class="classes"
     />
 </template>
 
@@ -20,10 +19,17 @@
             return { scrollY: 0 };
         },
         computed: {
-            ...mapGetters('game', ["theme"]),
+            ...mapGetters('game', ["isDarkModeOn"]),
             isScrollToTopIconVisible() {
                 return this.scrollY >= 250;
             },
+            classes() {
+                return {
+                    'fa-solid': true,
+                    'fa-circle-arrow-up': true,
+                    dark: this.isDarkModeOn
+                };
+            }
         },
         mounted() {
             window.addEventListener("scroll", this.setScrollY);

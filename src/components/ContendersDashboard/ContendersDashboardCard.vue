@@ -1,8 +1,5 @@
 <template>
-    <section 
-        :class="theme" 
-        class="container relative"
-    >
+    <section :class="classes">
         <contenders-dashboard-card-second-wind-badge
             :has-contender-second-wind="hasContenderSecondWind"
         />
@@ -15,10 +12,10 @@
             alt="Monster's avatar"
         />
         <div v-else class="player-icons relative">
-            <base-image 
+            <base-image
                 :src="playerImagePath"
-                class="player-avatar" 
-                alt="Player's avatar" 
+                class="player-avatar"
+                alt="Player's avatar"
             />
             <base-image 
                 :src="healthPotionImagePath" 
@@ -29,7 +26,9 @@
             </span>
         </div>
 
-        <contenders-dashboard-card-healthbar :contenderHealth="contenderHealth" />
+        <contenders-dashboard-card-healthbar
+            :contenderHealth="contenderHealth"
+        />
     </section>
 </template>
 
@@ -63,7 +62,14 @@
                 playerHealthPotions: "healthPotions",
                 playerHealth: "health",
             }),
-            ...mapGetters('game', ['theme']),
+            ...mapGetters("game", ["isDarkModeOn"]),
+            classes() {
+                return {
+                    container: true,
+                    relative: true,
+                    dark: this.isDarkModeOn,
+                };
+            },
             isContenderMonster() {
                 return this.contender === "monster";
             },

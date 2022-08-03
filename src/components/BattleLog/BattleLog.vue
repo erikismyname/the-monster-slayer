@@ -1,5 +1,5 @@
 <template>
-    <section :class="theme" class="container">
+    <section :class="classes">
         <base-h2>
             Battle Log
 
@@ -33,7 +33,13 @@
         },
         computed: {
             ...mapGetters('battleLog', ["entries", "isEntriesOrderDescending"]),
-            ...mapGetters('game', ['theme'])
+            ...mapGetters('game', ['isDarkModeOn']),
+            classes() {
+                return {
+                    container: true,
+                    dark: this.isDarkModeOn
+                };
+            }
         },
         methods: {
             ...mapActions('battleLog', ["changeEntriesOrder"]),

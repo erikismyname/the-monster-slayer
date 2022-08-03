@@ -1,6 +1,6 @@
 <template>
     <section 
-        v-if="!isOver" 
+        v-if="!isGameOver" 
         class="battle-controls"
     >
         <base-button
@@ -45,7 +45,7 @@
             BaseButton,
         },
         computed: {
-            ...mapGetters('game', ["isOver", "isCurrentRoundNotDivisibleByThree"]),
+            ...mapGetters('game', ["isGameOver", "isCurrentRoundNotDivisibleByThree"]),
             ...mapGetters("player", {
                 isPlayerHealingDisabled: "isHealingDisabled",
             }),

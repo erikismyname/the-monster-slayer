@@ -1,8 +1,7 @@
 <template>
     <section 
-        v-if="isOver" 
-        :class="theme" 
-        class="container"
+        v-if="isGameOver" 
+        :class="classes" 
     >
         <base-h2>Game Over</base-h2>
 
@@ -42,11 +41,17 @@
         },
         computed: {
             ...mapGetters('game', [
-                "isOver",
+                "isGameOver",
                 "isPlayerWinner",
                 "isMonsterWinner",
-                "theme",
+                "isDarkModeOn",
             ]),
+            classes() {
+                return {
+                    container: true,
+                    dark: this.isDarkModeOn
+                };
+            }
         },
         methods: {
             startNewGame() {
