@@ -38,7 +38,7 @@ export default {
         }
     },
     actions: {
-        endCurrentRound({ dispatch, commit, rootGetters }) {
+        endRound({ dispatch, commit, rootGetters }) {
             if (rootGetters['monster/health'] <= 0 && rootGetters['player/health'] <= 0) {
                 commit('SET_WINNER', 'draw');
             } else if (rootGetters['monster/health'] <= 0) {
@@ -49,10 +49,10 @@ export default {
 
             commit('INCREMENT_ROUND'); // check if even if someone dies it increments the round
         },
-        endGame({ commit }) {
+        endBattle({ commit }) {
             commit('SET_WINNER', 'monster');
         },
-        startNewGame({ commit }) {
+        restart({ commit }) {
             commit('monster/RESET_DATA', null, { root: true });
             commit('player/RESET_DATA', null, { root: true });
             commit('battleLog/RESET_ENTRIES_DATA', null, { root: true });
