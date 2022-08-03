@@ -3,13 +3,13 @@ export default {
     state: {
         round: 0,
         winner: null,
-        theme: 'light'
+        isDarkModeOn: false
     },
     getters: {
         isCurrentRoundNotDivisibleByThree(state) {
             return state.round % 3 !== 0;
         },
-        isOver(state) {
+        isGameOver(state) {
             return state.winner;
         },
         isPlayerWinner(state) {
@@ -18,11 +18,8 @@ export default {
         isMonsterWinner(state) {
             return state.winner === "monster";
         },
-        theme(state) {
-            return state.theme;
-        },
-        isThemeLight(state) {
-            return state.theme === 'light';
+        isDarkModeOn(state) {
+            return state.isDarkModeOn;
         }
     },
     mutations: {
@@ -36,8 +33,8 @@ export default {
             state.round = 0;
             state.winner = null;
         },
-        TOGGLE_THEME(state) {
-            state.theme = state.theme === 'light' ? 'dark' : 'light';
+        TOGGLE_DARK_MODE(state) {
+            state.isDarkModeOn = !state.isDarkModeOn;
         }
     },
     actions: {
@@ -61,8 +58,8 @@ export default {
             commit('battleLog/RESET_ENTRIES_DATA', null, { root: true });
             commit('RESET_GAME_DATA');
         },
-        toggleTheme({ commit }) {
-            commit('TOGGLE_THEME');
+        toggleDarkMode({ commit }) {
+            commit('TOGGLE_DARK_MODE');
         }
     }
 };
