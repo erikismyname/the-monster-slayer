@@ -1,8 +1,5 @@
 <template>
-    <div 
-        :class="theme" 
-        class="app"
-    >
+    <div :class="classes">
         <modal />
         <the-header />
         <battle-screen />
@@ -25,7 +22,15 @@
             ScrollToTop,
             TheHeader,
         },
-        computed: mapGetters('game', ["theme"]),
+        computed: {
+            ...mapGetters("game", ["isDarkModeOn"]),
+            classes() {
+                return {
+                    app: true,
+                    dark: this.isDarkModeOn,
+                };
+            },
+        },
     };
 </script>
 
