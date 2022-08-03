@@ -25,7 +25,7 @@
             ScrollToTop,
             TheHeader,
         },
-        computed: mapGetters(["theme"]),
+        computed: mapGetters('game', ["theme"]),
     };
 </script>
 

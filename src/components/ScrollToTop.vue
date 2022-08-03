@@ -20,20 +20,23 @@
             return { scrollY: 0 };
         },
         computed: {
-            ...mapGetters(["theme"]),
+            ...mapGetters('game', ["theme"]),
             isScrollToTopIconVisible() {
                 return this.scrollY >= 250;
             },
         },
         mounted() {
-            addEventListener("scroll", this.setScrollY);
+            window.addEventListener("scroll", this.setScrollY);
+        },
+        beforeDestroy() {
+            window.removeEventListener("scroll", this.setScrollY);
         },
         methods: {
-            setScrollY() {
-                this.scrollY = scrollY;
+            setScrollY(event) {
+                this.scrollY = event.target.defaultView.scrollY;
             },
             scrollToTop() {
-                scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: "smooth" });
             },
         },
     };

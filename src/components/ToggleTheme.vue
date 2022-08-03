@@ -1,12 +1,12 @@
 <template>
     <base-icon
         v-if="isThemeLight"
-        @click.native="setTheme"
+        @click.native="toggleTheme"
         class="fa-solid fa-sun"
     />
     <base-icon 
         v-else 
-        @click.native="setTheme" 
+        @click.native="toggleTheme" 
         class="fa-solid fa-moon" 
     />
 </template>
@@ -20,7 +20,7 @@
         components: {
             BaseIcon,
         },
-        computed: mapGetters(["isThemeLight"]),
-        methods: mapActions(["setTheme"]),
+        computed: mapGetters('game', ["isThemeLight"]),
+        methods: mapActions('game', ["toggleTheme"]),
     };
 </script>

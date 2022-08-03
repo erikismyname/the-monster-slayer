@@ -63,7 +63,7 @@
                 playerHealthPotions: "healthPotions",
                 playerHealth: "health",
             }),
-            ...mapGetters(['theme']),
+            ...mapGetters('game', ['theme']),
             isContenderMonster() {
                 return this.contender === "monster";
             },

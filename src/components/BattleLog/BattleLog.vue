@@ -32,10 +32,11 @@
             BattleLogList,
         },
         computed: {
-            ...mapGetters(["entries", "isEntriesOrderDescending", 'theme']),
+            ...mapGetters('battleLog', ["entries", "isEntriesOrderDescending"]),
+            ...mapGetters('game', ['theme'])
         },
         methods: {
-            ...mapActions(["changeEntriesOrder"]),
+            ...mapActions('battleLog', ["changeEntriesOrder"]),
         },
     };
 </script>

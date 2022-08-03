@@ -1,16 +1,19 @@
 <template>
-    <section v-if="!isGameOver" class="battle-controls">
+    <section 
+        v-if="!isOver" 
+        class="battle-controls"
+    >
         <base-button
-            @click.native="processRound('attack', false)"
-            data-testid="attack-btn"
+            @click.native="processRound('attack')"
+            data-testid="attack-button"
         >
             ATTACK
         </base-button>
 
         <base-button
             :disabled="isCurrentRoundNotDivisibleByThree"
-            @click.native="processRound('attack', true)"
-            data-testid="special-attack-btn"
+            @click.native="processRound('specialAttack')"
+            data-testid="special-attack-button"
         >
             SPECIAL ATTACK
         </base-button>
@@ -18,14 +21,14 @@
         <base-button
             :disabled="isPlayerHealingDisabled"
             @click.native="processRound('heal')"
-            data-testid="heal-btn"
+            data-testid="heal-button"
         >
             HEAL
         </base-button>
 
         <base-button 
             @click.native="surrender" 
-            data-testid="surrender-btn"
+            data-testid="surrender-button"
         >
             SURRENDER
         </base-button>
@@ -42,25 +45,19 @@
             BaseButton,
         },
         computed: {
-            ...mapGetters([
-                "isGameOver",
-                "isCurrentRoundNotDivisibleByThree",
-            ]),
-            ...mapGetters('player', {
-                isPlayerHealingDisabled: 'isHealingDisabled'
+            ...mapGetters('game', ["isOver", "isCurrentRoundNotDivisibleByThree"]),
+            ...mapGetters("player", {
+                isPlayerHealingDisabled: "isHealingDisabled",
             }),
         },
         methods: {
-            processRound(action, isSpecialAttack) {
-                this.$store.dispatch("player/processAction", {
-                    action,
-                    isSpecialAttack,
-                });
+            processRound(action) {
+                this.$store.dispatch("player/processAction", action);
                 this.$store.dispatch("monster/processAction");
-                this.$store.dispatch("endCurrentRound");
+                this.$store.dispatch("game/endCurrentRound");
             },
             surrender() {
-                this.$store.dispatch("endGame");
+                this.$store.dispatch("game/endGame");
             },
         },
     };

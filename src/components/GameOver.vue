@@ -1,6 +1,6 @@
 <template>
     <section 
-        v-if="isGameOver" 
+        v-if="isOver" 
         :class="theme" 
         class="container"
     >
@@ -41,8 +41,8 @@
             BaseIcon,
         },
         computed: {
-            ...mapGetters([
-                "isGameOver",
+            ...mapGetters('game', [
+                "isOver",
                 "isPlayerWinner",
                 "isMonsterWinner",
                 "theme",
@@ -50,7 +50,7 @@
         },
         methods: {
             startNewGame() {
-                this.$store.dispatch("startNewGame");
+                this.$store.dispatch("game/startNewGame");
             },
         },
     };
