@@ -19,5 +19,5 @@ describe('BaseButton.vue', () => {
 
     it('should render a correct button text', () => {
         expect(button.text()).toBe('Test');
-    })
+    });
 });
