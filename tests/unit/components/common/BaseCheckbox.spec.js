@@ -18,7 +18,7 @@ describe('BaseCheckbox.vue', () => {
         expect(input.attributes('type')).toBe('checkbox');
     });
 
-    it('should change checked value when clicked', async () => {
+    it('should change checked value on click', async () => {
         expect(input.element.checked).toBe(false);
         await input.setChecked();
         expect(input.element.checked).toBe(true);
@@ -26,7 +26,7 @@ describe('BaseCheckbox.vue', () => {
         expect(input.element.checked).toBe(false);
     });
 
-    it('should emit an event when clicked', async () => {
+    it('should emit an event on click', async () => {
         await input.setChecked();
         const event = wrapper.emitted('change');
 
