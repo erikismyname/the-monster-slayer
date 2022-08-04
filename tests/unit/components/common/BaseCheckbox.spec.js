@@ -13,9 +13,8 @@ describe('BaseCheckbox.vue', () => {
         input = wrapper.find('input');
     });
 
-    it('should render an input of type checkbox', () => {
+    it('should render an input', () => {
         expect(input.exists()).toBe(true);
-        expect(input.attributes('type')).toBe('checkbox');
     });
 
     it('should change checked value on click', async () => {

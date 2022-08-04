@@ -20,11 +20,11 @@ describe('BaseImage.vue', () => {
         expect(image.exists()).toBe(true);
     });
 
-    it('should render correct src', () => {
+    it('should render a correct src', () => {
         expect(image.attributes('src')).toBe('Test 1');
     });
 
-    it('should render correct alt', () => {
+    it('should render a correct alt', () => {
         expect(image.attributes('alt')).toBe('Test 2');
     });
 });

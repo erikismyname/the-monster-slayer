@@ -13,9 +13,8 @@ describe('BaseInput.vue', () => {
         input = wrapper.find('input');
     });
 
-    it('should render an input of type text', () => {
+    it('should render an input', () => {
         expect(input.exists()).toBe(true);
-        expect(input.attributes('type')).toBe('text');
     });
 
     it('should change value on input', async () => {

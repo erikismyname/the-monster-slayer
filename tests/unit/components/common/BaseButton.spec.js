@@ -17,7 +17,7 @@ describe('BaseButton.vue', () => {
         expect(button.exists()).toBe(true);
     });
 
-    it('should render a correct button label', () => {
+    it('should render a correct button text', () => {
         expect(button.text()).toBe('Test');
     })
 });
