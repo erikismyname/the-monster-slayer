@@ -1,11 +1,20 @@
 <template>
-    <span v-if="hasContenderSecondWind" class="second-wind-badge">
+    <base-span
+        v-if="hasContenderSecondWind"
+        class="second-wind-badge"
+        data-testid="second-wind-badge"
+    >
         Second Wind
-    </span>
+    </base-span>
 </template>
 
 <script>
+    import BaseSpan from "@/components/common/BaseSpan";
+
     export default {
+        components: {
+            BaseSpan,
+        },
         props: {
             hasContenderSecondWind: {
                 type: Boolean,
@@ -14,14 +23,3 @@
         },
     };
 </script>
-
-<style scoped>
-    .second-wind-badge {
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: rotateZ(45deg) translateX(2.2rem) translateY(-0.3rem);
-        width: 8rem;
-        padding: 0.1rem;
-    }
-</style>
