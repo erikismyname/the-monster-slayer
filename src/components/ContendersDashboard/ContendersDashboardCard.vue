@@ -1,15 +1,27 @@
 <template>
     <section :class="classes">
-        <contenders-dashboard-card-second-wind-badge :has-contender-second-wind="hasContenderSecondWind" />
+        <contenders-dashboard-card-second-wind-badge
+            :has-contender-second-wind="hasContenderSecondWind"
+        />
 
-        <slot></slot>
+        <base-h2 
+            class="contender"
+            data-testid="contender"    
+        >
+            {{ contenderName }}
+        </base-h2>
 
         <base-image
             v-if="isContenderMonster"
             :src="monsterImagePath"
             alt="Monster's avatar"
+            data-testid="monster-avatar"
         />
-        <div v-else class="player-icons relative">
+        <div 
+            v-else 
+            class="player-icons relative" 
+            data-testid="player-icons"
+        >
             <base-image
                 :src="playerImagePath"
                 class="player-avatar"
@@ -20,25 +32,34 @@
                 alt="A health potion" 
             />
 
-            <span class="health-potions-counter">
+            <base-span
+                class="health-potions-counter"
+                data-testid="health-potions-counter"
+            >
                 {{ playerHealthPotions }}
-            </span>
+            </base-span>
         </div>
 
-        <contenders-dashboard-card-healthbar :contenderHealth="contenderHealth" />
+        <contenders-dashboard-card-healthbar
+            :contenderHealth="contenderHealth"
+        />
     </section>
 </template>
 
 <script>
     import { mapGetters } from "vuex";
 
+    import BaseH2 from "@/components/common/BaseH2";
     import BaseImage from "@/components/common/BaseImage";
+    import BaseSpan from "@/components/common/BaseSpan";
     import ContendersDashboardCardHealthbar from "@/components/ContendersDashboard/ContendersDashboardCardHealthbar";
     import ContendersDashboardCardSecondWindBadge from "@/components/ContendersDashboard/ContendersDashboardCardSecondWindBadge";
 
     export default {
         components: {
+            BaseH2,
             BaseImage,
+            BaseSpan,
             ContendersDashboardCardHealthbar,
             ContendersDashboardCardSecondWindBadge,
         },
@@ -55,8 +76,9 @@
             }),
             ...mapGetters("player", {
                 hasPlayerSecondWind: "hasSecondWind",
-                playerHealthPotions: "healthPotions",
                 playerHealth: "health",
+                playerHealthPotions: "healthPotions",
+                playerName: "name",
             }),
             ...mapGetters("game", ["isDarkModeOn"]),
             classes() {
@@ -68,6 +90,9 @@
             },
             isContenderMonster() {
                 return this.contender === "monster";
+            },
+            contenderName() {
+                return this.isContenderMonster ? "Monster" : this.playerName;
             },
             monsterImagePath() {
                 return require("@/assets/monster.jpg");
@@ -104,17 +129,5 @@
     .player-icons {
         display: inline-block;
         vertical-align: middle;
-    }
-
-    .health-potions-counter {
-        position: absolute;
-    }
-
-    .health-potions-counter {
-        right: 0.3rem;
-        top: -0.05rem;
-        border-radius: 50%;
-        width: 1rem;
-        font-size: 0.6rem;
     }
 </style>
