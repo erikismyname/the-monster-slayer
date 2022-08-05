@@ -22,7 +22,7 @@
                 Generate a random name
             </base-label>
         </div>
-        <span>* Note that the name can only contain letters</span>
+        <base-span>* Note that the name can only contain letters</base-span>
         <div class="button-container">
             <base-button 
                 @click.native="startGame" 
@@ -41,6 +41,7 @@
     import BaseCheckbox from "@/components/common/BaseCheckbox";
     import BaseInput from "@/components/common/BaseInput";
     import BaseLabel from "@/components/common/BaseLabel";
+    import BaseSpan from "@/components/common/BaseSpan";
 
     export default {
         components: {
@@ -48,6 +49,7 @@
             BaseCheckbox,
             BaseInput,
             BaseLabel,
+            BaseSpan,
         },
         data() {
             return {
