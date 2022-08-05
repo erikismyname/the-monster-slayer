@@ -2,6 +2,7 @@
     <section 
         v-if="!isGameOver" 
         class="battle-controls"
+        data-testid="battle-controls"
     >
         <base-button
             @click.native="processRound('attack')"
