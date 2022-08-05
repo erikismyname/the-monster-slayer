@@ -4,13 +4,24 @@
             class="healthbar-status"
             :class="contenderHealthbarStatusClass"
             :style="contenderHealthbarWidthStyle"
+            data-testid="healthbar-status"
         ></div>
-        <span class="healthbar-percentage">{{ contenderHealth }}%</span>
+        <base-span
+            class="healthbar-percentage"
+            data-testid="healthbar-percentage"
+        >
+            {{ contenderHealth }}%
+        </base-span>
     </div>
 </template>
 
 <script>
+    import BaseSpan from "@/components/common/BaseSpan";
+
     export default {
+        components: {
+            BaseSpan,
+        },
         props: {
             contenderHealth: {
                 type: Number,
@@ -47,12 +58,6 @@
     .healthbar-status {
         height: 100%;
         transition: width 500ms ease-out;
-    }
-
-    .healthbar-percentage {
-        position: absolute;
-        top: 0;
-        transform: translateX(-50%);
     }
 
     .high {
