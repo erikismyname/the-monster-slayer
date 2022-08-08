@@ -97,21 +97,23 @@ export default {
                 points: action === 'attack' ? rootGetters['monster/lastDamagePointsTaken'] : getters.lastHealthPointsGained
             }, { root: true });
         },
-        attack({ commit }) {
+        attack({ dispatch }) {
             const attackPoints = getRandomValueBetween(
                 config.PLAYER_MIN_ATTACK_POINTS,
                 config.PLAYER_MAX_ATTACK_POINTS
             );
 
-            commit('monster/DECREASE_HEALTH', attackPoints, { root: true });
-            commit('monster/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
+            dispatch('dealDamage', attackPoints);
         },
-        specialAttack({ commit }) {
+        specialAttack({ dispatch }) {
             const attackPoints = getRandomValueBetween(
                 config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
                 config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
             );
 
+            dispatch('dealDamage', attackPoints);
+        },
+        dealDamage({ commit }, attackPoints) {
             commit('monster/DECREASE_HEALTH', attackPoints, { root: true });
             commit('monster/SET_LAST_DAMAGE_POINTS_TAKEN', attackPoints, { root: true });
         },
