@@ -21,6 +21,7 @@
 <script>
     import { mapGetters, mapActions } from "vuex";
 
+    import classes from '@/mixins/classes';
     import BaseH2 from "@/components/common/BaseH2";
     import BaseIcon from "@/components/common/BaseIcon";
     import BattleLogList from "@/components/BattleLog/BattleLogList";
@@ -31,15 +32,10 @@
             BaseIcon,
             BattleLogList,
         },
+        mixins: [classes],
         computed: {
             ...mapGetters("battleLog", ["entries", "isEntriesOrderDescending"]),
             ...mapGetters("game", ["isDarkModeOn"]),
-            classes() {
-                return {
-                    container: true,
-                    dark: this.isDarkModeOn,
-                };
-            },
         },
         methods: mapActions("battleLog", ["changeEntriesOrder"]),
     };
