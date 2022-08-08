@@ -2,23 +2,24 @@
     <section 
         v-if="isGameOver" 
         :class="classes"
+        data-testid="game-over"
     >
         <base-h2>Game Over</base-h2>
 
-        <base-h3 v-if="isPlayerWinner">
+        <base-h3 v-if="isPlayerWinner" data-testid="win">
             You WON!
             <base-icon class="fa-solid fa-face-smile" />
         </base-h3>
-        <base-h3 v-else-if="isMonsterWinner">
+        <base-h3 v-else-if="isMonsterWinner" data-testid="lost">
             You LOST!
             <base-icon class="fa-solid fa-face-frown" />
         </base-h3>
-        <base-h3 v-else>
+        <base-h3 v-else data-testid="draw">
             DRAW!
             <base-icon class="fa-solid fa-face-meh" />
         </base-h3>
 
-        <base-button @click.native="startNewGame"> 
+        <base-button @click.native="startNewGame" data-testid="start-new-game"> 
             Start New Game
         </base-button>
     </section>
