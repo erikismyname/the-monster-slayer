@@ -28,6 +28,7 @@
 <script>
     import { mapGetters } from "vuex";
 
+    import classes from '@/mixins/classes';
     import BaseButton from "@/components/common/BaseButton";
     import BaseH2 from "@/components/common/BaseH2";
     import BaseH3 from "@/components/common/BaseH3";
@@ -40,6 +41,7 @@
             BaseH3,
             BaseIcon,
         },
+        mixins: [classes],
         computed: {
             ...mapGetters("game", [
                 "isGameOver",
@@ -47,12 +49,6 @@
                 "isPlayerWinner",
                 "isMonsterWinner",
             ]),
-            classes() {
-                return {
-                    container: true,
-                    dark: this.isDarkModeOn,
-                };
-            },
         },
         methods: {
             startNewGame() {
