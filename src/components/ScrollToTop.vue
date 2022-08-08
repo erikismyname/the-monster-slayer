@@ -3,6 +3,7 @@
         v-if="isScrollToTopIconVisible"
         @click.native="scrollToTop"
         :class="classes"
+        data-testid="scroll-to-top"
     />
 </template>
 
