@@ -6,7 +6,7 @@ describe('BattleLogListItem.vue', () => {
     let wrapper;
     let li;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BattleLogListItem, {
             propsData: { text: 'Test' }
         });
@@ -17,7 +17,7 @@ describe('BattleLogListItem.vue', () => {
         expect(li.exists()).toBe(true);
     });
 
-    it('should render a correct li text', () => {
+    it('should render text prop', () => {
         expect(li.text()).toBe('Test');
     });
 });
