@@ -6,7 +6,7 @@ describe('BattleLogList.vue', () => {
     let wrapper;
     let liWrapper;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BattleLogList, {
             propsData: {
                 entries: [
@@ -22,7 +22,7 @@ describe('BattleLogList.vue', () => {
         expect(liWrapper.length).toBe(2);
     });
 
-    it('should render the correct text of each entry', () => {
+    it('should render entry text', () => {
         expect(liWrapper.wrappers[0].text()).toBe('Test 1');
         expect(liWrapper.wrappers[1].text()).toBe('Test 2');
     });
