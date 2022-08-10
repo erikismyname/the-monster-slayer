@@ -1,30 +1,34 @@
-import { mount } from '@vue/test-utils';
-
+import createWrapper from '@/utils/setupTests';
 import Modal from '@/components/Modal/Modal';
 
 describe('Modal.vue', () => {
+    let player;
+
+    beforeEach(() => {
+        player = createPlayerModule();
+    });
+
     it('should render backdrop and modal when player name is not set', () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(Modal, { player });
 
         expect(wrapper.find('[data-testid="backdrop"]').exists()).toBe(false);
         expect(wrapper.find('[data-testid="modal"]').exists()).toBe(false);
     });
 
     it('should not render backdrop and modal when player name is set', () => {
-        computed.isPlayerNameSet = () => true;
-        const wrapper = createWrapper();
+        player.getters.name = () => 'Test';
+        const wrapper = createWrapper(Modal, { player });
 
         expect(wrapper.find('[data-testid="backdrop"]').exists()).toBe(true);
         expect(wrapper.find('[data-testid="modal"]').exists()).toBe(true);
     });
 });
 
-const computed = {
-    isPlayerNameSet: () => false
-};
-
-function createWrapper() {
-    return mount(Modal, {
-        computed
-    });
+function createPlayerModule() {
+    return {
+        namespaced: true,
+        getters: {
+            name: () => ''
+        }
+    }
 }
