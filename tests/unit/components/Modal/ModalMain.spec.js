@@ -1,16 +1,15 @@
-import Vuex from 'vuex';
-import { createLocalVue, mount } from '@vue/test-utils';
-
+import createWrapper from '@/utils/setupTests';
 import ModalMain from '@/components/Modal/ModalMain';
 
 describe('ModalMain.vue', () => {
     let wrapper;
+    let player = createPlayerModule();
     let input;
     let button;
     let checkbox;
 
     beforeEach(() => {
-        wrapper = createWrapper();
+        wrapper = createWrapper(ModalMain, { player });
         input = wrapper.find('[data-testid="player-name"]');
         button = wrapper.find('[data-testid="start-game"]');
         checkbox = wrapper.find('[data-testid="generate-random-name"]');
@@ -53,22 +52,13 @@ describe('ModalMain.vue', () => {
         await input.setValue('Test');
         await button.trigger('click');
 
-        expect(store.dispatch).toHaveBeenCalledTimes(1);
-        expect(store.dispatch).toHaveBeenCalledWith('player/setName', 'Test');
+        expect(player.actions.setName).toHaveBeenCalledTimes(1);
     });
 });
 
-let store;
-
-function createWrapper() {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-
-    store = new Vuex.Store();
-    store.dispatch = jest.fn();
-
-    return mount(ModalMain, {
-        localVue,
-        store,
-    });
+function createPlayerModule() {
+    return {
+        namespaced: true,
+        actions: { setName: jest.fn() }
+    }
 }
