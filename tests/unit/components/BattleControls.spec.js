@@ -1,134 +1,116 @@
-import Vuex from 'vuex';
-import { createLocalVue, mount } from '@vue/test-utils';
-
+import createWrapper from '@/utils/setupTests';
 import BattleControls from '@/components/BattleControls';
 
 describe('BattleControls.vue', () => {
+    let monster;
+    let player;
+    let game;
+    let modules;
+
+    beforeEach(() => {
+        monster = createModule('monster');
+        player = createModule('player');
+        game = createModule('game');
+        modules = { monster, player, game };
+    });
+
     it('should render section if game is not over', () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
         expect(wrapper.find('[data-testid="battle-controls"]').exists()).toBe(true);
     });
 
     it('should not render section if game is over', () => {
-        gameGetters.isGameOver = () => true;
-        const wrapper = createWrapper();
+        game.getters.isGameOver = () => true;
+        const wrapper = createWrapper(BattleControls, modules);
 
         expect(wrapper.find('[data-testid="battle-controls"]').exists()).toBe(false);
     });
 
     it('should dispatch correct action on attack', async () => {
-        gameGetters.isGameOver = () => false;
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
 
         await wrapper.find('[data-testid="attack-button"]').trigger('click');
 
-        expect(playerActions.processAction).toHaveBeenCalledTimes(1);
-        expect(monsterActions.processAction).toHaveBeenCalledTimes(1);
-        expect(gameActions.endRound).toHaveBeenCalledTimes(1);
+        expect(player.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(monster.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(game.actions.endRound).toHaveBeenCalledTimes(1);
     });
 
     it('should not disable special attack button if round is divisible by 3', async () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
         expect(wrapper.find('[data-testid="special-attack-button"]').element.disabled).toBe(false);
     });
 
     it('should disable special attack button if round is not divisible by 3', async () => {
-        gameGetters.isCurrentRoundNotDivisibleByThree = () => true;
-        const wrapper = createWrapper();
+        game.getters.isCurrentRoundNotDivisibleByThree = () => true;
+        const wrapper = createWrapper(BattleControls, modules);
+
         expect(wrapper.find('[data-testid="special-attack-button"]').element.disabled).toBe(true);
     });
 
     it('should dispatch correct action on special attack', async () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
 
         await wrapper.find('[data-testid="special-attack-button"]').trigger('click');
 
-        expect(playerActions.processAction).toHaveBeenCalledTimes(1);
-        expect(monsterActions.processAction).toHaveBeenCalledTimes(1);
-        expect(gameActions.endRound).toHaveBeenCalledTimes(1);
+        expect(player.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(monster.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(game.actions.endRound).toHaveBeenCalledTimes(1);
     });
 
     it('should disable healing if player health is 100 or player health potions number is 0', () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
 
         expect(wrapper.find('[data-testid="heal-button"]').element.disabled).toBe(true);
     });
 
     it('should not disable healing if player health is not 100 or player health potions number is not 0', () => {
-        computed.isPlayerHealingDisabled = () => false;
-        const wrapper = createWrapper();
+        player.getters.isHealingDisabled = () => false;
+        const wrapper = createWrapper(BattleControls, modules);
 
         expect(wrapper.find('[data-testid="heal-button"]').element.disabled).toBe(false);
     });
 
     it('should dispatch correct action on heal', async () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
 
         await wrapper.find('[data-testid="special-attack-button"]').trigger('click');
 
-        expect(playerActions.processAction).toHaveBeenCalledTimes(1);
-        expect(monsterActions.processAction).toHaveBeenCalledTimes(1);
-        expect(gameActions.endRound).toHaveBeenCalledTimes(1);
+        expect(player.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(monster.actions.processAction).toHaveBeenCalledTimes(1);
+        expect(game.actions.endRound).toHaveBeenCalledTimes(1);
     });
 
     it('should dispatch correct action on surrender', async () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleControls, modules);
 
         await wrapper.find('[data-testid="surrender-button"]').trigger('click');
 
-        expect(gameActions.endBattle).toHaveBeenCalledTimes(1);
+        expect(game.actions.endBattle).toHaveBeenCalledTimes(1);
     });
 });
 
-const computed = {
-    isPlayerHealingDisabled: () => true
-};
-
-const gameGetters = {
-    isGameOver: () => false,
-    isCurrentRoundNotDivisibleByThree: () => false
-};
-
-let store;
-
-const playerActions = {
-    processAction: jest.fn()
-};
-
-const monsterActions = {
-    processAction: jest.fn()
-};
-
-const gameActions = {
-    endRound: jest.fn(),
-    endBattle: jest.fn()
-};
-
-function createWrapper() {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-
-    store = new Vuex.Store({
-        modules: {
-            game: {
-                namespaced: true,
-                getters: gameGetters,
-                actions: gameActions
+function createModule(name) {
+    const modules = {
+        monster: { actions: { processAction: jest.fn() } },
+        player: {
+            getters: { isHealingDisabled: () => true },
+            actions: { processAction: jest.fn() }
+        },
+        game: {
+            getters: {
+                isGameOver: () => false,
+                isCurrentRoundNotDivisibleByThree: () => false
             },
-            player: {
-                namespaced: true,
-                actions: playerActions
-            },
-            monster: {
-                namespaced: true,
-                actions: monsterActions
+            actions: {
+                endRound: jest.fn(),
+                endBattle: jest.fn()
             }
         }
-    });
+    };
 
-    return mount(BattleControls, {
-        localVue,
-        store,
-        computed
-    });
+    const module = modules[name];
+    module.namespaced = true;
+
+    return module;
 }
