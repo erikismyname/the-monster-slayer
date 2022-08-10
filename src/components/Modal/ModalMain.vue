@@ -84,11 +84,9 @@
                 this.$store.dispatch("player/setName", this.playerName);
             },
             isPlayerNameNotValid() {
-                if (!this.playerName || !this.playerName.match(/^[a-zA-Z]+$/)) {
-                    return true;
-                }
-
-                return false;
+                return !this.playerName || !this.playerName.match(/^[a-zA-Z]+$/)
+                    ? true
+                    : false;
             },
         },
     };
