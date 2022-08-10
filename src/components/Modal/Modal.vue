@@ -70,12 +70,23 @@
         }
     }
 
+    @media(max-width: 21.562rem) {
+        .modal {
+            top: 9.9rem;
+        }
+    }
+
     @media (max-width: 20rem) {
         .modal {
             width: 15rem;
-            top: 9.9rem;
             left: calc(50% - 7.5rem);
             text-align: center;
+        }
+    }
+
+    @media(max-width: 16.9375rem) {
+        .modal {
+            top: 12.8rem;
         }
     }
 </style>
