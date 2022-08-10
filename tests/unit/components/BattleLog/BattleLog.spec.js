@@ -1,86 +1,77 @@
-import Vuex from 'vuex';
-import { createLocalVue, mount } from '@vue/test-utils';
-
+import createWrapper from '@/utils/setupTests';
 import BattleLog from '@/components/BattleLog/BattleLog';
 
 describe('BattleLog.vue', () => {
+    let battleLog;
+    let game;
+    let modules;
+
+    beforeEach(() => {
+        battleLog = createBattleLogModule();
+        game = createGameModule();
+        modules = { battleLog, game };
+    });
+
     it('should not apply dark class when dark mode is off', () => {
-        const wrapper = createWrapper();
+        const wrapper = createWrapper(BattleLog, modules);
+
         expect(wrapper.classes('dark')).toBe(false);
     });
 
     it('should apply dark class when dark mode is on', () => {
-        const wrapper = createWrapper({ isDarkModeOn: true });
+        game.getters.isDarkModeOn = () => true;
+        const wrapper = createWrapper(BattleLog, modules);
+
         expect(wrapper.classes('dark')).toBe(true);
     });
 
     it('should render arrow down instead of arrow up when entries order is descending', () => {
-        const wrapper = createWrapper({ isEntriesOrderDescending: true });
+        const wrapper = createWrapper(BattleLog, modules);
 
         expect(wrapper.find('.fa-arrow-down').exists()).toBe(true);
         expect(wrapper.find('.fa-arrow-up').exists()).toBe(false);
     });
 
     it('should render arrow up instead of arrow down when entries order is ascending', () => {
-        const wrapper = createWrapper();
+        battleLog.getters.isEntriesOrderDescending = () => false;
+        const wrapper = createWrapper(BattleLog, modules);
 
         expect(wrapper.find('.fa-arrow-up').exists()).toBe(true);
         expect(wrapper.find('.fa-arrow-down').exists()).toBe(false);
     });
 
-    it('dispatches correct action when the arrow down is clicked', async () => {
-        const wrapper = createWrapper({ isEntriesOrderDescending: true });
+    it('should dispatch the correct action when the arrow down is clicked', async () => {
+        const wrapper = createWrapper(BattleLog, modules);
 
         await wrapper.find('.fa-arrow-down').trigger('click');
-        expect(actions.changeEntriesOrder).toHaveBeenCalledTimes(1);
+        expect(battleLog.actions.changeEntriesOrder).toHaveBeenCalledTimes(1);
     });
 
-    it('dispatches correct action when the arrow up is clicked', async () => {
-        const wrapper = createWrapper();
+    it('should dispatch the correct action when the arrow up is clicked', async () => {
+        battleLog.getters.isEntriesOrderDescending = () => false;
+        const wrapper = createWrapper(BattleLog, modules);
 
         await wrapper.find('.fa-arrow-up').trigger('click');
-        expect(actions.changeEntriesOrder).toHaveBeenCalledTimes(2);
+        expect(battleLog.actions.changeEntriesOrder).toHaveBeenCalledTimes(1);
     });
 });
 
-function createWrapper(initialStoreState = {}) {
-    const localVue = createTestVue();
-    const store = createStore(initialStoreState);
-
-    return mount(BattleLog, {
-        localVue,
-        store,
-    });
+function createBattleLogModule() {
+    return {
+        namespaced: true,
+        getters: {
+            entries: () => [],
+            isEntriesOrderDescending: () => true,
+        },
+        actions: { changeEntriesOrder: jest.fn() }
+    }
 }
 
-function createTestVue() {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-
-    return localVue;
-}
-
-const actions = {
-    changeEntriesOrder: jest.fn()
-};
-
-function createStore({ isEntriesOrderDescending, isDarkModeOn }) {
-    return new Vuex.Store({
-        modules: {
-            battleLog: {
-                namespaced: true,
-                getters: {
-                    isEntriesOrderDescending: () => isEntriesOrderDescending,
-                    entries: () => []
-                },
-                actions
-            },
-            game: {
-                namespaced: true,
-                getters: {
-                    isDarkModeOn: () => isDarkModeOn
-                }
-            }
+function createGameModule() {
+    return {
+        namespaced: true,
+        getters: {
+            isDarkModeOn: () => false
         }
-    });
+    };
 }
