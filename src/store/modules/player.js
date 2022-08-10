@@ -94,7 +94,7 @@ export default {
             commit('battleLog/ADD_ENTRY', {
                 contender: 'Player',
                 action,
-                points: action === 'attack' ? rootGetters['monster/lastDamagePointsTaken'] : getters.lastHealthPointsGained
+                points: action === 'heal' ? getters.lastHealthPointsGained : rootGetters['monster/lastDamagePointsTaken']
             }, { root: true });
         },
         attack({ dispatch }) {
