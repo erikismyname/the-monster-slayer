@@ -1,49 +1,54 @@
-import { mount } from '@vue/test-utils'
-
+import createWrapper from '@/utils/setupTests';
 import ScrollToTop from '@/components/ScrollToTop';
 
 describe('ScrollToTop', () => {
-    it('should render scroll icon when scrollY < 250', () => {
-        const wrapper = createWrapper(false);
+    let game;
+
+    beforeEach(() => game = createGameModule());
+
+    it('should not render scroll icon when scrollY < 250', () => {
+        const wrapper = createWrapper(ScrollToTop, { game });
+
         expect(wrapper.find('[data-testid="scroll-to-top"]').exists()).toBe(false);
     });
 
     it('should render scroll icon when scrollY >= 250', async () => {
-        const wrapper = createWrapper(false);
+        const wrapper = createWrapper(ScrollToTop, { game });
+
         await wrapper.setData({ scrollY: 250 });
         expect(wrapper.find('[data-testid="scroll-to-top"]').exists()).toBe(true);
     });
 
     it('should not apply dark class when dark mode is off', async () => {
-        const wrapper = createWrapper(false);
+        const wrapper = createWrapper(ScrollToTop, { game });
+
         await wrapper.setData({ scrollY: 250 });
         expect(wrapper.find('[data-testid="scroll-to-top"]').classes('dark')).toBe(false);
     });
 
     it('should apply dark class when dark mode is on', async () => {
-        const wrapper = createWrapper(true);
+        game.getters.isDarkModeOn = () => true;
+        const wrapper = createWrapper(ScrollToTop, { game });
+
         await wrapper.setData({ scrollY: 250 });
         expect(wrapper.find('[data-testid="scroll-to-top"]').classes('dark')).toBe(true);
     });
 
     it('should scroll to top when scroll icon is clicked', async () => {
-        const wrapper = createWrapper(false);
+        window.scrollTo = jest.fn();
+        const wrapper = createWrapper(ScrollToTop, { game });
 
         await wrapper.setData({ scrollY: 250 });
         expect(wrapper.vm.scrollY).toBe(250);
 
         await wrapper.find('[data-testid="scroll-to-top"]').trigger('click');
-        expect(methods.scrollToTop).toHaveBeenCalledTimes(1);
+        setTimeout(() => expect(wrapper.vm.scrollY).toBe(0), 1000);
     });
 });
 
-const methods = {
-    scrollToTop: jest.fn()
-};
-
-function createWrapper(isDarkModeOn) {
-    return mount(ScrollToTop, {
-        computed: { isDarkModeOn: () => isDarkModeOn },
-        methods
-    });
+function createGameModule() {
+    return {
+        namespaced: true,
+        getters: { isDarkModeOn: () => false }
+    };
 }
