@@ -6,7 +6,7 @@ describe('BaseButton.vue', () => {
     let wrapper;
     let button;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BaseButton, {
             slots: { default: 'Test' }
         });

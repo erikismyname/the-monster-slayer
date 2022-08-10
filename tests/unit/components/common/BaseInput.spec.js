@@ -19,8 +19,10 @@ describe('BaseInput.vue', () => {
 
     it('should change value on input', async () => {
         expect(input.element.value).toBe('');
+
         await input.setValue('Test 1');
         expect(input.element.value).toBe('Test 1');
+        
         await input.setValue('Test 2');
         expect(input.element.value).toBe('Test 2');
     });

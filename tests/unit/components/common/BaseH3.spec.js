@@ -6,7 +6,7 @@ describe('BaseH3', () => {
     let wrapper;
     let h3;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BaseH3, {
             slots: { default: 'Test' }
         });

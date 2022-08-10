@@ -6,7 +6,7 @@ describe('BaseH2.vue', () => {
     let wrapper;
     let h2;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BaseH2, {
             slots: { default: 'Test' }
         });

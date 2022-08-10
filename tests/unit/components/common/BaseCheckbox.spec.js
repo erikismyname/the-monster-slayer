@@ -19,8 +19,10 @@ describe('BaseCheckbox.vue', () => {
 
     it('should change checked value on click', async () => {
         expect(input.element.checked).toBe(false);
+
         await input.setChecked();
         expect(input.element.checked).toBe(true);
+
         await input.setChecked(false);
         expect(input.element.checked).toBe(false);
     });

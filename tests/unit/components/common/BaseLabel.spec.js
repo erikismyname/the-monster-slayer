@@ -6,7 +6,7 @@ describe('BaseLabel.vue', () => {
     let wrapper;
     let label;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BaseLabel, {
             slots: { default: 'Test' }
         });

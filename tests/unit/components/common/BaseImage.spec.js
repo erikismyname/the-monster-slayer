@@ -6,7 +6,7 @@ describe('BaseImage.vue', () => {
     let wrapper;
     let image;
 
-    beforeEach(() => {
+    beforeAll(() => {
         wrapper = mount(BaseImage, {
             propsData: {
                 src: 'Test 1',
