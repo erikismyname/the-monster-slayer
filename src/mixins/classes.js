@@ -5,6 +5,6 @@ export default {
                 container: true,
                 dark: this.isDarkModeOn,
             };
-        },
+        }
     }
 };
