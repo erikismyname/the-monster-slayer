@@ -1,25 +1,36 @@
 <template>
-    <section 
-        v-if="isGameOver" 
-        :class="classes"
+    <section v-if="isGameOver" 
+        :class="classes" 
         data-testid="game-over"
     >
         <base-h2>Game Over</base-h2>
 
-        <base-h3 v-if="isPlayerWinner" data-testid="win">
+        <base-h3 
+            v-if="isPlayerWinner" 
+            data-testid="win-message"
+        >
             You WON!
             <base-icon class="fa-solid fa-face-smile" />
         </base-h3>
-        <base-h3 v-else-if="isMonsterWinner" data-testid="lost">
+        <base-h3 
+            v-else-if="isMonsterWinner" 
+            data-testid="lost-message"
+        >
             You LOST!
             <base-icon class="fa-solid fa-face-frown" />
         </base-h3>
-        <base-h3 v-else data-testid="draw">
+        <base-h3 
+            v-else 
+            data-testid="draw-message"
+        >
             DRAW!
             <base-icon class="fa-solid fa-face-meh" />
         </base-h3>
 
-        <base-button @click.native="startNewGame" data-testid="start-new-game"> 
+        <base-button 
+            @click.native="startNewGame" 
+            data-testid="start-new-game"
+        >
             Start New Game
         </base-button>
     </section>
@@ -28,7 +39,8 @@
 <script>
     import { mapGetters } from "vuex";
 
-    import classes from '@/mixins/classes';
+    import classes from "@/mixins/classes";
+
     import BaseButton from "@/components/common/BaseButton";
     import BaseH2 from "@/components/common/BaseH2";
     import BaseH3 from "@/components/common/BaseH3";

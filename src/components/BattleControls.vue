@@ -1,6 +1,6 @@
 <template>
-    <section 
-        v-if="!isGameOver" 
+    <section
+        v-if="!isGameOver"
         class="battle-controls"
         data-testid="battle-controls"
     >
