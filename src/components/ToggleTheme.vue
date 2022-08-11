@@ -5,10 +5,10 @@
         class="fa-solid fa-sun"
         data-testid="light-mode"
     />
-    <base-icon 
-        v-else 
-        @click.native="toggleDarkMode" 
-        class="fa-solid fa-moon" 
+    <base-icon
+        v-else
+        @click.native="toggleDarkMode"
+        class="fa-solid fa-moon"
         data-testid="dark-mode"
     />
 </template>

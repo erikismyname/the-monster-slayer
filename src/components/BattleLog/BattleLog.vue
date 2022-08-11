@@ -21,7 +21,8 @@
 <script>
     import { mapGetters, mapActions } from "vuex";
 
-    import classes from '@/mixins/classes';
+    import classes from "@/mixins/classes";
+    
     import BaseH2 from "@/components/common/BaseH2";
     import BaseIcon from "@/components/common/BaseIcon";
     import BattleLogList from "@/components/BattleLog/BattleLogList";
