@@ -37,27 +37,27 @@ describe('GameOver.vue', () => {
     it('should display appropriate message when there is no winner', () => {
         const wrapper = createWrapper(GameOver, { game });
 
-        expect(wrapper.find('[data-testid="lost"]').exists()).toBe(false);
-        expect(wrapper.find('[data-testid="win"]').exists()).toBe(false);
-        expect(wrapper.find('[data-testid="draw"]').exists()).toBe(true);
+        expect(wrapper.find('[data-testid="lost-message"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="win-message"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="draw-message"]').exists()).toBe(true);
     });
 
     it('should display appropriate message when winner is monster', () => {
         game.getters.isMonsterWinner = () => true;
         const wrapper = createWrapper(GameOver, { game });
 
-        expect(wrapper.find('[data-testid="lost"]').exists()).toBe(true);
-        expect(wrapper.find('[data-testid="win"]').exists()).toBe(false);
-        expect(wrapper.find('[data-testid="draw"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="lost-message"]').exists()).toBe(true);
+        expect(wrapper.find('[data-testid="win-message"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="draw-message"]').exists()).toBe(false);
     });
 
     it('should display appropriate message when winner is player', () => {
         game.getters.isPlayerWinner = () => true;
         const wrapper = createWrapper(GameOver, { game });
 
-        expect(wrapper.find('[data-testid="lost"]').exists()).toBe(false);
-        expect(wrapper.find('[data-testid="win"]').exists()).toBe(true);
-        expect(wrapper.find('[data-testid="draw"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="lost-message"]').exists()).toBe(false);
+        expect(wrapper.find('[data-testid="win-message"]').exists()).toBe(true);
+        expect(wrapper.find('[data-testid="draw-message"]').exists()).toBe(false);
     });
 
     it('should call restart action when start new game button is clicked', async () => {
