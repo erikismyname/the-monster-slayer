@@ -32,8 +32,8 @@ export default {
         SET_LAST_DAMAGE_POINTS_TAKEN(state, points) {
             state.lastDamagePointsTaken = points;
         },
-        SET_SECOND_WIND(state) {
-            state.health = 50;
+        REVIVE(state) {
+            state.health = config.MONSTER_MAX_HEALTH_POINTS_SECOND_WIND;
             state.hasSecondWind = true;
             state.hasUsedSecondWind = true;
         },
@@ -45,7 +45,7 @@ export default {
         }
     },
     actions: {
-        processAction({ commit, dispatch, rootGetters }) {
+        processAction({ dispatch, commit, rootGetters }) {
             dispatch('attack');
 
             commit('battleLog/ADD_ENTRY', {
@@ -65,7 +65,7 @@ export default {
         },
         processDying({ getters, commit }) {
             hasContenderSecondWind(getters.hasUsedSecondWind)
-                ? commit('SET_SECOND_WIND')
+                ? commit('REVIVE')
                 : commit('game/SET_WINNER', 'player', { root: true });
         },
     }
