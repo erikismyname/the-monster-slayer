@@ -29,7 +29,7 @@ export default {
         SET_WINNER(state, winner) {
             state.winner = winner;
         },
-        RESET_GAME_DATA(state) {
+        RESET_DATA(state) {
             state.round = 0;
             state.winner = null;
         },
@@ -38,16 +38,19 @@ export default {
         }
     },
     actions: {
-        endRound({ dispatch, commit, rootGetters }) {
-            if (rootGetters['monster/health'] <= 0 && rootGetters['player/health'] <= 0) {
+        endRound({ rootGetters, commit, dispatch }) {
+            const monsterHealth = rootGetters['monster/health'];
+            const playerHealth = rootGetters['player/health'];
+
+            if (monsterHealth === 0 && playerHealth === 0) {
                 commit('SET_WINNER', 'draw');
-            } else if (rootGetters['monster/health'] <= 0) {
+            } else if (monsterHealth === 0) {
                 dispatch('monster/processDying', null, { root: true });
-            } else if (rootGetters['player/health'] <= 0) {
+            } else if (playerHealth === 0) {
                 dispatch('player/processDying', null, { root: true });
             }
 
-            commit('INCREMENT_ROUND'); // check if even if someone dies it increments the round
+            commit('INCREMENT_ROUND');
         },
         endBattle({ commit }) {
             commit('SET_WINNER', 'monster');
@@ -55,8 +58,8 @@ export default {
         restart({ commit }) {
             commit('monster/RESET_DATA', null, { root: true });
             commit('player/RESET_DATA', null, { root: true });
-            commit('battleLog/RESET_ENTRIES_DATA', null, { root: true });
-            commit('RESET_GAME_DATA');
+            commit('battleLog/RESET_DATA', null, { root: true });
+            commit('RESET_DATA');
         },
         toggleDarkMode({ commit }) {
             commit('TOGGLE_DARK_MODE');
