@@ -36,7 +36,7 @@ export default {
 
             state.entries = sortedEntries;
         },
-        RESET_ENTRIES_DATA(state) {
+        RESET_DATA(state) {
             state.entries = [];
             state.entriesOrder = 'descending';
         }
