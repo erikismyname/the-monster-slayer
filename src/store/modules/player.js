@@ -60,8 +60,8 @@ export default {
         DECREASE_HEALTH_POTIONS(state) {
             state.healthPotions--;
         },
-        SET_SECOND_WIND(state) {
-            state.health = 50;
+        REVIVE(state) {
+            state.health = config.PLAYER_MAX_HEALTH_POINTS_SECOND_WIND;
             state.hasSecondWind = true;
             state.hasUsedSecondWind = true;
         },
@@ -78,13 +78,13 @@ export default {
         setName({ commit }, name) {
             commit('SET_NAME', name);
         },
-        processAction({ commit, dispatch, getters, rootGetters }, action) {
+        processAction({ dispatch, commit, getters, rootGetters }, action) {
             switch (action) {
                 case 'attack':
-                    dispatch('attack');
+                    dispatch('processAttack');
                     break;
                 case 'specialAttack':
-                    dispatch('specialAttack');
+                    dispatch('processSpecialAttack');
                     break;
                 case 'heal':
                     dispatch('heal');
@@ -97,7 +97,7 @@ export default {
                 points: action === 'heal' ? getters.lastHealthPointsGained : rootGetters['monster/lastDamagePointsTaken']
             }, { root: true });
         },
-        attack({ dispatch }) {
+        processAttack({ dispatch }) {
             const attackPoints = getRandomValueBetween(
                 config.PLAYER_MIN_ATTACK_POINTS,
                 config.PLAYER_MAX_ATTACK_POINTS
@@ -105,7 +105,7 @@ export default {
 
             dispatch('dealDamage', attackPoints);
         },
-        specialAttack({ dispatch }) {
+        processSpecialAttack({ dispatch }) {
             const attackPoints = getRandomValueBetween(
                 config.PLAYER_MIN_SPECIAL_ATTACK_POINTS,
                 config.PLAYER_MAX_SPECIAL_ATTACK_POINTS
@@ -125,11 +125,12 @@ export default {
 
             commit('INCREASE_HEALTH', healPoints);
             commit('SET_LAST_HEALTH_POINTS_GAINED', healPoints);
+
             commit('DECREASE_HEALTH_POTIONS');
         },
-        processDying({ commit, getters }) {
+        processDying({ getters, commit }) {
             hasContenderSecondWind(getters.hasUsedSecondWind)
-                ? commit('SET_SECOND_WIND')
+                ? commit('REVIVE')
                 : commit('game/SET_WINNER', 'monster', { root: true });
         },
     }
