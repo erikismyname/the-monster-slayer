@@ -1,13 +1,13 @@
 <template>
     <div>
-        <modal-backdrop v-if="isPlayerNameSet" />
+        <modal-backdrop v-if="!isPlayerNameSet" />
 
         <transition 
             name="move-fade" 
             appear
         >
             <div 
-                v-if="isPlayerNameSet" 
+                v-if="!isPlayerNameSet" 
                 class="modal" 
                 data-testid="modal"
             >
@@ -70,7 +70,7 @@
         }
     }
 
-    @media(max-width: 21.562rem) {
+    @media (max-width: 21.562rem) {
         .modal {
             top: 9.9rem;
         }
@@ -84,7 +84,7 @@
         }
     }
 
-    @media(max-width: 16.9375rem) {
+    @media (max-width: 16.9375rem) {
         .modal {
             top: 12.8rem;
         }
