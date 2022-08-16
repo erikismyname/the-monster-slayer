@@ -14,8 +14,8 @@ describe('ToggleTheme.vue', () => {
     });
 
     it('should dispatch action when dark icon is clicked', async () => {
-        const wrapper = createWrapper(ToggleTheme, { game })
-            ;
+        const wrapper = createWrapper(ToggleTheme, { game });
+
         await wrapper.find('[data-testid="dark-mode"]').trigger('click');
         expect(game.actions.toggleDarkMode).toHaveBeenCalledTimes(1);
     });
