@@ -1,4 +1,4 @@
-import createWrapper from 'tests/unit/utils/setupTests';
+import createWrapper from '../../utils/setupTests';
 import Modal from '@/components/Modal/Modal';
 
 describe('Modal.vue', () => {

@@ -1,4 +1,4 @@
-import createWrapper from 'tests/unit/utils/setupTests';
+import createWrapper from '../../utils/setupTests';
 import BattleLog from '@/components/BattleLog/BattleLog';
 
 describe('BattleLog.vue', () => {

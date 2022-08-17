@@ -1,4 +1,4 @@
-import createWrapper from 'tests/unit/utils/setupTests';
+import createWrapper from '../utils/setupTests';
 import ToggleTheme from '@/components/ToggleTheme';
 
 describe('ToggleTheme.vue', () => {
