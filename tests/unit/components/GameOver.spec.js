@@ -1,4 +1,4 @@
-import createWrapper from '@/utils/setupTests';
+import createWrapper from 'tests/unit/utils/setupTests';
 import GameOver from '@/components/GameOver';
 
 describe('GameOver.vue', () => {

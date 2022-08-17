@@ -1,4 +1,4 @@
-import createWrapper from '@/utils/setupTests';
+import createWrapper from 'tests/unit/utils/setupTests';
 import ContendersDashboardCard from '@/components/ContendersDashboard/ContendersDashboardCard';
 
 describe('CotendersDashboardCard.vue', () => {
